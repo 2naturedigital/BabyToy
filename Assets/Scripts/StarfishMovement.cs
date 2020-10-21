@@ -4,45 +4,48 @@ using UnityEngine;
 
 public class StarfishMovement : MonoBehaviour
 {
-    public float starfish_velocity = 0;
-    public int starfish_speed = 1000;
-    public int direction = 0;
-    public float elapsed_time = 0;
-    public int movement_period = 0;
+    private float starfishVelocity = 0;
+    public int starfishSpeed = 1000;
+    private int direction = 0;
+    private float elapsedTime = 0;
+    public int movementPeriod = 3;
     // Start is called before the first frame update
+
+    //TODO: factor out parts that will happen all at the same time into their own methods to be called
+    //TODO: figure out how to make the starfish bounce off the borders
     void Start()
     {
-        movement_period = Random.Range(1, 5);
+        //movementPeriod = Random.Range(1, 5);
         direction = Random.Range(1, 5);
-        starfish_speed = Random.Range(1000, 3000);
-        starfish_velocity = starfish_speed * Time.deltaTime;
+        //starfishSpeed = Random.Range(1000, 3000);
+        starfishVelocity = starfishSpeed * Time.deltaTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        elapsed_time += Time.deltaTime;
+        elapsedTime += Time.deltaTime;
 
-
-        if (elapsed_time > movement_period)
+        //TODO: find a way to smooth out movement between directions (currently has abrupt changes)
+        if (elapsedTime > movementPeriod)
         {
             switch (direction)
             {
                 case 1:
                     Debug.Log("Starfish moving UP");
-                    GetComponent<Rigidbody2D>().velocity = Vector2.up * starfish_velocity * 3;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.up * starfishVelocity;
                     break;
                 case 2:
                     Debug.Log("Starfish moving RIGHT");
-                    GetComponent<Rigidbody2D>().velocity = Vector2.right * starfish_velocity * 2;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.right * starfishVelocity;
                     break;
                 case 3:
                     Debug.Log("Starfish moving DOWN");
-                    GetComponent<Rigidbody2D>().velocity = Vector2.down * starfish_velocity;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.down * starfishVelocity;
                     break;
                 case 4:
                     Debug.Log("Starfish moving LEFT");
-                    GetComponent<Rigidbody2D>().velocity = Vector2.left * starfish_velocity * 5;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.left * starfishVelocity;
                     break;
                 default:
                     Debug.Log("Default case reached for starfish velocity");
@@ -50,12 +53,12 @@ public class StarfishMovement : MonoBehaviour
             }
 
             // recauculate values for next movement
-            elapsed_time = 0;
-            Debug.Log("time passed: " + movement_period + " seconds");
-            movement_period = Random.Range(1, 5);
+            elapsedTime = 0;
+            Debug.Log("time passed: " + movementPeriod + " seconds");
+            //movementPeriod = Random.Range(1, 5);
             direction = Random.Range(1, 5);
-            starfish_speed = Random.Range(2000, 4000);
-            starfish_velocity = starfish_speed * Time.deltaTime;
+            //starfishSpeed = Random.Range(2000, 4000);
+            starfishVelocity = starfishSpeed * Time.deltaTime;
         }
     }
 }
