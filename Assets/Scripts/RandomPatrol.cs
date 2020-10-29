@@ -49,17 +49,23 @@ public class RandomPatrol : MonoBehaviour
         // Reload screen when there is a collision
         if (other.tag == "Fish")
         {
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            targetPosition = GetRandomPosition();
+            //Reload();
         }
 
     }
 
-    public void UpdateTarget(Vector2 newTarget)
+    public void Reload()
+    {
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void SetTarget(Vector2 newTarget)
     {
         targetPosition = newTarget;
     }
 
-    public Vector2 GetCurrentTarget()
+    public Vector2 GetTarget()
     {
         return targetPosition;
     }

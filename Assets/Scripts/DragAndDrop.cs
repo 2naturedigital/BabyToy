@@ -56,11 +56,12 @@ public class DragAndDrop : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter2D(Collision other)
     {
         RandomPatrol rp = other.gameObject.GetComponent<RandomPatrol>();
-        Vector2 target = randomPatrol.GetCurrentTarget();
-        randomPatrol.UpdateTarget(rp.GetCurrentTarget());
-        rp.UpdateTarget(target);
+        //Vector2 target = randomPatrol.GetTarget();
+        randomPatrol.SetTarget(rp.GetTarget());
+        //rp.SetTarget(target);
+        randomPatrol.Reload();
     }
 }
