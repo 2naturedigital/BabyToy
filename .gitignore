@@ -70,3 +70,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 .vscode/settings.json
+ProjectSettings/ProjectVersion.txt
+Packages/packages-lock.json
+Packages/manifest.json
