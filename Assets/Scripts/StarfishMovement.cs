@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StarfishMovement : MonoBehaviour
 {
+    public Animator animator;
     private float starfishVelocity = 0;
     public int starfishSpeed = 1000;
     private int direction = 0;
@@ -24,6 +25,10 @@ public class StarfishMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //TODO: Change StarfishIdleSpeed to get info from accelerometer
+        //animator.setFloat("StarfishIdleSpeed", starfishVelocity);
+
         elapsedTime += Time.deltaTime;
 
         //TODO: find a way to smooth out movement between directions (currently has abrupt changes)
