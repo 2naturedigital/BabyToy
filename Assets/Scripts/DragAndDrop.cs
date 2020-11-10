@@ -29,7 +29,7 @@ public class DragAndDrop : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
 
-            // When a touch begins, rab its location and see if it is overlaping a collider2d object then set that object to moveable
+            // When a touch begins, grab its location and see if it is overlaping a collider2d object then set that object to moveable
             if (touch.phase == TouchPhase.Began)
             {
                 Collider2D touchedCollider = Physics2D.OverlapPoint(touchPosition);
@@ -56,12 +56,12 @@ public class DragAndDrop : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collision other)
-    {
-        RandomPatrol rp = other.gameObject.GetComponent<RandomPatrol>();
-        //Vector2 target = randomPatrol.GetTarget();
-        randomPatrol.SetTarget(rp.GetTarget());
-        //rp.SetTarget(target);
-        randomPatrol.Reload();
-    }
+    //private void OnTriggerEnter2D(Collision other)
+    //{
+    //    RandomPatrol rp = other.gameObject.GetComponent<RandomPatrol>();
+    //    //Vector2 target = randomPatrol.GetTarget();
+    //    randomPatrol.SetTarget(rp.GetTarget());
+    //    //rp.SetTarget(target);
+    //    randomPatrol.Reload();
+    //}
 }

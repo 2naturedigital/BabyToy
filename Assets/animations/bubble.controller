@@ -7,7 +7,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Touched
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3546488788274677985}
   m_Solo: 0
@@ -31,7 +34,7 @@ AnimatorController:
   m_Name: bubble
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: touch
+  - m_Name: Touched
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -62,7 +65,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3573715111294412622}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 3708862599940709252}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -103,6 +107,18 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &3708862599940709252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba1f57ac622ec4b4b805fcdbc59fa0f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1107 &8455024108685780196
 AnimatorStateMachine:
   serializedVersion: 5
