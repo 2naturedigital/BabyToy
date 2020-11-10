@@ -14,8 +14,7 @@ public class StarfishMovement : MonoBehaviour
 
     //TODO: factor out parts that will happen all at the same time into their own methods to be called
     //TODO: figure out how to make the starfish bounce off the borders
-    void Start()
-    {
+    void Start() {
         //movementPeriod = Random.Range(1, 5);
         direction = Random.Range(1, 5);
         //starfishSpeed = Random.Range(1000, 3000);
