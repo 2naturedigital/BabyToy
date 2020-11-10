@@ -24,7 +24,7 @@ public class Bubbles2 : MonoBehaviour
 
     public void CreateBubbles() {          
         if (bubbleTimer <= 0) {
-            Vector3 bubblePosition = new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, 0f);
+            Vector3 bubblePosition = new Vector3(Random.Range(-540.0f, 540.0f), -1000.0f, 0f);
             GameObject bubbleClone = Instantiate(bubbleOriginal, bubblePosition, bubbleOriginal.transform.rotation);
             bubbleClone.transform.parent = bubbleContainer.transform;
 

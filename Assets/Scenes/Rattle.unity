@@ -328,6 +328,7 @@ MonoBehaviour:
   bubbleOriginal: {fileID: 6968515196046032890, guid: f9ce2378ff31e0f4daecbd9505a227b1,
     type: 3}
   bubbleContainer: {fileID: 826779766}
+  animator: {fileID: 0}
 --- !u!4 &528298671
 Transform:
   m_ObjectHideFlags: 0
@@ -780,7 +781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 369, y: -101}
+  m_AnchoredPosition: {x: 241, y: -514}
   m_SizeDelta: {x: 318, y: 342}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1610959107
