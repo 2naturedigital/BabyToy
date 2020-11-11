@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//TODO -- add a method to destroy bubble after it is touched (and popped)
+//TODO -- add sounds for pop (randomized)
+//TODO -- randomize sounds for spawned bubbles
+
 public class Bubble : MonoBehaviour
 {
     public Animator animator;
