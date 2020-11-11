@@ -30,8 +30,7 @@ public class waterCurrent : MonoBehaviour {
                     bubblesInCurrent.Remove(bubble);
                 } else {
                     bubble.AddForce(currentStrength * currentDirection);
-                }
-                
+                }                
             }
         }
     }
