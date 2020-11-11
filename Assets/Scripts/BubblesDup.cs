@@ -6,10 +6,12 @@ public class BubblesDup : MonoBehaviour
 {
     public GameObject bubbleOriginal;
     public GameObject bubbleContainer;
-    public float bubbleSpawnMinTime = 1;
-    public float bubbleSpawnMaxTime = 8;
-    public float bubblePopMinTime = 10;
-    public float bubblePopMaxTime = 20;
+    public float bubbleSpawnMinTime;
+    public float bubbleSpawnMaxTime;
+    public float bubblePopMinTime;
+    public float bubblePopMaxTime;
+    public float bubbleMinScale;
+    public float bubbleMaxScale;
     float bubbleTimer = 0;
     float bubbleDestoryTimer = 0;
 

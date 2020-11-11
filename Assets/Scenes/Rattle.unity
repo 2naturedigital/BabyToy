@@ -249,12 +249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 0.002
   minStrength: 0.001
   maxStrength: 0.005
-  currentDirection: {x: -1, y: 0}
   alternatingCurrent: 1
-  movementPeriod: 2
+  movementPeriod: 4
 --- !u!61 &271795048
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -409,6 +407,10 @@ MonoBehaviour:
   bubbleOriginal: {fileID: 6968515196046032890, guid: f9ce2378ff31e0f4daecbd9505a227b1,
     type: 3}
   bubbleContainer: {fileID: 826779766}
+  bubbleSpawnMinTime: 1
+  bubbleSpawnMaxTime: 5
+  bubblePopMinTime: 10
+  bubblePopMaxTime: 40
 --- !u!4 &528298671
 Transform:
   m_ObjectHideFlags: 0
@@ -472,10 +474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 0.004
   minStrength: 0.001
-  maxStrength: 0.003
-  currentDirection: {x: -1, y: 0}
+  maxStrength: 0.002
   alternatingCurrent: 1
   movementPeriod: 3
 --- !u!61 &673668690
@@ -634,10 +634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 0.001
-  minStrength: 0.001
-  maxStrength: 0.003
-  currentDirection: {x: 1, y: 0}
+  minStrength: 0.0001
+  maxStrength: 0.001
   alternatingCurrent: 1
   movementPeriod: 5
 --- !u!61 &765393355
@@ -715,10 +713,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 0.002
   minStrength: 0.001
   maxStrength: 0.002
-  currentDirection: {x: 1, y: 0}
   alternatingCurrent: 1
   movementPeriod: 2
 --- !u!61 &782968335
@@ -1085,7 +1081,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184103754}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78dabcfff1de90c43a56c8aa5f20804a, type: 3}
   m_Name: 
@@ -1227,7 +1223,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610959105}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78dabcfff1de90c43a56c8aa5f20804a, type: 3}
   m_Name: 
@@ -1451,7 +1447,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852925465}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e6d9da73adc52c45a0ff6d3543d2dcb, type: 3}
   m_Name: 

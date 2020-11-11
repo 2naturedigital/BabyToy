@@ -8,6 +8,7 @@ public class FishController : MonoBehaviour {
     public float minY;
     public float maxY;
     public float speed;
+    private bool isFacingLeft = true;
 
     // Keep track of current target position
     private Vector2 targetPosition;
@@ -22,10 +23,31 @@ public class FishController : MonoBehaviour {
     void Update() {
         // Do a movement transformation if the target position and the current position don't match
         if ((Vector2)transform.position != targetPosition) {
+            // flip the sprite to face the right direction when swimming
+            if (transform.position.x > targetPosition.x && !isFacingLeft) {
+                FlipHorizontal();
+            } else if (transform.position.x < targetPosition.x && isFacingLeft) {
+                FlipHorizontal();
+            }
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         } else {
             targetPosition = GetRandomPosition();
         }
+    }
+
+    void Flip() {
+        isFacingLeft = !isFacingLeft;
+
+        // Multiply the player's x local scale by -1
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
+    void FlipHorizontal() {
+        isFacingLeft = !isFacingLeft;
+        //animator.transform.Rotate(0, 180, 0);
+        transform.Rotate(0, 180, 0);
     }
 
     Vector2 GetRandomPosition() {

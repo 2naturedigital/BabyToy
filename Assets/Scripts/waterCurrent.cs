@@ -5,13 +5,19 @@ using UnityEngine;
 public class WaterCurrent : MonoBehaviour {
 
    List<Rigidbody2D> bubblesInCurrent = new List<Rigidbody2D>();
-   public float currentStrength;
-   public float minStrength = (float)0.001;
-   public float maxStrength = (float)0.005;
-   public Vector2 currentDirection;
-   public bool alternatingCurrent = true;
-   public int movementPeriod = 3;
+   private float currentStrength;
+   public float minStrength;
+   public float maxStrength;
+   private Vector2 currentDirection;
+   public bool alternatingCurrent;
+   public int movementPeriod;
    private float elapsedTime = 0;
+
+   private void Start() {
+       // initialize direction and strength for current
+       currentDirection = newDirection();
+       currentStrength = newStrength();
+   }
 
 
     private void OnTriggerEnter2D(Collider2D col) {
