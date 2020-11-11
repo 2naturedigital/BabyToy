@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bubbles2 : MonoBehaviour
+public class BubblesDup : MonoBehaviour
 {
     public GameObject bubbleOriginal;
     public GameObject bubbleContainer;
-    readonly float bubbleSpawnMinTime = 1;
-    readonly float bubbleSpawnMaxTime = 8;
-    readonly float bubblePopMinTime = 10;
-    readonly float bubblePopMaxTime = 20;
+    public float bubbleSpawnMinTime = 1;
+    public float bubbleSpawnMaxTime = 8;
+    public float bubblePopMinTime = 10;
+    public float bubblePopMaxTime = 20;
     float bubbleTimer = 0;
     float bubbleDestoryTimer = 0;
 
 
     // Start is called before the first frame update
     void Start()
-    {        
-        
+    {
+
     }
 
-    public void CreateBubbles() {          
+    public void CreateBubbles() {
         if (bubbleTimer <= 0) {
             Vector3 bubblePosition = new Vector3(Random.Range(-540.0f, 540.0f), -1000.0f, 0f);
             GameObject bubbleClone = Instantiate(bubbleOriginal, bubblePosition, bubbleOriginal.transform.rotation);
@@ -33,19 +33,19 @@ public class Bubbles2 : MonoBehaviour
             bubbleTimer = Random.Range(bubbleSpawnMinTime, bubbleSpawnMaxTime);
         } else {
             bubbleTimer -= Time.deltaTime;
-        }        
+        }
     }
 
-    
+
     // Update is called once per frame
     void Update()
     {
 
-        CreateBubbles(); //need the number to be dynamic, reactive to the shake. 
+        CreateBubbles(); //need the number to be dynamic, reactive to the shake.
 
-        
+
     }
 
-    
+
 
 }
