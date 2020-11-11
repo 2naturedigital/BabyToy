@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeviceVelocityScript : MonoBehaviour
+public class Accelerometer : MonoBehaviour
 {
-    void onStart () 
+    void onStart ()
     {
     //    Vector3 dir = Vector3.zero;
     //    dir.x = Input.acceleration.x;
     //    dir.y = Input.acceleration.y;
     //    dir.z = Input.acceleration.z;
 
-        
+
     //    int bound = 4;
 
     //    Vector3 changes = Vector3.zero;
