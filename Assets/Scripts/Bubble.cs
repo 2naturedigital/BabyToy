@@ -11,8 +11,11 @@ public class Bubble : MonoBehaviour
     public float bubblePitchMax;
     public float bubbleVolMin;
     public float bubbleVolMax;
+    public float bubbleLifetimeMin;
+    public float bubbleLifetimeMax;
+    private float lifetimer;
     public AudioClip[] popSounds;
-    public float destroyTimer;
+    public float destroyAnimationTimer;
     private GameObject bubble;
     Collider2D col;
     Rigidbody2D rb;
@@ -22,12 +25,12 @@ public class Bubble : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
-        audioSrc = GetComponent<AudioSource>();      
-        
+        audioSrc = GetComponent<AudioSource>();
     }    
 
     void Awake() {
         RandomBubbles();
+        lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
     }
     
     void Update() {
@@ -43,10 +46,24 @@ public class Bubble : MonoBehaviour
                     
                     //set the collider2d object to a gameobject & destroy it
                     bubble = GetComponent<Collider2D>().gameObject;
-                    Destroyer();
+                    Destroyer();                    
+                    Destroy(bubble, destroyAnimationTimer);
                 }
             }            
         }
+
+        //autodestruct bubbles
+        if (lifetimer > 0) {
+            lifetimer -= Time.deltaTime;
+        } 
+        if (lifetimer <= 0) {
+            Destroyer();            
+            Destroy(this.gameObject, destroyAnimationTimer);
+            lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
+        }
+        if (this.transform.position.y >= 1000.0f) {
+            Destroy(this.gameObject);
+        }        
     }
     
     //triggers the pop animation, sets a random pop sound & plays, destroys bubble object
@@ -54,7 +71,6 @@ public class Bubble : MonoBehaviour
         animator.SetTrigger("Touched");
         audioSrc.clip = popSounds[Random.Range(0, popSounds.Length)];
         audioSrc.PlayOneShot(audioSrc.clip);
-        Destroy(bubble, destroyTimer);
     }
 
     //sets the bubble sound, randomizes pitch & volume
