@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO -- randomize sounds for spawned bubbles
-
 public class Bubble : MonoBehaviour
 {
     public Animator animator;
     public AudioSource audioSrc;
-    public AudioClip[] audioClipArray;
+    public AudioClip bubbleSound;
+    public float bubblePitchMin;
+    public float bubblePitchMax;
+    public float bubbleVolMin;
+    public float bubbleVolMax;
+    public AudioClip[] popSounds;
     public float destroyTimer;
     private GameObject bubble;
     Collider2D col;
@@ -19,13 +22,15 @@ public class Bubble : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
-        audioSrc = GetComponent<AudioSource>();
-        //set rando bubble sounds here
-    }    
-    
-    void Update() {      
+        audioSrc = GetComponent<AudioSource>();      
         
+    }    
 
+    void Awake() {
+        RandomBubbles();
+    }
+    
+    void Update() {
         if (Input.touchCount > 0) {
             Touch touch = Input.GetTouch(0);
             Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
@@ -42,8 +47,16 @@ public class Bubble : MonoBehaviour
 
     private void Destroyer() {
         animator.SetTrigger("Touched");
-        audioSrc.clip = audioClipArray[Random.Range(0, audioClipArray.Length)];
+        audioSrc.clip = popSounds[Random.Range(0, popSounds.Length)];
         audioSrc.PlayOneShot(audioSrc.clip);
         Destroy(bubble, destroyTimer);
     }
+
+    private void RandomBubbles() {
+        audioSrc.clip = bubbleSound;
+        audioSrc.pitch = Random.Range(bubblePitchMin, bubblePitchMax);
+        audioSrc.volume = Random.Range(bubbleVolMin, bubbleVolMax);
+        audioSrc.PlayOneShot(audioSrc.clip);
+    }
+
 }

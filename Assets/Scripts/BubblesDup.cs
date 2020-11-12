@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+//TODO figure out how to trigger pop animation & random pop sounds on destroy
+
 public class BubblesDup : MonoBehaviour
 {
     public GameObject bubbleOriginal;
