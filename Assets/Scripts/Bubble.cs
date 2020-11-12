@@ -31,6 +31,8 @@ public class Bubble : MonoBehaviour
     }
     
     void Update() {
+
+        //get touch position when the screen is touched
         if (Input.touchCount > 0) {
             Touch touch = Input.GetTouch(0);
             Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
@@ -38,13 +40,16 @@ public class Bubble : MonoBehaviour
             // When a touch begins, grab its location and see if it is overlaping a collider2d object
             if (touch.phase == TouchPhase.Began) {
                 if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPosition)) {
+                    
+                    //set the collider2d object to a gameobject & destroy it
                     bubble = GetComponent<Collider2D>().gameObject;
                     Destroyer();
                 }
             }            
         }
     }
-
+    
+    //triggers the pop animation, sets a random pop sound & plays, destroys bubble object
     private void Destroyer() {
         animator.SetTrigger("Touched");
         audioSrc.clip = popSounds[Random.Range(0, popSounds.Length)];
@@ -52,6 +57,7 @@ public class Bubble : MonoBehaviour
         Destroy(bubble, destroyTimer);
     }
 
+    //sets the bubble sound, randomizes pitch & volume
     private void RandomBubbles() {
         audioSrc.clip = bubbleSound;
         audioSrc.pitch = Random.Range(bubblePitchMin, bubblePitchMax);
