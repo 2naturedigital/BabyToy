@@ -18,7 +18,6 @@ public class StarfishMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         direction = -1;
-        animator = GetComponent<Animator>();
     }
 
     void Wobble() {
@@ -52,24 +51,20 @@ public class StarfishMovement : MonoBehaviour
 
     void OnShakeStart() {
         isShaken = true;
-        animator.SetBool("isShaken", true);
     }
 
     void OnShakeEnd() {
         isShaken = false;
         isResetTime = true;
-        animator.SetBool("isShaken", false);
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         Wobble();
 
         // timer to check for shake (just for testing)
         elapsedTime += Time.deltaTime;
-        if (elapsedTime > fakeShakeTestTimer)
-        {
+        if (elapsedTime > fakeShakeTestTimer) {
             if (!isShaken) {
                 OnShakeStart();
             } else {

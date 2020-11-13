@@ -76,12 +76,12 @@ public class FishController : MonoBehaviour {
     }
 
     public void SetTarget(Vector2 newTarget) {
-        Debug.Log(this + " Is changing to x: " + newTarget.x + " " + newTarget.y);
+        //Debug.Log(this + " Is changing to x: " + newTarget.x + " " + newTarget.y);
         targetPosition = newTarget;
     }
 
     public Vector2 GetTarget() {
-        Debug.Log(this + " Is going towards: " + targetPosition.x + " " + targetPosition.y);
+        //Debug.Log(this + " Is going towards: " + targetPosition.x + " " + targetPosition.y);
         return targetPosition;
     }
 }
