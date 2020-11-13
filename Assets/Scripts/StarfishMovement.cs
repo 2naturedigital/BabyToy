@@ -18,6 +18,7 @@ public class StarfishMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         direction = -1;
+        animator = GetComponent<Animator>();
     }
 
     void Wobble() {
@@ -51,17 +52,13 @@ public class StarfishMovement : MonoBehaviour
 
     void OnShakeStart() {
         isShaken = true;
-        // float tmp = wobbleSpeed;
-        // wobbleSpeed = wobbleShakeSpeed;
-        // wobbleShakeSpeed = tmp;
+        animator.SetBool("isShaken", true);
     }
 
     void OnShakeEnd() {
         isShaken = false;
         isResetTime = true;
-        // float tmp = wobbleSpeed;
-        // wobbleSpeed = wobbleShakeSpeed;
-        // wobbleShakeSpeed = tmp;
+        animator.SetBool("isShaken", false);
     }
 
     // Update is called once per frame

@@ -113,7 +113,7 @@ Rigidbody2D:
   m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: -3
+  m_GravityScale: -10
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -138,8 +138,8 @@ MonoBehaviour:
   bubblePitchMax: 1.2
   bubbleVolMin: 0.8
   bubbleVolMax: 1.2
-  bubbleLifetimeMin: 15
-  bubbleLifetimeMax: 30
+  bubbleLifetimeMin: 5
+  bubbleLifetimeMax: 10
   popSounds:
   - {fileID: 8300000, guid: 6bbac0e25d604cf4da0006503b2a3405, type: 3}
   - {fileID: 8300000, guid: 90d73fffd2a28de448c2e806cecb85ab, type: 3}

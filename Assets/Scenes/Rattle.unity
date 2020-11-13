@@ -398,7 +398,7 @@ MonoBehaviour:
   bubbleSpawnMaxTime: 2
   bubblePopMinTime: 10
   bubblePopMaxTime: 30
-  bubbleMinScale: 2
+  bubbleMinScale: 1
   bubbleMaxScale: 4
 --- !u!4 &528298671
 Transform:
