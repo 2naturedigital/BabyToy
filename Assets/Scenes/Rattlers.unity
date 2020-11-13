@@ -1473,8 +1473,8 @@ MonoBehaviour:
   animator: {fileID: 1852925467}
   wobbleSpeed: 0.5
   wobbleShakeSpeed: 5
-  wobbleMinAngle: 0.15
-  wobbleMaxAngle: -0.15
+  wobbleMinAngle: 0.1
+  wobbleMaxAngle: -0.1
   isShaken: 0
   isResetTime: 0
   fakeShakeTestTimer: 10
