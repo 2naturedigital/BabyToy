@@ -21,34 +21,35 @@ public class DragAndDrop : MonoBehaviour {
     void Update() {
 
         if (Input.touchCount > 0) {
-            Touch touch = Input.GetTouch(0);
-            // translates the position on the screen that has been touched to the scene world position
-            Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+            foreach (Touch touch in Input.touches) {
+                // translates the position on the screen that has been touched to the scene world position
+                Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
 
-            // When a touch begins, grab its location and see if it is overlaping a collider2d object then set that object to moveable
-            if (touch.phase == TouchPhase.Began) {
-                Collider2D touchedCollider = Physics2D.OverlapPoint(touchPosition);
-                if (col == touchedCollider) {
-                    moveAllowed = true;
+                // When a touch begins, grab its location and see if it is overlaping a collider2d object then set that object to moveable
+                if (touch.phase == TouchPhase.Began) {
+                    Collider2D touchedCollider = Physics2D.OverlapPoint(touchPosition);
+                    if (col == touchedCollider) {
+                        moveAllowed = true;
+                    }
                 }
-            }
 
-            // Move the object to where the touch is moving
-            if (touch.phase == TouchPhase.Moved) {
-                if (moveAllowed) {
-                    transform.position = new Vector2(touchPosition.x, touchPosition.y);
+                // Move the object to where the touch is moving
+                if (touch.phase == TouchPhase.Moved) {
+                    if (moveAllowed) {
+                        transform.position = new Vector2(touchPosition.x, touchPosition.y);
+                    }
                 }
-            }
 
-            // Turn off movable when touch is ended
-            if (touch.phase == TouchPhase.Ended) {
-                moveAllowed = false;
+                // Turn off movable when touch is ended
+                if (touch.phase == TouchPhase.Ended) {
+                    moveAllowed = false;
+                }
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Fish") {
+        if (this.tag == "Fish" && other.tag == "Fish") {
             Debug.Log("Collision of Fish!");
             FishController otherFish = other.gameObject.GetComponent<FishController>();
             Vector2 thisTarget = thisFish.GetTarget();

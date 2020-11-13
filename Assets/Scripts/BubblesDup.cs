@@ -16,6 +16,7 @@ public class BubblesDup : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        bubbleTimer -= Time.deltaTime;
         CreateBubbles(); //need the number to be dynamic, reactive to the shake.
     }
 
@@ -32,8 +33,6 @@ public class BubblesDup : MonoBehaviour
             //Destroy(bubbleClone, bubbleDestoryTimer);
 
             bubbleTimer = Random.Range(bubbleSpawnMinTime, bubbleSpawnMaxTime);
-        } else {
-            bubbleTimer -= Time.deltaTime;
         }
     }
 }

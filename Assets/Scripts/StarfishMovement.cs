@@ -5,64 +5,80 @@ using UnityEngine;
 public class StarfishMovement : MonoBehaviour
 {
     public Animator animator;
-    private float starfishVelocity = 0;
-    public int starfishSpeed = 1000;
-    private int direction = 0;
+    public float wobbleSpeed;
+    public float wobbleShakeSpeed;
+    public float wobbleMinAngle;
+    public float wobbleMaxAngle;
+    private int direction;
+    public bool isShaken = false;
+    public bool isResetTime = false;
     private float elapsedTime = 0;
-    public int movementPeriod = 3;
-    // Start is called before the first frame update
+    public int fakeShakeTestTimer;
 
-    //TODO: factor out parts that will happen all at the same time into their own methods to be called
-    //TODO: figure out how to make the starfish bounce off the borders
+    // Start is called before the first frame update
     void Start() {
-        //movementPeriod = Random.Range(1, 5);
-        direction = Random.Range(1, 5);
-        //starfishSpeed = Random.Range(1000, 3000);
-        starfishVelocity = starfishSpeed * Time.deltaTime;
+        direction = -1;
+    }
+
+    void Wobble() {
+
+        float rotation = 0;
+        //Debug.Log("MY Z IS AT: " + transform.rotation.z);
+        if (!isShaken && !isResetTime) {                                    // wobble normally
+            // flip wobble direction after max or min is reached
+            if (transform.rotation.z >= wobbleMinAngle || transform.rotation.z <= wobbleMaxAngle) {
+                FlipWobble();
+            }
+            rotation = direction * wobbleSpeed;
+        } else if (isShaken) {                              // spin fast
+            rotation = direction * wobbleShakeSpeed;
+        } else if (isResetTime) {                           // head back to reset position
+            if (transform.rotation.z <= .1 && transform.rotation.z >= -.1) {
+                //Debug.Log("Reset Complete");
+                //Debug.Log("Complete Z at: " + transform.rotation.z);
+                isResetTime = false;
+            }
+            rotation = direction * wobbleShakeSpeed - 2;
+        }
+
+        // rotation based on rotation created
+        transform.Rotate(0, 0, rotation);
+    }
+
+    void FlipWobble() {
+        direction *= -1;
+    }
+
+    void OnShakeStart() {
+        isShaken = true;
+        // float tmp = wobbleSpeed;
+        // wobbleSpeed = wobbleShakeSpeed;
+        // wobbleShakeSpeed = tmp;
+    }
+
+    void OnShakeEnd() {
+        isShaken = false;
+        isResetTime = true;
+        // float tmp = wobbleSpeed;
+        // wobbleSpeed = wobbleShakeSpeed;
+        // wobbleShakeSpeed = tmp;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Wobble();
 
-        //TODO: Change StarfishIdleSpeed to get info from accelerometer
-        //animator.setFloat("StarfishIdleSpeed", starfishVelocity);
-
+        // timer to check for shake (just for testing)
         elapsedTime += Time.deltaTime;
-
-        //TODO: find a way to smooth out movement between directions (currently has abrupt changes)
-        if (elapsedTime > movementPeriod)
+        if (elapsedTime > fakeShakeTestTimer)
         {
-            switch (direction)
-            {
-                case 1:
-                    Debug.Log("Starfish moving UP");
-                    GetComponent<Rigidbody2D>().velocity = Vector2.up * starfishVelocity;
-                    break;
-                case 2:
-                    Debug.Log("Starfish moving RIGHT");
-                    GetComponent<Rigidbody2D>().velocity = Vector2.right * starfishVelocity;
-                    break;
-                case 3:
-                    Debug.Log("Starfish moving DOWN");
-                    GetComponent<Rigidbody2D>().velocity = Vector2.down * starfishVelocity;
-                    break;
-                case 4:
-                    Debug.Log("Starfish moving LEFT");
-                    GetComponent<Rigidbody2D>().velocity = Vector2.left * starfishVelocity;
-                    break;
-                default:
-                    Debug.Log("Default case reached for starfish velocity");
-                    break;
+            if (!isShaken) {
+                OnShakeStart();
+            } else {
+                OnShakeEnd();
             }
-
-            // recauculate values for next movement
             elapsedTime = 0;
-            Debug.Log("time passed: " + movementPeriod + " seconds");
-            //movementPeriod = Random.Range(1, 5);
-            direction = Random.Range(1, 5);
-            //starfishSpeed = Random.Range(2000, 4000);
-            starfishVelocity = starfishSpeed * Time.deltaTime;
         }
     }
 }

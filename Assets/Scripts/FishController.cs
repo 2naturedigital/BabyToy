@@ -45,9 +45,15 @@ public class FishController : MonoBehaviour {
     }
 
     void FlipHorizontal() {
-        isFacingLeft = !isFacingLeft;
-        //animator.transform.Rotate(0, 180, 0);
-        transform.Rotate(0, 180, 0);
+        if (this.tag == "Fish") {
+            isFacingLeft = !isFacingLeft;
+            //animator.transform.Rotate(0, 180, 0);
+            transform.Rotate(0, 180, 0);
+        }
+    }
+
+    void Rotate() {
+
     }
 
     Vector2 GetRandomPosition() {
@@ -59,7 +65,7 @@ public class FishController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         // Reload screen when there is a collision
-        if (other.tag == "Fish") {
+        if (this.tag == "Fish" && other.tag == "Fish") {
             //targetPosition = GetRandomPosition();
             //Reload();
         }

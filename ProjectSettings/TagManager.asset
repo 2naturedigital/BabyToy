@@ -6,7 +6,8 @@ TagManager:
   tags:
   - Fish
   - Bubble
-  - waterCurrent
+  - StarFish
+  - WaterCurrent
   layers:
   - Default
   - TransparentFX

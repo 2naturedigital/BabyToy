@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 271795047}
   m_Layer: 5
   m_Name: FourthCurrent
-  m_TagString: waterCurrent
+  m_TagString: WaterCurrent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -394,12 +394,12 @@ MonoBehaviour:
   bubbleOriginal: {fileID: 6968515196046032890, guid: f9ce2378ff31e0f4daecbd9505a227b1,
     type: 3}
   bubbleContainer: {fileID: 826779766}
-  bubbleSpawnMinTime: 1
-  bubbleSpawnMaxTime: 5
+  bubbleSpawnMinTime: 0.5
+  bubbleSpawnMaxTime: 2
   bubblePopMinTime: 10
   bubblePopMaxTime: 30
-  bubbleMinScale: 0.3
-  bubbleMaxScale: 1.5
+  bubbleMinScale: 2
+  bubbleMaxScale: 4
 --- !u!4 &528298671
 Transform:
   m_ObjectHideFlags: 0
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 673668689}
   m_Layer: 5
   m_Name: SecondCurrent
-  m_TagString: waterCurrent
+  m_TagString: WaterCurrent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 765393354}
   m_Layer: 5
   m_Name: FirstCurrent
-  m_TagString: waterCurrent
+  m_TagString: WaterCurrent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 782968334}
   m_Layer: 5
   m_Name: ThirdCurrent
-  m_TagString: waterCurrent
+  m_TagString: WaterCurrent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1283,7 +1283,7 @@ GameObject:
   - component: {fileID: 1852925474}
   m_Layer: 5
   m_Name: starfish
-  m_TagString: Fish
+  m_TagString: StarFish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1436,11 +1436,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852925465}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e6d9da73adc52c45a0ff6d3543d2dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1852925467}
-  starfishSpeed: 1000
-  movementPeriod: 3
+  wobbleSpeed: 0.5
+  wobbleShakeSpeed: 5
+  wobbleMinAngle: 0.15
+  wobbleMaxAngle: -0.15
+  isShaken: 0
+  isResetTime: 0
+  fakeShakeTestTimer: 10
