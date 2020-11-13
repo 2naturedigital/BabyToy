@@ -31,6 +31,7 @@ public class Accelerometer : MonoBehaviour
        // update previousreading with current
        prevreading = dir;
 
+      // shake if out of bounds
        if ((changes.x > bounds && changes.y > bounds) || (changes.x > bounds && changes.z > bounds) || (changes.y > bounds && changes.z > bounds)) {
             Debug.Log("Shake Happened!");
        }
