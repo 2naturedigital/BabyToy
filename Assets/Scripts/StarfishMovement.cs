@@ -10,10 +10,10 @@ public class StarfishMovement : MonoBehaviour
     public float wobbleMinAngle;
     public float wobbleMaxAngle;
     private int direction;
-    public bool isShaken = false;
+    public bool isShaking = false;
     public bool isResetTime = false;
     private float elapsedTime = 0;
-    public int fakeShakeTestTimer;
+    public int shakeResetTimer = 3;
 
     // Start is called before the first frame update
     void Start() {
@@ -24,13 +24,13 @@ public class StarfishMovement : MonoBehaviour
 
         float rotation = 0;
         //Debug.Log("MY Z IS AT: " + transform.rotation.z);
-        if (!isShaken && !isResetTime) {                                    // wobble normally
+        if (!isShaking && !isResetTime) {                                    // wobble normally
             // flip wobble direction after max or min is reached
             if (transform.rotation.z >= wobbleMinAngle || transform.rotation.z <= wobbleMaxAngle) {
                 FlipWobble();
             }
             rotation = direction * wobbleSpeed;
-        } else if (isShaken) {                              // spin fast
+        } else if (isShaking) {                              // spin fast
             rotation = direction * wobbleShakeSpeed;
         } else if (isResetTime) {                           // head back to reset position
             if (transform.rotation.z <= .1 && transform.rotation.z >= -.1) {
@@ -49,12 +49,13 @@ public class StarfishMovement : MonoBehaviour
         direction *= -1;
     }
 
-    void OnShakeStart() {
-        isShaken = true;
+    public void StartShake() {
+        Debug.Log("STARFISH SHAKE STARTED");
+        isShaking = true;
     }
 
-    void OnShakeEnd() {
-        isShaken = false;
+    public void EndShake() {
+        isShaking = false;
         isResetTime = true;
     }
 
@@ -64,12 +65,8 @@ public class StarfishMovement : MonoBehaviour
 
         // timer to check for shake (just for testing)
         elapsedTime += Time.deltaTime;
-        if (elapsedTime > fakeShakeTestTimer) {
-            if (!isShaken) {
-                OnShakeStart();
-            } else {
-                OnShakeEnd();
-            }
+        if (elapsedTime > shakeResetTimer) {
+            EndShake();
             elapsedTime = 0;
         }
     }
