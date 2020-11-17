@@ -410,11 +410,11 @@ MonoBehaviour:
     type: 3}
   bubbleContainer: {fileID: 826779766}
   bubbleSpawnMinTime: 0.5
-  bubbleSpawnMaxTime: 5
+  bubbleSpawnMaxTime: 2
   bubblePopMinTime: 5
   bubblePopMaxTime: 10
-  bubbleMinScale: 2
-  bubbleMaxScale: 4
+  bubbleMinScale: 1
+  bubbleMaxScale: 2.5
 --- !u!4 &528298671
 Transform:
   m_ObjectHideFlags: 0
