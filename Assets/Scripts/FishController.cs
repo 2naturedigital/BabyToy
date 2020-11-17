@@ -9,7 +9,7 @@ public class FishController : MonoBehaviour {
     public float maxY;
     public float speed;
     private bool isFacingLeft = true;
-    private bool isShaking = false;
+    public bool isShaking = false;
 
     // Keep track of current target position
     private Vector2 targetPosition;
@@ -34,6 +34,9 @@ public class FishController : MonoBehaviour {
         } else {
             targetPosition = GetRandomPosition();
         }
+
+        
+
     }
 
     void Flip() {
