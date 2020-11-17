@@ -1,39 +1,33 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(ShakeController))]
+
 public class Accelerometer : MonoBehaviour
 {
-    private Vector3 dir;
-    private Vector3 changes;
-    private Vector3 prevreading;
-    public int bounds;
-    void onStart () {
-       Debug.Log("initialized");
-       dir = Vector3.zero;
-       dir.x = Input.acceleration.x;
-       dir.y = Input.acceleration.y;
-       dir.z = Input.acceleration.z;
+    public float shakeDetectionThreshhold;
+    public float minShakeInterval;
+    private float sqrShakeDetectionThreshold;
+    private float timeSinceLastShake;
+    private ShakeController shakeController;
 
-       changes = Vector3.zero;
-       prevreading = Vector3.zero;
+    void Start() {
+        // less system taxing to use squared magnintude rather than squareroot
+        sqrShakeDetectionThreshold = Mathf.Pow(shakeDetectionThreshhold, 2);
+        shakeController = GetComponent<ShakeController>();
     }
 
     // Update is called once per frame
     void Update() {
-       // grab changes since last update
-       changes.x = Mathf.Abs(prevreading.x - dir.x);
-       changes.y = Mathf.Abs(prevreading.y - dir.y);
-       changes.z = Mathf.Abs(prevreading.z - dir.z);
-
-       Debug.Log("Changes x: " + changes.x);
-       Debug.Log("Changes y: " + changes.y);
-       Debug.Log("Changes z: " + changes.z);
-
-       // update previousreading with current
-       prevreading = dir;
-
-      // shake when bounds out
-       if ((changes.x > bounds && changes.y > bounds) || (changes.x > bounds && changes.z > bounds) || (changes.y > bounds && changes.z > bounds)) {
-            Debug.Log("Shake Happened!");
-       }
+        //Debug.Log("sqrmagnitude: " + Input.acceleration.sqrMagnitude);
+        // Shake only if threshold is met and it's been enough time since last shake
+        if (Input.acceleration.sqrMagnitude >= sqrShakeDetectionThreshold
+            && Time.unscaledTime >= timeSinceLastShake + minShakeInterval) {
+            Debug.Log("Shake Detected");
+            if (shakeController != null) {
+                shakeController.ShakeFish(Input.acceleration);
+            }
+            // reset time since last shake
+            timeSinceLastShake = Time.unscaledTime;
+        }
     }
 }

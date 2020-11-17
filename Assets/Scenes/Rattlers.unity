@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 85232076}
   - component: {fileID: 85232075}
   - component: {fileID: 85232074}
-  - component: {fileID: 85232077}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -188,19 +187,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &85232077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 85232073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a344c61caaeaae468ed6786a8992eba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounds: 4
 --- !u!1 &271795045
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +277,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -307,19 +292,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a344c61caaeaae468ed6786a8992eba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounds: 4
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -427,6 +399,70 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 788732148}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &650523468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 650523471}
+  - component: {fileID: 650523470}
+  - component: {fileID: 650523469}
+  m_Layer: 0
+  m_Name: ShakeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &650523469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650523468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a344c61caaeaae468ed6786a8992eba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDetectionThreshhold: 1.2
+  minShakeInterval: 1
+--- !u!114 &650523470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650523468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c00d1d75238e04b9c7b95f71b4b864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeForceMultiplier: 5
+  Fishies:
+  - {fileID: 1610959110}
+  - {fileID: 1184103759}
+  Starfishies:
+  - {fileID: 1852925474}
+--- !u!4 &650523471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650523468}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &673668687
@@ -759,7 +795,6 @@ GameObject:
   - component: {fileID: 788732147}
   - component: {fileID: 788732146}
   - component: {fileID: 788732145}
-  - component: {fileID: 788732149}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -852,19 +887,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &788732149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788732144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a344c61caaeaae468ed6786a8992eba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounds: 4
 --- !u!1 &826779766
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,6 +1497,6 @@ MonoBehaviour:
   wobbleShakeSpeed: 5
   wobbleMinAngle: 0.1
   wobbleMaxAngle: -0.1
-  isShaken: 0
+  isShaking: 0
   isResetTime: 0
-  fakeShakeTestTimer: 10
+  shakeResetTimer: 3

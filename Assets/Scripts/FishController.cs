@@ -9,6 +9,7 @@ public class FishController : MonoBehaviour {
     public float maxY;
     public float speed;
     private bool isFacingLeft = true;
+    private bool isShaking = false;
 
     // Keep track of current target position
     private Vector2 targetPosition;
@@ -50,6 +51,14 @@ public class FishController : MonoBehaviour {
             //animator.transform.Rotate(0, 180, 0);
             transform.Rotate(0, 180, 0);
         }
+    }
+
+    public void StartShake() {
+        isShaking = true;
+    }
+
+    public void EndShake() {
+        isShaking = false;
     }
 
     void Rotate() {
