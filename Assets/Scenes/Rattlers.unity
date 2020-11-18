@@ -365,8 +365,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a344c61caaeaae468ed6786a8992eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeDetectionThreshhold: 0
-  minShakeInterval: 0
+  shakeDetectionThreshhold: 3.6
+  minShakeInterval: 1
 --- !u!114 &650523470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,8 +383,8 @@ MonoBehaviour:
   Fishies:
   - {fileID: 1610959110}
   - {fileID: 1184103759}
-  Starfishies:
-  - {fileID: 1852925474}
+  - {fileID: 1852925471}
+  Bubbles: []
 --- !u!4 &650523471
 Transform:
   m_ObjectHideFlags: 0
@@ -907,11 +907,11 @@ GameObject:
   - component: {fileID: 1184103758}
   - component: {fileID: 1184103757}
   - component: {fileID: 1184103756}
-  - component: {fileID: 1184103763}
   - component: {fileID: 1184103759}
+  - component: {fileID: 1184103762}
+  - component: {fileID: 1184103763}
   - component: {fileID: 1184103761}
   - component: {fileID: 1184103760}
-  - component: {fileID: 1184103762}
   m_Layer: 5
   m_Name: blowfish
   m_TagString: Fish
@@ -1012,6 +1012,8 @@ MonoBehaviour:
   maxY: 770
   speed: 40
   isShaking: 0
+  shakeResetTimer: 3
+  isResetTime: 0
 --- !u!50 &1184103760
 Rigidbody2D:
   serializedVersion: 4
@@ -1061,13 +1063,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee421e0ef14221419d960d6f22415a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: 0
-  maxX: 0
-  minY: 0
-  maxY: 0
-  speed: 0
+  minX: -320
+  maxX: 320
+  minY: -770
+  maxY: 770
+  speed: 40
   isShaking: 0
-  animator: {fileID: 0}
+  shakeResetTimer: 3
+  isResetTime: 0
+  animator: {fileID: 1184103756}
 --- !u!111 &1184103763
 Animation:
   m_ObjectHideFlags: 0
@@ -1075,7 +1079,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184103754}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Animation: {fileID: 0}
   m_Animations: []
@@ -1094,11 +1098,11 @@ GameObject:
   - component: {fileID: 1610959106}
   - component: {fileID: 1610959108}
   - component: {fileID: 1610959107}
-  - component: {fileID: 1610959110}
   - component: {fileID: 1610959109}
+  - component: {fileID: 1610959110}
+  - component: {fileID: 1610959111}
   - component: {fileID: 1610959113}
   - component: {fileID: 1610959112}
-  - component: {fileID: 1610959111}
   m_Layer: 5
   m_Name: guppy
   m_TagString: Fish
@@ -1199,6 +1203,8 @@ MonoBehaviour:
   maxY: 789
   speed: 100
   isShaking: 0
+  shakeResetTimer: 3
+  isResetTime: 0
 --- !u!114 &1610959111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,13 +1217,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d52d34a39eed7a4ea2bf877935a57be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: 0
-  maxX: 0
-  minY: 0
-  maxY: 0
-  speed: 0
+  minX: -381
+  maxX: 381
+  minY: -789
+  maxY: 789
+  speed: 100
   isShaking: 0
-  animator: {fileID: 0}
+  shakeResetTimer: 3
+  isResetTime: 0
+  animator: {fileID: 1610959109}
 --- !u!50 &1610959112
 Rigidbody2D:
   serializedVersion: 4
@@ -1278,9 +1286,9 @@ GameObject:
   - component: {fileID: 1852925468}
   - component: {fileID: 1852925467}
   - component: {fileID: 1852925471}
+  - component: {fileID: 1852925474}
   - component: {fileID: 1852925472}
   - component: {fileID: 1852925470}
-  - component: {fileID: 1852925474}
   m_Layer: 5
   m_Name: starfish
   m_TagString: StarFish
@@ -1402,6 +1410,8 @@ MonoBehaviour:
   maxY: 825
   speed: 10
   isShaking: 0
+  shakeResetTimer: 3
+  isResetTime: 0
 --- !u!58 &1852925472
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1430,11 +1440,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6d9da73adc52c45a0ff6d3543d2dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minX: -397
+  maxX: 397
+  minY: -825
+  maxY: 825
+  speed: 10
+  isShaking: 0
+  shakeResetTimer: 3
+  isResetTime: 0
   animator: {fileID: 1852925467}
   wobbleSpeed: 0.5
   wobbleShakeSpeed: 5
   wobbleMinAngle: 0.1
   wobbleMaxAngle: -0.1
-  isShaking: 0
-  isResetTime: 0
-  shakeResetTimer: 3
