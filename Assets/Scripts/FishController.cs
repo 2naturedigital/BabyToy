@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FishController : MonoBehaviour {
     public float minX;
@@ -10,6 +8,9 @@ public class FishController : MonoBehaviour {
     public float speed;
     private bool isFacingLeft = true;
     public bool isShaking = false;
+    private float elapsedTime = 0;
+    public int shakeResetTimer = 3;
+    public bool isResetTime = false;
 
     // Keep track of current target position
     private Vector2 targetPosition;
@@ -17,7 +18,7 @@ public class FishController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         // Get a starting target position
-        targetPosition = GetRandomPosition();
+        targetPosition = GetRandomTarget();
     }
 
     // Update is called once per frame
@@ -32,61 +33,19 @@ public class FishController : MonoBehaviour {
             }
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         } else {
-            targetPosition = GetRandomPosition();
+            targetPosition = GetRandomTarget();
         }
 
-        
-
-    }
-
-    void Flip() {
-        isFacingLeft = !isFacingLeft;
-
-        // Multiply the player's x local scale by -1
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
-
-    void FlipHorizontal() {
-        if (this.tag == "Fish") {
-            isFacingLeft = !isFacingLeft;
-            //animator.transform.Rotate(0, 180, 0);
-            transform.Rotate(0, 180, 0);
+        // timer to check for shake (just for testing)
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > shakeResetTimer) {
+            EndShake();
+            elapsedTime = 0;
         }
     }
 
-    public void StartShake() {
-        isShaking = true;
-    }
 
-    public void EndShake() {
-        isShaking = false;
-    }
-
-    void Rotate() {
-
-    }
-
-    Vector2 GetRandomPosition() {
-        float randomX = Random.Range(minX, maxX);
-        float randomY = Random.Range(minY, maxY);
-
-        return new Vector2(randomX, randomY);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) {
-        // Reload screen when there is a collision
-        if (this.tag == "Fish" && other.tag == "Fish") {
-            //targetPosition = GetRandomPosition();
-            //Reload();
-        }
-    }
-
-    public void Reload() {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
+    // TARGET RELATED
     public void SetTarget(Vector2 newTarget) {
         //Debug.Log(this + " Is changing to x: " + newTarget.x + " " + newTarget.y);
         targetPosition = newTarget;
@@ -96,4 +55,57 @@ public class FishController : MonoBehaviour {
         //Debug.Log(this + " Is going towards: " + targetPosition.x + " " + targetPosition.y);
         return targetPosition;
     }
-}
+
+    Vector2 GetRandomTarget() {
+        float randomX = Random.Range(minX, maxX);
+        float randomY = Random.Range(minY, maxY);
+
+        return new Vector2(randomX, randomY);
+    }
+
+
+    // ANIMATION RELATED
+    void FlipHorizontal() {
+        if (this.tag == "Fish") {
+            isFacingLeft = !isFacingLeft;
+            //animator.transform.Rotate(0, 180, 0);
+            transform.Rotate(0, 180, 0);
+        }
+    }
+
+    void Rotate() {
+    }
+
+
+    // COLLISION RELATED
+    private void OnTriggerEnter2D(Collider2D other) {
+        // Reload screen when there is a collision
+        if (this.tag == "Fish" && other.tag == "Fish") {
+            //Reload();
+        }
+    }
+
+
+    // SHAKE RELATED
+    public bool IsShaking() {
+        return isShaking;
+    }
+
+    public void StartShake() {
+        Debug.Log("SHAKE STARTED");
+        isShaking = true;
+    }
+
+    public void EndShake() {
+        Debug.Log("SHAKE ENDED");
+        isShaking = false;
+        isResetTime = true;
+    }
+
+
+    // STARTING OVER
+    public void Reload() {
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+}//end of FishController

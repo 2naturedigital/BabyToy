@@ -47,15 +47,4 @@ public class DragAndDrop : MonoBehaviour {
             }
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (this.tag == "Fish" && other.tag == "Fish") {
-            Debug.Log("Collision of Fish!");
-            FishController otherFish = other.gameObject.GetComponent<FishController>();
-            Vector2 thisTarget = thisFish.GetTarget();
-            Vector2 otherTarget = otherFish.GetTarget();
-            thisFish.SetTarget(otherTarget);
-            otherFish.SetTarget(thisTarget);
-        }
-    }
 }

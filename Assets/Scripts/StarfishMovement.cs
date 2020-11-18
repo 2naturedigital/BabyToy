@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarfishMovement : MonoBehaviour
+public class StarfishMovement : FishController
 {
     public Animator animator;
     public float wobbleSpeed;
@@ -10,38 +10,16 @@ public class StarfishMovement : MonoBehaviour
     public float wobbleMinAngle;
     public float wobbleMaxAngle;
     private int direction;
-    public bool isShaking = false;
-    public bool isResetTime = false;
-    private float elapsedTime = 0;
-    public int shakeResetTimer = 3;
 
     // Start is called before the first frame update
     void Start() {
         direction = -1;
     }
 
-    void Wobble() {
-
-        float rotation = 0;
-        //Debug.Log("MY Z IS AT: " + transform.rotation.z);
-        if (!isShaking && !isResetTime) {                                    // wobble normally
-            // flip wobble direction after max or min is reached
-            if (transform.rotation.z >= wobbleMinAngle || transform.rotation.z <= wobbleMaxAngle) {
-                FlipWobble();
-            }
-            rotation = direction * wobbleSpeed;
-        } else if (isShaking) {                              // spin fast
-            rotation = direction * wobbleShakeSpeed;
-        } else if (isResetTime) {                           // head back to reset position
-            if (transform.rotation.z <= .1 && transform.rotation.z >= -.1) {
-                //Debug.Log("Reset Complete");
-                //Debug.Log("Complete Z at: " + transform.rotation.z);
-                isResetTime = false;
-            }
-            rotation = direction * wobbleShakeSpeed - 2;
-        }
-
+    void Wobble(float speed) {
         // rotation based on rotation created
+        float rotation = 0;
+        rotation = direction * speed;
         transform.Rotate(0, 0, rotation);
     }
 
@@ -49,25 +27,24 @@ public class StarfishMovement : MonoBehaviour
         direction *= -1;
     }
 
-    public void StartShake() {
-        Debug.Log("STARFISH SHAKE STARTED");
-        isShaking = true;
-    }
-
-    public void EndShake() {
-        isShaking = false;
-        isResetTime = true;
-    }
-
     // Update is called once per frame
     void Update() {
-        Wobble();
-
-        // timer to check for shake (just for testing)
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime > shakeResetTimer) {
-            EndShake();
-            elapsedTime = 0;
+        //Debug.Log("MY Z IS AT: " + transform.rotation.z);
+        if (!isShaking && !isResetTime) {                                    // wobble normally
+            // flip wobble direction after max or min is reached
+            if (transform.rotation.z >= wobbleMinAngle || transform.rotation.z <= wobbleMaxAngle) {
+                FlipWobble();
+            }
+            Wobble(wobbleSpeed);
+        } else if (isShaking) {                              // spin fast
+            Wobble(wobbleShakeSpeed);
+        } else if (isResetTime) {                           // head back to reset position
+            if (transform.rotation.z <= .1 && transform.rotation.z >= -.1) {
+                //Debug.Log("Reset Complete");
+                //Debug.Log("Complete Z at: " + transform.rotation.z);
+                isResetTime = false;
+            }
+            Wobble(wobbleShakeSpeed - 2);
         }
     }
 }
