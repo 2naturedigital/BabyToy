@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a344c61caaeaae468ed6786a8992eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeDetectionThreshhold: 3.6
+  shakeDetectionThreshhold: 1.6
   minShakeInterval: 1
 --- !u!114 &650523470
 MonoBehaviour:
@@ -909,7 +909,6 @@ GameObject:
   - component: {fileID: 1184103756}
   - component: {fileID: 1184103759}
   - component: {fileID: 1184103762}
-  - component: {fileID: 1184103763}
   - component: {fileID: 1184103761}
   - component: {fileID: 1184103760}
   m_Layer: 5
@@ -1072,21 +1071,6 @@ MonoBehaviour:
   shakeResetTimer: 3
   isResetTime: 0
   animator: {fileID: 1184103756}
---- !u!111 &1184103763
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184103754}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 1
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &1610959105
 GameObject:
   m_ObjectHideFlags: 0

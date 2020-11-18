@@ -87,19 +87,31 @@ public class FishController : MonoBehaviour {
 
 
     // SHAKE RELATED
-    public bool IsShaking() {
-        return isShaking;
-    }
-
     public void StartShake() {
         Debug.Log("SHAKE STARTED");
-        isShaking = true;
+        SetIsShaking(true);
     }
 
     public void EndShake() {
         Debug.Log("SHAKE ENDED");
-        isShaking = false;
-        isResetTime = true;
+        SetIsShaking(false);
+        SetResetTime(true);
+    }
+
+    public bool IsShaking() {
+        return isShaking;
+    }
+
+    public void SetIsShaking(bool b) {
+        isShaking = b;
+    }
+
+    public bool IsResetTime() {
+        return isResetTime;
+    }
+
+    public void SetResetTime(bool b) {
+        isResetTime = b;
     }
 
 

@@ -14,7 +14,7 @@ public class Guppy : FishController
 
     // Update is called once per frame
     void Update() {
-        animator.SetBool("isShaking", isShaking);
+        animator.SetBool("isShaking", IsShaking());
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

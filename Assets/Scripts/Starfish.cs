@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class StarfishMovement : FishController
+public class Starfish : FishController
 {
     public Animator animator;
     public float wobbleSpeed;
@@ -14,6 +12,29 @@ public class StarfishMovement : FishController
     // Start is called before the first frame update
     void Start() {
         direction = -1;
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update() {
+        animator.SetBool("isShaking", IsShaking());
+        //Debug.Log("MY Z IS AT: " + transform.rotation.z);
+        if (!IsShaking() && !IsResetTime()) {                                    // wobble normally
+            // flip wobble direction after max or min is reached
+            if (transform.rotation.z >= wobbleMinAngle || transform.rotation.z <= wobbleMaxAngle) {
+                FlipWobble();
+            }
+            Wobble(wobbleSpeed);
+        } else if (IsShaking()) {                              // spin fast
+            Wobble(wobbleShakeSpeed);
+        } else if (IsResetTime()) {                           // head back to reset position
+            if (transform.rotation.z <= .1 && transform.rotation.z >= -.1) {
+                //Debug.Log("Reset Complete");
+                //Debug.Log("Complete Z at: " + transform.rotation.z);
+                SetResetTime(false);
+            }
+            Wobble(wobbleShakeSpeed - 2);
+        }
     }
 
     void Wobble(float speed) {
@@ -25,26 +46,5 @@ public class StarfishMovement : FishController
 
     void FlipWobble() {
         direction *= -1;
-    }
-
-    // Update is called once per frame
-    void Update() {
-        //Debug.Log("MY Z IS AT: " + transform.rotation.z);
-        if (!isShaking && !isResetTime) {                                    // wobble normally
-            // flip wobble direction after max or min is reached
-            if (transform.rotation.z >= wobbleMinAngle || transform.rotation.z <= wobbleMaxAngle) {
-                FlipWobble();
-            }
-            Wobble(wobbleSpeed);
-        } else if (isShaking) {                              // spin fast
-            Wobble(wobbleShakeSpeed);
-        } else if (isResetTime) {                           // head back to reset position
-            if (transform.rotation.z <= .1 && transform.rotation.z >= -.1) {
-                //Debug.Log("Reset Complete");
-                //Debug.Log("Complete Z at: " + transform.rotation.z);
-                isResetTime = false;
-            }
-            Wobble(wobbleShakeSpeed - 2);
-        }
     }
 }
