@@ -3,8 +3,9 @@
 public class ShakeController : MonoBehaviour
 {
     public float shakeForceMultiplier;
-    public FishController[] Fishies;
-    public StarfishMovement[] Starfishies;
+    public MovementController[] Fishies;
+    public StarfishController[] Starfishies;
+    public Bubble[] Bubbles;
 
     public void ShakeFish(Vector3 deviceAcceleration) {
         foreach (var f in Fishies) {
@@ -14,6 +15,11 @@ public class ShakeController : MonoBehaviour
         foreach (var s in Starfishies) {
             s.StartShake();
             Debug.Log("Shaking a starfish");
+        }
+        foreach (var b in Bubbles) {
+            if (b != null) {
+                b.StartShake();
+            }
         }
     }
 }

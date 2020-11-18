@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class StarfishMovement : MonoBehaviour
+public class StarfishController : MonoBehaviour
 {
     public Animator animator;
     public float wobbleSpeed;

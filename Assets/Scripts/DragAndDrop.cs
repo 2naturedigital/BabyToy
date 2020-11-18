@@ -6,7 +6,7 @@ public class DragAndDrop : MonoBehaviour {
     bool moveAllowed;
     Collider2D col;
 
-    private FishController thisFish;
+    private MovementController thisFish;
 
     // Start is called before the first frame update
     void Start() {
@@ -14,7 +14,7 @@ public class DragAndDrop : MonoBehaviour {
     }
 
     void Awake() {
-        thisFish = GameObject.FindObjectOfType<FishController>();
+        thisFish = GameObject.FindObjectOfType<MovementController>();
     }
 
     // Update is called once per frame
@@ -51,7 +51,7 @@ public class DragAndDrop : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (this.tag == "Fish" && other.tag == "Fish") {
             Debug.Log("Collision of Fish!");
-            FishController otherFish = other.gameObject.GetComponent<FishController>();
+            MovementController otherFish = other.gameObject.GetComponent<MovementController>();
             Vector2 thisTarget = thisFish.GetTarget();
             Vector2 otherTarget = otherFish.GetTarget();
             thisFish.SetTarget(otherTarget);

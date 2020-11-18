@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
@@ -17,6 +15,7 @@ public class Bubble : MonoBehaviour
     public AudioClip[] popSounds;
     public float destroyAnimationTimer;
     private GameObject bubble;
+    private bool isShaking = false;
     Collider2D col;
     Rigidbody2D rb;
 
@@ -34,6 +33,9 @@ public class Bubble : MonoBehaviour
     }
 
     void Update() {
+        if (isShaking) {
+            Destroy(this.gameObject);
+        }
 
         //get touch position when the screen is touched
         if (Input.touchCount > 0) {
@@ -64,6 +66,15 @@ public class Bubble : MonoBehaviour
             PopBubble(this.gameObject);
             lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
         }
+    }
+
+    public void StartShake() {
+        Debug.Log("bubble " + this.gameObject + " is shaking!");
+        isShaking = true;
+    }
+
+    public void EndShake() {
+        isShaking = false;
     }
 
     //triggers the pop animation, sets a random pop sound & plays, destroys bubble object

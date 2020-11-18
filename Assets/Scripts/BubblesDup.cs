@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BubblesDup : MonoBehaviour
 {
@@ -19,7 +17,6 @@ public class BubblesDup : MonoBehaviour
         bubbleTimer -= Time.deltaTime;
         CreateBubbles(); //need the number to be dynamic, reactive to the shake.
     }
-
 
     public void CreateBubbles() {
         if (bubbleTimer <= 0) {
