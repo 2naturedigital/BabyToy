@@ -15,7 +15,17 @@ public class BlowFish : FishController
     // Update is called once per frame
     void Update() {
         AnimateFish();
-        //MoveFish();
+        MoveFish();
+    }
+
+    public override void AnimateFish()
+    {
+        base.AnimateFish();
+    }
+
+    public override void MoveFish()
+    {
+        //base.MoveFish();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
