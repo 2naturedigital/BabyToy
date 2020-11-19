@@ -39,7 +39,8 @@ public class BlowFish : FishController
     public override void MoveFish()
     {
         base.MoveFish();
-        blowFish.velocity = pumpDirection * pumpPower;
+        //blowFish.velocity = pumpDirection * pumpPower;
+        blowFish.AddForce(pumpDirection * pumpPower);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
