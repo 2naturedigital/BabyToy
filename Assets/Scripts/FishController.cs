@@ -9,6 +9,7 @@ public class FishController : MonoBehaviour {
     private bool isFacingLeft = true;
     public bool isShaking = false;
     public bool isResetTime = false;
+    public Animator animator;
 
     // Keep track of current target position
     private Vector2 targetPosition;
@@ -17,11 +18,17 @@ public class FishController : MonoBehaviour {
     void Start() {
         // Get a starting target position
         targetPosition = GetRandomTarget();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update() {
-        // Do a movement transformation if the target position and the current position don't match
+    }
+
+
+    // TARGET RELATED
+    // Do a movement transformation if the target position and the current position don't match
+    public void MoveFish() {
         if ((Vector2)transform.position != targetPosition) {
             // flip the sprite to face the right direction when swimming
             if (transform.position.x > targetPosition.x && !isFacingLeft) {
@@ -35,8 +42,6 @@ public class FishController : MonoBehaviour {
         }
     }
 
-
-    // TARGET RELATED
     public void SetTarget(Vector2 newTarget) {
         //Debug.Log(this + " Is changing to x: " + newTarget.x + " " + newTarget.y);
         targetPosition = newTarget;
@@ -47,7 +52,7 @@ public class FishController : MonoBehaviour {
         return targetPosition;
     }
 
-    Vector2 GetRandomTarget() {
+    public Vector2 GetRandomTarget() {
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
 
@@ -56,7 +61,11 @@ public class FishController : MonoBehaviour {
 
 
     // ANIMATION RELATED
-    void FlipHorizontal() {
+    // Animate the object for shake
+    public void AnimateFish() {
+        animator.SetBool("isShaking", IsShaking());
+    }
+    public void FlipHorizontal() {
         if (this.tag == "Fish") {
             isFacingLeft = !isFacingLeft;
             //animator.transform.Rotate(0, 180, 0);
@@ -64,27 +73,31 @@ public class FishController : MonoBehaviour {
         }
     }
 
-    void Rotate() {
+    public void Rotate() {
     }
 
 
     // COLLISION RELATED
     private void OnTriggerEnter2D(Collider2D other) {
-        // Reload screen when there is a collision
         if (this.tag == "Fish" && other.tag == "Fish") {
-            //Reload();
+            Debug.Log("Collision");
+            FishController otherFish = other.gameObject.GetComponent<FishController>();
+            if (otherFish != null) {
+                Vector2 thisTarget = this.GetTarget();
+                Vector2 otherTarget = otherFish.GetTarget();
+                this.SetTarget(otherTarget);
+                otherFish.SetTarget(thisTarget);
+            }
         }
     }
 
 
     // SHAKE RELATED
-    public virtual void StartShake() {
-        Debug.Log("SHAKE STARTED");
+    public void StartShake() {
         SetIsShaking(true);
     }
 
-    public virtual void EndShake() {
-        Debug.Log("SHAKE ENDED");
+    public void EndShake() {
         SetIsShaking(false);
         SetResetTime(true);
     }

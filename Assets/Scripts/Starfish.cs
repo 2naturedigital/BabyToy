@@ -2,7 +2,7 @@
 
 public class Starfish : FishController
 {
-    public Animator animator;
+    //public Animator animator;
     public float wobbleSpeed;
     public float wobbleShakeSpeed;
     public float wobbleMinAngle;
@@ -12,12 +12,13 @@ public class Starfish : FishController
     // Start is called before the first frame update
     void Start() {
         direction = -1;
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update() {
-        animator.SetBool("isShaking", IsShaking());
+        AnimateFish();
+        MoveFish();
         //Debug.Log("MY Z IS AT: " + transform.rotation.z);
         if (!IsShaking() && !IsResetTime()) {                                    // wobble normally
             // flip wobble direction after max or min is reached
@@ -37,15 +38,6 @@ public class Starfish : FishController
         }
     }
 
-    public override void StartShake() {
-        SetIsShaking(true);
-    }
-
-    public override void EndShake() {
-        SetIsShaking(false);
-        SetResetTime(true);
-    }
-
     void Wobble(float speed) {
         // rotation based on rotation created
         float rotation = 0;
@@ -55,5 +47,9 @@ public class Starfish : FishController
 
     void FlipWobble() {
         direction *= -1;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+
     }
 }
