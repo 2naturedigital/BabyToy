@@ -28,7 +28,7 @@ public class FishController : MonoBehaviour {
 
     // TARGET RELATED
     // Do a movement transformation if the target position and the current position don't match
-    public void MoveFish() {
+    public virtual void MoveFish() {
         if ((Vector2)transform.position != targetPosition) {
             // flip the sprite to face the right direction when swimming
             if (transform.position.x > targetPosition.x && !isFacingLeft) {
@@ -62,7 +62,7 @@ public class FishController : MonoBehaviour {
 
     // ANIMATION RELATED
     // Animate the object for shake
-    public void AnimateFish() {
+    public virtual void AnimateFish() {
         animator.SetBool("isShaking", IsShaking());
     }
     public void FlipHorizontal() {
