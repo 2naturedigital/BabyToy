@@ -17,7 +17,7 @@ public class FishController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         // Get a starting target position
-        targetPosition = GetRandomTarget();
+        SetRandomTarget();
         animator = GetComponent<Animator>();
     }
 
@@ -38,7 +38,7 @@ public class FishController : MonoBehaviour {
             }
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         } else {
-            targetPosition = GetRandomTarget();
+            SetRandomTarget();
         }
     }
 
@@ -52,11 +52,11 @@ public class FishController : MonoBehaviour {
         return targetPosition;
     }
 
-    public Vector2 GetRandomTarget() {
+    public void SetRandomTarget() {
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
 
-        return new Vector2(randomX, randomY);
+        targetPosition = new Vector2(randomX, randomY);
     }
 
 

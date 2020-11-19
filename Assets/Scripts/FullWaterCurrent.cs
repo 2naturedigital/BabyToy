@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterCurrent : MonoBehaviour {
+public class FullWaterCurrent : MonoBehaviour {
 
-   List<Rigidbody2D> bubblesInCurrent = new List<Rigidbody2D>();
+   List<Rigidbody2D> fishInCurrent = new List<Rigidbody2D>();
    private float currentStrength;
    public float minStrength;
    public float maxStrength;
@@ -19,20 +19,15 @@ public class WaterCurrent : MonoBehaviour {
        NewDirection();
        NewStrength();
        NewMovementPeriod();
+       fishInCurrent.Add(FindObjectOfType<BlowFish>().GetComponent<Rigidbody2D>());
    }
 
 
     private void OnTriggerEnter2D(Collider2D col) {
-        Rigidbody2D objectRigid = col.gameObject.GetComponent<Rigidbody2D>();
-        if (objectRigid != null)
-            bubblesInCurrent.Add(objectRigid);
     }
 
 
     private void OnTriggerExit2D(Collider2D col) {
-        Rigidbody2D objectRigid = col.gameObject.GetComponent<Rigidbody2D>();
-        if (objectRigid != null)
-            bubblesInCurrent.Remove(objectRigid);
     }
 
     private void NewDirection() {
@@ -52,9 +47,9 @@ public class WaterCurrent : MonoBehaviour {
 
 
     private void FixedUpdate() {
-        foreach (Rigidbody2D bubble in bubblesInCurrent) {
-            if (bubble != null) {
-                bubble.AddForce(currentStrength * currentDirection);
+        foreach (Rigidbody2D fish in fishInCurrent) {
+            if (fish != null) {
+                fish.AddForce(currentStrength * currentDirection);
             }
         }
     }
