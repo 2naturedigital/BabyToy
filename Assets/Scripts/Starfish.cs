@@ -37,6 +37,15 @@ public class Starfish : FishController
         }
     }
 
+    public override void StartShake() {
+        SetIsShaking(true);
+    }
+
+    public override void EndShake() {
+        SetIsShaking(false);
+        SetResetTime(true);
+    }
+
     void Wobble(float speed) {
         // rotation based on rotation created
         float rotation = 0;
