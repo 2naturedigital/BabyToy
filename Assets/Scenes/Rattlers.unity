@@ -1049,6 +1049,9 @@ MonoBehaviour:
   speed: 40
   isShaking: 0
   isResetTime: 0
+  animator: {fileID: 1184103756}
+  pumpMinTime: 0.3
+  pumpMaxTime: 3
 --- !u!1 &1610959105
 GameObject:
   m_ObjectHideFlags: 0
