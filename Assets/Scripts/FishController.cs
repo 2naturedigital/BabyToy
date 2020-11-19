@@ -8,8 +8,6 @@ public class FishController : MonoBehaviour {
     public float speed;
     private bool isFacingLeft = true;
     public bool isShaking = false;
-    private float elapsedTime = 0;
-    public int shakeResetTimer = 3;
     public bool isResetTime = false;
 
     // Keep track of current target position
@@ -34,13 +32,6 @@ public class FishController : MonoBehaviour {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         } else {
             targetPosition = GetRandomTarget();
-        }
-
-        // timer to check for shake (just for testing)
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime > shakeResetTimer) {
-            EndShake();
-            elapsedTime = 0;
         }
     }
 
@@ -87,12 +78,12 @@ public class FishController : MonoBehaviour {
 
 
     // SHAKE RELATED
-    public void StartShake() {
+    public virtual void StartShake() {
         Debug.Log("SHAKE STARTED");
         SetIsShaking(true);
     }
 
-    public void EndShake() {
+    public virtual void EndShake() {
         Debug.Log("SHAKE ENDED");
         SetIsShaking(false);
         SetResetTime(true);

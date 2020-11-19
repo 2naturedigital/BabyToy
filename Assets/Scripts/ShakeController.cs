@@ -3,23 +3,39 @@
 public class ShakeController : MonoBehaviour
 {
     public float shakeForceMultiplier;
+    public int shakeResetTimer = 3;
     public FishController[] Fishies;
     //public StarfishMovement[] Starfishies;
     public Bubble[] Bubbles;
+    private float elapsedTime = 0;
 
     public void ShakeFish(Vector3 deviceAcceleration) {
         foreach (var f in Fishies) {
             f.StartShake();
             Debug.Log("shaking a fish");
         }
-        // foreach (var s in Starfishies) {
-        //     s.StartShake();
-        //     Debug.Log("Shaking a starfish");
-        // }
         foreach (var b in Bubbles) {
             if (b != null) {
                 b.StartShake();
             }
+        }
+    }
+
+    private void Update() {
+        // timer to check for shake (just for testing)
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > shakeResetTimer) {
+            foreach (var f in Fishies) {
+                if (f != null){
+                    f.EndShake();
+                }
+            }
+            foreach (var b in Bubbles) {
+                if (b != null) {
+                    b.EndShake();
+                }
+            }
+            elapsedTime = 0;
         }
     }
 }
