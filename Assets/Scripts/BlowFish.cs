@@ -3,6 +3,9 @@
 public class BlowFish : FishController
 {
     private Animator animator;
+    public float pumpMinTime = 0.3f;
+    public float pumpMaxTime = 3f;
+    float pumpTimer = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -14,7 +17,16 @@ public class BlowFish : FishController
 
     // Update is called once per frame
     void Update() {
+        //shake reaction
         animator.SetBool("isShaking", IsShaking());
+        
+        //blowfish pump
+        if (pumpTimer <= 0) {
+            animator.SetTrigger("pumpOnce");
+            pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
+        } else {
+            pumpTimer -= Time.deltaTime;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeForceMultiplier: 5
-  shakeResetTimer: 2
+  shakeResetTimer: 3
   Fishies:
   - {fileID: 1610959110}
   - {fileID: 1184103759}
@@ -1021,14 +1021,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184103754}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1069,7 +1069,6 @@ MonoBehaviour:
   speed: 40
   isShaking: 0
   isResetTime: 0
-  animator: {fileID: 1184103756}
 --- !u!1 &1610959105
 GameObject:
   m_ObjectHideFlags: 0
