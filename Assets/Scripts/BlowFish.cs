@@ -5,17 +5,23 @@ public class BlowFish : FishController
     public float pumpMinTime = 0.3f;
     public float pumpMaxTime = 3f;
     float pumpTimer = 0;
-    public float waitTimer = 0;
-    private bool isWaiting = false;
     public float pumpPower;
-    public float gravity;
     private Vector2 pumpDirection;
+    // public float waitTimer = 0;
+    // private bool isWaiting = false;
+    //public float gravity;
     Rigidbody2D blowFish;
+    public AudioSource audioSrc;
+    public AudioClip inflate;
+    public AudioClip deflate;
+    private bool inflated = false;
+    private bool deflated = true;
 
     // Start is called before the first frame update
     void Start() {
         blowFish = GetComponent<Rigidbody2D>();
         pumpDirection = Vector2.up;
+        audioSrc = GetComponent<AudioSource>();
     }
 
     void Awake() {
@@ -23,22 +29,41 @@ public class BlowFish : FishController
 
     // Update is called once per frame
     void Update() {
-        if (!isWaiting) {
-            if (pumpTimer <= 0) {
-                AnimateFish();
-                MoveFish();
-                waitTimer = Random.Range(pumpMinTime, pumpMinTime + 2);
-                isWaiting = true;
-            } else {
-                pumpTimer -= Time.deltaTime;
-            }
+        //if (!isWaiting) {
+            // if (pumpTimer <= 0) {
+            //     AnimateFish();
+            //     MoveFish();
+            //     //waitTimer = Random.Range(pumpMinTime, pumpMinTime + 2);
+            //     //isWaiting = true;
+            // } else {
+            //     pumpTimer -= Time.deltaTime;
+            // }
+        //} else {
+            // if (waitTimer <= 0) {
+            //     pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
+            //     isWaiting = false;
+            // } else {
+            //     waitTimer -= Time.deltaTime;
+            // }
+        //}
+
+        if (pumpTimer <= 0) {
+            AnimateFish();
+            MoveFish();
+            pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);            
         } else {
-            if (waitTimer <= 0) {
-                pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
-                isWaiting = false;
-            } else {
-                waitTimer -= Time.deltaTime;
-            }
+            pumpTimer -= Time.deltaTime;
+        }
+
+        if (isShaking && !inflated) {
+            Inflate();
+            inflated = true;
+            deflated = false;
+        } 
+        if (!isShaking && inflated) {
+            Deflate();
+            deflated = true;
+            inflated = false;
         }
     }
 
@@ -51,8 +76,17 @@ public class BlowFish : FishController
 
     public override void MoveFish()
     {
-        //base.MoveFish();
         blowFish.AddForce(pumpDirection * pumpPower);
+    }
+
+    private void Inflate() {        
+        audioSrc.clip = inflate;
+        audioSrc.PlayOneShot(audioSrc.clip);
+    }
+
+    private void Deflate() {
+        audioSrc.clip = deflate;
+        audioSrc.PlayOneShot(audioSrc.clip);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
