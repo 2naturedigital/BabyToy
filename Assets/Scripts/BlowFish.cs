@@ -23,18 +23,10 @@ public class BlowFish : FishController
 
     // Update is called once per frame
     void Update() {
-        AnimateFish();
-        MoveFish();
-    }
-
-    //blowfish pump animation
-    public override void AnimateFish()
-    {
-        base.AnimateFish();
-
         if (!isWaiting) {
             if (pumpTimer <= 0) {
-                animator.SetTrigger("pumpOnce");
+                AnimateFish();
+                MoveFish();
                 waitTimer = Random.Range(pumpMinTime, pumpMinTime + 2);
                 isWaiting = true;
             } else {
@@ -50,17 +42,17 @@ public class BlowFish : FishController
         }
     }
 
+    //blowfish pump animation
+    public override void AnimateFish()
+    {
+        base.AnimateFish();
+        animator.SetTrigger("pumpOnce");
+    }
+
     public override void MoveFish()
     {
         //base.MoveFish();
-        //blowFish.velocity = pumpDirection * pumpPower;
-        if (pumpTimer <= 0) {
-            blowFish.GetComponent<Rigidbody2D>().gravityScale = pumpPower * -1;
-        } else {
-            blowFish.GetComponent<Rigidbody2D>().gravityScale = gravity;
-        }
-        //blowFish.AddForce(pumpDirection * pumpPower);
-
+        blowFish.AddForce(pumpDirection * pumpPower);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
