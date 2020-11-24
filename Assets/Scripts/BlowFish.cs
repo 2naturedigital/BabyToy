@@ -14,6 +14,7 @@ public class BlowFish : FishController
     public AudioSource audioSrc;
     public AudioClip inflate;
     public AudioClip deflate;
+    public AudioClip swim;
     private bool inflated = false;
     private bool deflated = true;
 
@@ -47,12 +48,18 @@ public class BlowFish : FishController
             // }
         //}
 
-        if (pumpTimer <= 0) {
-            AnimateFish();
-            MoveFish();
-            pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);            
-        } else {
-            pumpTimer -= Time.deltaTime;
+        
+    }
+
+    private void FixedUpdate() {
+        if (!isShaking) {
+            if (pumpTimer <= 0) {
+                AnimateFish();
+                MoveFish();
+                pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);            
+            } else {
+                pumpTimer -= Time.deltaTime;
+            }
         }
 
         if (isShaking && !inflated) {
@@ -65,28 +72,31 @@ public class BlowFish : FishController
             deflated = true;
             inflated = false;
         }
+        
     }
 
     //blowfish pump animation
-    public override void AnimateFish()
-    {
+    public override void AnimateFish() {
         base.AnimateFish();
         animator.SetTrigger("pumpOnce");
+        audioSrc.clip = swim;
+        audioSrc.PlayOneShot(audioSrc.clip);
     }
 
-    public override void MoveFish()
-    {
+    public override void MoveFish() {
         blowFish.AddForce(pumpDirection * pumpPower);
     }
 
     private void Inflate() {        
         audioSrc.clip = inflate;
         audioSrc.PlayOneShot(audioSrc.clip);
+        animator.SetBool("isShaking", true);
     }
 
     private void Deflate() {
         audioSrc.clip = deflate;
         audioSrc.PlayOneShot(audioSrc.clip);
+        animator.SetBool("isShaking", false);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

@@ -1236,8 +1236,9 @@ MonoBehaviour:
   pumpMaxTime: 5
   pumpPower: 2000
   audioSrc: {fileID: 1184103759}
-  inflate: {fileID: 8300000, guid: 3bbd6d5130e1165439b1d334d4e80a2a, type: 3}
-  deflate: {fileID: 8300000, guid: 131828572eef2124dad402353eb1fe4f, type: 3}
+  inflate: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
+  deflate: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
+  swim: {fileID: 8300000, guid: 00e733cbd5bf3d1499bd189043d4b3ee, type: 3}
 --- !u!1 &1610959105
 GameObject:
   m_ObjectHideFlags: 0
