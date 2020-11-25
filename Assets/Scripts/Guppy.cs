@@ -18,6 +18,7 @@ public class Guppy : FishController
     }
 
     private void FixedUpdate() {
+        SetAnimatorShakeTrigger();
         AnimateFish();
     }
 

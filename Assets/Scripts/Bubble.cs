@@ -68,7 +68,7 @@ public class Bubble : MonoBehaviour
         }
     }
 
-    public void StartShake() {
+    public void StartShake(Vector3 mult) {
         Debug.Log("bubble " + this.gameObject + " is shaking!");
         isShaking = true;
     }

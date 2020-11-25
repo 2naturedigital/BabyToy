@@ -11,12 +11,12 @@ public class ShakeController : MonoBehaviour
 
     public void ShakeFish(Vector3 deviceAcceleration) {
         foreach (var f in Fishies) {
-            f.StartShake();
+            f.StartShake(deviceAcceleration);
             Debug.Log("shaking a fish");
         }
         foreach (var b in Bubbles) {
             if (b != null) {
-                b.StartShake();
+                b.StartShake(deviceAcceleration);
             }
         }
         // resets the elapsed timer since shaking is still happening

@@ -10,6 +10,7 @@ public class FishController : MonoBehaviour {
     public bool isShaking = false;
     public bool isResetTime = false;
     public Animator animator;
+    private float shakeMultiplier;
 
     // Keep track of current target position
     private Vector2 targetPosition;
@@ -103,10 +104,13 @@ public class FishController : MonoBehaviour {
 
 
     // SHAKE RELATED
-    public void StartShake() {
+    public void StartShake(Vector3 mult) {
+        shakeMultiplier = mult.x;
+        Debug.Log("X Mult: " + mult.x);
+        Debug.Log("Y Mult: " + mult.y);
+        Debug.Log("Z Mult: " + mult.z);
         SetIsShaking(true);
     }
-
     public void EndShake() {
         SetIsShaking(false);
         SetResetTime(true);
