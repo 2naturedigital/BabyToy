@@ -72,6 +72,10 @@ public class BlowFish : FishController
         audioSrc.PlayOneShot(audioSrc.clip);
     }
 
+    public float GetPumpPower() {
+        return pumpPower * GetShakeMultiplier();
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
 
     }

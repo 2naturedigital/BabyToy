@@ -48,7 +48,7 @@ public class Starfish : FishController
     void Wobble(float speed) {
         // rotation based on rotation created
         float rotation = 0;
-        rotation = direction * speed;
+        rotation = direction * speed * GetShakeMultiplier();
         transform.Rotate(0, 0, rotation);
     }
 

@@ -10,7 +10,7 @@ public class FishController : MonoBehaviour {
     public bool isShaking = false;
     public bool isResetTime = false;
     public Animator animator;
-    private float shakeMultiplier;
+    private float shakeMultiplier = 1;
 
     // Keep track of current target position
     private Vector2 targetPosition;
@@ -43,7 +43,7 @@ public class FishController : MonoBehaviour {
             } else if (transform.position.x < targetPosition.x && isFacingLeft) {
                 FlipHorizontal();
             }
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * GetSpeed());
         } else {
             SetRandomTarget();
         }
@@ -64,6 +64,10 @@ public class FishController : MonoBehaviour {
         float randomY = Random.Range(minY, maxY);
 
         targetPosition = new Vector2(randomX, randomY);
+    }
+
+    public float GetSpeed() {
+        return speed * shakeMultiplier;
     }
 
 
@@ -105,13 +109,12 @@ public class FishController : MonoBehaviour {
 
     // SHAKE RELATED
     public void StartShake(Vector3 mult) {
-        shakeMultiplier = mult.x;
-        Debug.Log("X Mult: " + mult.x);
-        Debug.Log("Y Mult: " + mult.y);
-        Debug.Log("Z Mult: " + mult.z);
+        shakeMultiplier = mult.sqrMagnitude;
+        //Debug.Log("Magnintude: " + shakeMultiplier);
         SetIsShaking(true);
     }
     public void EndShake() {
+        shakeMultiplier = 1;
         SetIsShaking(false);
         SetResetTime(true);
     }
@@ -130,6 +133,10 @@ public class FishController : MonoBehaviour {
 
     public void SetResetTime(bool b) {
         isResetTime = b;
+    }
+
+    public float GetShakeMultiplier() {
+        return shakeMultiplier;
     }
 
 
