@@ -12,11 +12,10 @@ public class BlowFish : FishController
     //public float gravity;
     Rigidbody2D blowFish;
     public AudioSource audioSrc;
-    public AudioClip inflate;
-    public AudioClip deflate;
-    public AudioClip swim;
-    private bool inflated = false;
-    private bool deflated = true;
+    public AudioClip inflateAudio;
+    public AudioClip deflateAudio;
+    public AudioClip swimAudio;
+    private bool isInflated = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -30,73 +29,49 @@ public class BlowFish : FishController
 
     // Update is called once per frame
     void Update() {
-        //if (!isWaiting) {
-            // if (pumpTimer <= 0) {
-            //     AnimateFish();
-            //     MoveFish();
-            //     //waitTimer = Random.Range(pumpMinTime, pumpMinTime + 2);
-            //     //isWaiting = true;
-            // } else {
-            //     pumpTimer -= Time.deltaTime;
-            // }
-        //} else {
-            // if (waitTimer <= 0) {
-            //     pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
-            //     isWaiting = false;
-            // } else {
-            //     waitTimer -= Time.deltaTime;
-            // }
-        //}
-
-        
+        MoveFish();    
     }
 
     private void FixedUpdate() {
-        if (!isShaking) {
+        AnimateFish();
+
+        if (IsShaking() && !isInflated) {
+            InflateSFX();
+            isInflated = true;
+        } 
+        if (!IsShaking() && isInflated) {
+            DeflateSFX();
+            isInflated = false;    
+        }        
+    }
+
+    //blowfish pump animation
+    public override void AnimateFish() {
+        base.AnimateFish();        
+        if (!IsShaking()) {
             if (pumpTimer <= 0) {
-                AnimateFish();
-                MoveFish();
+                animator.SetTrigger("pumpOnce");
+                audioSrc.clip = swimAudio;
+                audioSrc.PlayOneShot(audioSrc.clip);
                 pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);            
             } else {
                 pumpTimer -= Time.deltaTime;
             }
         }
-
-        if (isShaking && !inflated) {
-            Inflate();
-            inflated = true;
-            deflated = false;
-        } 
-        if (!isShaking && inflated) {
-            Deflate();
-            deflated = true;
-            inflated = false;
-        }
-        
-    }
-
-    //blowfish pump animation
-    public override void AnimateFish() {
-        base.AnimateFish();
-        animator.SetTrigger("pumpOnce");
-        audioSrc.clip = swim;
-        audioSrc.PlayOneShot(audioSrc.clip);
     }
 
     public override void MoveFish() {
         blowFish.AddForce(pumpDirection * pumpPower);
     }
 
-    private void Inflate() {        
-        audioSrc.clip = inflate;
+    private void InflateSFX() {        
+        audioSrc.clip = inflateAudio;
         audioSrc.PlayOneShot(audioSrc.clip);
-        animator.SetBool("isShaking", true);
     }
 
-    private void Deflate() {
-        audioSrc.clip = deflate;
+    private void DeflateSFX() {
+        audioSrc.clip = deflateAudio;
         audioSrc.PlayOneShot(audioSrc.clip);
-        animator.SetBool("isShaking", false);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
