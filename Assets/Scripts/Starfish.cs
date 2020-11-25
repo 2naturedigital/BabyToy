@@ -21,11 +21,11 @@ public class Starfish : FishController
     }
 
     private void FixedUpdate() {
+        SetAnimatorShakeTrigger();
         AnimateFish();
     }
 
     public override void AnimateFish() {
-        base.AnimateFish();
         //Debug.Log("MY Z IS AT: " + transform.rotation.z);
         if (!IsShaking() && !IsResetTime()) {                                    // wobble normally
             // flip wobble direction after max or min is reached

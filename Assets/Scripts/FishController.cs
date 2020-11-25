@@ -69,7 +69,7 @@ public class FishController : MonoBehaviour {
     // ANIMATION RELATED
     // Animate the object for shake
     public void SetAnimatorShakeTrigger() {
-        animator.SetBool("isShaking", IsShaking());
+        animator.SetBool("isShaking", isShaking);
     }
     public virtual void AnimateFish() {
         // animations implemented in each fish subclass

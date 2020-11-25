@@ -460,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c00d1d75238e04b9c7b95f71b4b864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeForceMultiplier: 5
+  shakeForceMultiplier: 3
   shakeResetTimer: 3
   Fishies:
   - {fileID: 1610959111}

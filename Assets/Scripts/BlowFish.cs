@@ -7,9 +7,6 @@ public class BlowFish : FishController
     float pumpTimer = 0;
     public float pumpPower;
     private Vector2 pumpDirection;
-    // public float waitTimer = 0;
-    // private bool isWaiting = false;
-    //public float gravity;
     Rigidbody2D blowFish;
     public AudioSource audioSrc;
     public AudioClip inflateAudio;
@@ -32,6 +29,7 @@ public class BlowFish : FishController
     }
 
     private void FixedUpdate() {
+        SetAnimatorShakeTrigger();
         // only do blowfish animations and movement when not shaking and pump timer has been reached
         if (!IsShaking()) {
             if (pumpTimer <= 0) {
@@ -42,7 +40,6 @@ public class BlowFish : FishController
                 pumpTimer -= Time.deltaTime;
             }
         }
-
 
         if (IsShaking() && !isInflated) {
             InflateSFX();

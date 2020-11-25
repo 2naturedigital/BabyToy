@@ -19,6 +19,8 @@ public class ShakeController : MonoBehaviour
                 b.StartShake();
             }
         }
+        // resets the elapsed timer since shaking is still happening
+        elapsedTime = 0;
     }
 
     private void Update() {
