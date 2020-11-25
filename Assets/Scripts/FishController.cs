@@ -23,6 +23,12 @@ public class FishController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        MoveFish();
+    }
+
+    private void FixedUpdate() {
+        SetAnimatorShakeTrigger();
+        AnimateFish();
     }
 
 
@@ -62,9 +68,13 @@ public class FishController : MonoBehaviour {
 
     // ANIMATION RELATED
     // Animate the object for shake
-    public virtual void AnimateFish() {
+    public void SetAnimatorShakeTrigger() {
         animator.SetBool("isShaking", IsShaking());
     }
+    public virtual void AnimateFish() {
+        // animations implemented in each fish subclass
+    }
+
     public void FlipHorizontal() {
         if (this.tag == "Fish") {
             isFacingLeft = !isFacingLeft;

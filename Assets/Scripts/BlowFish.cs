@@ -20,8 +20,8 @@ public class BlowFish : FishController
     // Start is called before the first frame update
     void Start() {
         blowFish = GetComponent<Rigidbody2D>();
-        pumpDirection = Vector2.up;
         audioSrc = GetComponent<AudioSource>();
+        pumpDirection = Vector2.up;
     }
 
     void Awake() {
@@ -29,42 +29,43 @@ public class BlowFish : FishController
 
     // Update is called once per frame
     void Update() {
-        MoveFish();    
     }
 
     private void FixedUpdate() {
-        AnimateFish();
-
-        if (IsShaking() && !isInflated) {
-            InflateSFX();
-            isInflated = true;
-        } 
-        if (!IsShaking() && isInflated) {
-            DeflateSFX();
-            isInflated = false;    
-        }        
-    }
-
-    //blowfish pump animation
-    public override void AnimateFish() {
-        base.AnimateFish();        
+        // only do blowfish animations and movement when not shaking and pump timer has been reached
         if (!IsShaking()) {
             if (pumpTimer <= 0) {
-                animator.SetTrigger("pumpOnce");
-                audioSrc.clip = swimAudio;
-                audioSrc.PlayOneShot(audioSrc.clip);
-                pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);            
+                AnimateFish();
+                MoveFish();
+                pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
             } else {
                 pumpTimer -= Time.deltaTime;
             }
         }
+
+
+        if (IsShaking() && !isInflated) {
+            InflateSFX();
+            isInflated = true;
+        }
+        if (!IsShaking() && isInflated) {
+            DeflateSFX();
+            isInflated = false;
+        }
+    }
+
+    //blowfish pump animation
+    public override void AnimateFish() {
+        animator.SetTrigger("pumpOnce");
+        audioSrc.clip = swimAudio;
+        audioSrc.PlayOneShot(audioSrc.clip);
     }
 
     public override void MoveFish() {
         blowFish.AddForce(pumpDirection * pumpPower);
     }
 
-    private void InflateSFX() {        
+    private void InflateSFX() {
         audioSrc.clip = inflateAudio;
         audioSrc.PlayOneShot(audioSrc.clip);
     }

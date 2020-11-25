@@ -14,8 +14,11 @@ public class Guppy : FishController
 
     // Update is called once per frame
     void Update() {
-        AnimateFish();
         MoveFish();
+    }
+
+    private void FixedUpdate() {
+        AnimateFish();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

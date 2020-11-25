@@ -1232,13 +1232,13 @@ MonoBehaviour:
   isShaking: 0
   isResetTime: 0
   animator: {fileID: 1184103756}
-  pumpMinTime: 0.3
-  pumpMaxTime: 5
-  pumpPower: 2000
+  pumpMinTime: 0.8
+  pumpMaxTime: 8
+  pumpPower: 1800
   audioSrc: {fileID: 1184103759}
-  inflate: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
-  deflate: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
-  swim: {fileID: 8300000, guid: 00e733cbd5bf3d1499bd189043d4b3ee, type: 3}
+  inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
+  deflateAudio: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
+  swimAudio: {fileID: 8300000, guid: 21b455daae0663f41bf7f8f43b88c109, type: 3}
 --- !u!1 &1610959105
 GameObject:
   m_ObjectHideFlags: 0
