@@ -7,6 +7,8 @@ public class ShakeController : MonoBehaviour
     public FishController[] Fishies;
     //public StarfishMovement[] Starfishies;
     public Bubble[] Bubbles;
+
+    public BubblesDup bubblesDup;
     private float elapsedTime = 0;
 
     public void ShakeFish(Vector3 deviceAcceleration) {
@@ -19,6 +21,7 @@ public class ShakeController : MonoBehaviour
                 b.StartShake(deviceAcceleration);
             }
         }
+        bubblesDup.StartShake(deviceAcceleration);
         // resets the elapsed timer since shaking is still happening
         elapsedTime = 0;
     }
@@ -37,6 +40,7 @@ public class ShakeController : MonoBehaviour
                     b.EndShake();
                 }
             }
+            bubblesDup.EndShake();
             elapsedTime = 0;
         }
     }
