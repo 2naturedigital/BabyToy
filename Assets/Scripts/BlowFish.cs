@@ -54,8 +54,9 @@ public class BlowFish : FishController
     //blowfish pump animation
     public override void AnimateFish() {
         animator.SetTrigger("pumpOnce");
-        audioSrc.clip = swimAudio;
-        audioSrc.PlayOneShot(audioSrc.clip);
+        //audioSrc.clip = swimAudio;
+        //audioSrc.PlayOneShot(audioSrc.clip);
+        sndCtrl.PlaySFX(swimAudio);
     }
 
     public override void MoveFish() {

@@ -10,7 +10,8 @@ public class FishController : MonoBehaviour {
     public bool isShaking = false;
     public bool isResetTime = false;
     public Animator animator;
-    private float shakeMultiplier = 1;
+    private float shakeMultiplier = 1;    
+    public SoundController sndCtrl;
 
     // Keep track of current target position
     private Vector2 targetPosition;
@@ -20,6 +21,7 @@ public class FishController : MonoBehaviour {
         // Get a starting target position
         SetRandomTarget();
         animator = GetComponent<Animator>();
+        sndCtrl = GetComponent<SoundController>();
     }
 
     // Update is called once per frame
