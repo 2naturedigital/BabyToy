@@ -21,7 +21,7 @@ public class FishController : MonoBehaviour {
         // Get a starting target position
         SetRandomTarget();
         animator = GetComponent<Animator>();
-        sndCtrl = GetComponent<SoundController>();
+        sndCtrl = FindObjectOfType<SoundController>();
     }
 
     // Update is called once per frame

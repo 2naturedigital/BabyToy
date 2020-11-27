@@ -463,8 +463,8 @@ MonoBehaviour:
   bubblePopMaxTime: 20
   bubbleMinScale: 1
   bubbleMaxScale: 2.5
-  shakeBubbleTimer: 0.1
-  shakeBubbleCount: 3
+  shakeBubbleTimer: 0.5
+  shakeBubbleCount: 1
 --- !u!4 &528298671
 Transform:
   m_ObjectHideFlags: 0
@@ -610,7 +610,7 @@ MonoBehaviour:
   - {fileID: 1184103762}
   - {fileID: 1852925474}
   Bubbles: []
-  bubblesDup: {fileID: 528298670}
+  bubblesDup: {fileID: 0}
 --- !u!4 &650523471
 Transform:
   m_ObjectHideFlags: 0
