@@ -7,6 +7,7 @@ public class Guppy : FishController
     // Start is called before the first frame update
     void Start() {
         //animator = GetComponent<Animator>();
+        sndCtrl = FindObjectOfType<SoundController>();
     }
 
     void Awake() {
@@ -23,7 +24,7 @@ public class Guppy : FishController
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Guppy Bumpy!");
+        //Debug.Log("Guppy Bumpy!");
         if (other.tag == "Fish") {
             SetRandomTarget();
         }

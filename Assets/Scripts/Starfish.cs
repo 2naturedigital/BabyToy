@@ -12,6 +12,7 @@ public class Starfish : FishController
     // Start is called before the first frame update
     void Start() {
         direction = -1;
+        sndCtrl = FindObjectOfType<SoundController>();
         //animator = GetComponent<Animator>();
     }
 
@@ -36,12 +37,12 @@ public class Starfish : FishController
         } else if (IsShaking()) {                              // spin fast
             Wobble(wobbleShakeSpeed);
         } else if (IsResetTime()) {                           // head back to reset position
-            if (transform.rotation.z <= .1 && transform.rotation.z >= -.1) {
+            Wobble(wobbleShakeSpeed - 2);
+            if (transform.rotation.z <= wobbleMinAngle && transform.rotation.z >= wobbleMaxAngle) {
                 //Debug.Log("Reset Complete");
                 //Debug.Log("Complete Z at: " + transform.rotation.z);
                 SetResetTime(false);
             }
-            Wobble(wobbleShakeSpeed - 2);
         }
     }
 

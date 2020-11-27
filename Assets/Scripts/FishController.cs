@@ -10,7 +10,7 @@ public class FishController : MonoBehaviour {
     public bool isShaking = false;
     public bool isResetTime = false;
     public Animator animator;
-    private float shakeMultiplier = 1;    
+    private float shakeMultiplier = 1;
     public SoundController sndCtrl;
 
     // Keep track of current target position
@@ -19,9 +19,10 @@ public class FishController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         // Get a starting target position
+        sndCtrl = FindObjectOfType<SoundController>();
         SetRandomTarget();
         animator = GetComponent<Animator>();
-        sndCtrl = FindObjectOfType<SoundController>();
+        //sndCtrl = FindObjectOfType<SoundController>();
     }
 
     // Update is called once per frame
@@ -32,6 +33,10 @@ public class FishController : MonoBehaviour {
     private void FixedUpdate() {
         SetAnimatorShakeTrigger();
         AnimateFish();
+    }
+
+    public void PlaySFX(AudioClip audioClip, float vol = 1f, float pitch = 1f) {
+        sndCtrl.PlaySFX(audioClip, vol, pitch);
     }
 
 

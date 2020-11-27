@@ -18,9 +18,11 @@ public class Bubble : MonoBehaviour
     private bool isShaking = false;
     Collider2D col;
     Rigidbody2D rb;
+    public SoundController sndCtrl;
 
 
     void start() {
+        sndCtrl = FindObjectOfType<SoundController>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
@@ -28,6 +30,7 @@ public class Bubble : MonoBehaviour
     }
 
     void Awake() {
+        sndCtrl = FindObjectOfType<SoundController>();
         RandomizeBubbleSounds();
         lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
     }
@@ -80,17 +83,19 @@ public class Bubble : MonoBehaviour
     //triggers the pop animation, sets a random pop sound & plays, destroys bubble object
     private void PopBubble(GameObject gameObject) {
         animator.SetTrigger("Touched");
-        audioSrc.clip = popSounds[Random.Range(0, popSounds.Length)];
-        audioSrc.PlayOneShot(audioSrc.clip);
+        // audioSrc.clip = popSounds[Random.Range(0, popSounds.Length)];
+        // audioSrc.PlayOneShot(audioSrc.clip);
+        sndCtrl.PlaySFX(popSounds[Random.Range(0, popSounds.Length)]);
         Destroy(gameObject, destroyAnimationTimer);
     }
 
     //sets the bubble sound, randomizes pitch & volume
     private void RandomizeBubbleSounds() {
-        audioSrc.clip = bubbleSound;
-        audioSrc.pitch = Random.Range(bubblePitchMin, bubblePitchMax);
-        audioSrc.volume = Random.Range(bubbleVolMin, bubbleVolMax);
-        audioSrc.PlayOneShot(audioSrc.clip);
+        // audioSrc.clip = bubbleSound;
+        // audioSrc.pitch = Random.Range(bubblePitchMin, bubblePitchMax);
+        // audioSrc.volume = Random.Range(bubbleVolMin, bubbleVolMax);
+        // audioSrc.PlayOneShot(audioSrc.clip);
+        sndCtrl.PlaySFX(bubbleSound, Random.Range(bubbleVolMin, bubbleVolMax), Random.Range(bubblePitchMin, bubblePitchMax));
     }
 
 }

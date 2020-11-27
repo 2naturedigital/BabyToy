@@ -5,9 +5,6 @@ public class ShakeController : MonoBehaviour
     public float shakeForceMultiplier;
     public int shakeResetTimer = 3;
     public FishController[] Fishies;
-    //public StarfishMovement[] Starfishies;
-    public Bubble[] Bubbles;
-
     public BubblesDup bubblesDup;
     private float elapsedTime = 0;
 
@@ -15,11 +12,6 @@ public class ShakeController : MonoBehaviour
         foreach (var f in Fishies) {
             f.StartShake(deviceAcceleration);
             Debug.Log("shaking a fish");
-        }
-        foreach (var b in Bubbles) {
-            if (b != null) {
-                b.StartShake(deviceAcceleration);
-            }
         }
         bubblesDup.StartShake(deviceAcceleration);
         // resets the elapsed timer since shaking is still happening
@@ -33,11 +25,6 @@ public class ShakeController : MonoBehaviour
             foreach (var f in Fishies) {
                 if (f != null){
                     f.EndShake();
-                }
-            }
-            foreach (var b in Bubbles) {
-                if (b != null) {
-                    b.EndShake();
                 }
             }
             bubblesDup.EndShake();
