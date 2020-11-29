@@ -5,7 +5,9 @@ public class FishController : MonoBehaviour {
     public float maxX;
     public float minY;
     public float maxY;
-    public float speed;
+    public float minSpeed;
+    public float maxSpeed;
+    private float speed;
     private bool isFacingLeft = true;
     public bool isShaking = false;
     public bool isResetTime = false;
@@ -43,6 +45,7 @@ public class FishController : MonoBehaviour {
     // TARGET RELATED
     // Do a movement transformation if the target position and the current position don't match
     public virtual void MoveFish() {
+        SetSpeed();
         if ((Vector2)transform.position != targetPosition) {
             // flip the sprite to face the right direction when swimming
             if (transform.position.x > targetPosition.x && !isFacingLeft) {
@@ -75,6 +78,10 @@ public class FishController : MonoBehaviour {
 
     public float GetSpeed() {
         return speed * shakeMultiplier;
+    }
+
+    public void SetSpeed() {
+        speed = Random.Range(minSpeed, maxSpeed);
     }
 
 

@@ -8,6 +8,7 @@ TagManager:
   - Bubble
   - StarFish
   - WaterCurrent
+  - Wall
   layers:
   - Default
   - TransparentFX

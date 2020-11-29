@@ -5,7 +5,9 @@ public class BlowFish : FishController
     public float pumpMinTime = 0.3f;
     public float pumpMaxTime = 3f;
     float pumpTimer = 0;
-    public float pumpPower;
+    public float pumpPowerMin;
+    public float pumpPowerMax;
+    private float pumpPower;
     private Vector2 pumpDirection;
     Rigidbody2D blowFish;
     public AudioSource audioSrc;
@@ -40,6 +42,8 @@ public class BlowFish : FishController
             } else {
                 pumpTimer -= Time.deltaTime;
             }
+        } else {
+            base.MoveFish();
         }
 
         if (IsShaking() && !isInflated) {
@@ -61,6 +65,7 @@ public class BlowFish : FishController
     }
 
     public override void MoveFish() {
+        SetPumpPower();
         blowFish.AddForce(pumpDirection * pumpPower);
     }
 
@@ -80,7 +85,31 @@ public class BlowFish : FishController
         return pumpPower * GetShakeMultiplier();
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    public void SetPumpPower() {
+        pumpPower = Random.Range(pumpPowerMin, pumpPowerMax) * GetShakeMultiplier();
+    }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (this.tag == "Fish" && other.tag == "Wall") {
+            //Debug.Log("BOUNCE");
+            Bounce();
+        }
+    }
+
+    private void PositionCheck() {
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+        if((screenPosition.y > Screen.height) || (screenPosition.y < 0f) || (screenPosition.x > Screen.width) || (screenPosition.x <0f))
+        {
+            screenPosition.x = Mathf.Clamp(screenPosition.x, 0f + 440/2, Screen.width - 440/2);
+            screenPosition.y = Mathf.Clamp(screenPosition.y, 0f + 380/2, Screen.height - 380/2);
+            Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+            this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
+            Bounce();
+        }
+    }
+
+    private void Bounce() {
+        Vector2 newVelocity = blowFish.velocity * -1;
+        blowFish.velocity = newVelocity;
     }
 }
