@@ -47,7 +47,7 @@ public class BlowFish : FishController
                 pumpTimer -= Time.deltaTime;
             }
         } else {
-            base.MoveFish();
+            //base.MoveFish();
         }
 
         if (IsShaking() && !isInflated) {
