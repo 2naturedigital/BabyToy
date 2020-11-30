@@ -1371,16 +1371,16 @@ MonoBehaviour:
   maxX: 320
   minY: -770
   maxY: 770
-  minSpeed: 20
-  maxSpeed: 80
+  minSpeed: 0
+  maxSpeed: 0
   isShaking: 0
   isResetTime: 0
   animator: {fileID: 1184103756}
   sndCtrl: {fileID: 0}
   pumpMinTime: 0.8
   pumpMaxTime: 15
-  pumpPowerMin: 1500
-  pumpPowerMax: 5000
+  pumpPowerMin: 100
+  pumpPowerMax: 100
   audioSrc: {fileID: 1184103759}
   inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
   deflateAudio: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
@@ -1498,8 +1498,8 @@ MonoBehaviour:
   maxX: 381
   minY: -789
   maxY: 789
-  minSpeed: 40
-  maxSpeed: 120
+  minSpeed: 20
+  maxSpeed: 40
   isShaking: 0
   isResetTime: 0
   animator: {fileID: 1610959109}
@@ -1701,8 +1701,8 @@ MonoBehaviour:
   maxX: 397
   minY: -825
   maxY: 825
-  minSpeed: 5
-  maxSpeed: 20
+  minSpeed: 0
+  maxSpeed: 0
   isShaking: 0
   isResetTime: 0
   animator: {fileID: 1852925467}
