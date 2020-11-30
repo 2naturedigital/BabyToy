@@ -2,6 +2,8 @@
 
 public class BlowFish : FishController
 {
+    private const int FISHWIDTH = 440;
+    private const int FISHHEIGHT = 380;
     public float pumpMinTime = 0.3f;
     public float pumpMaxTime = 3f;
     float pumpTimer = 0;
@@ -29,6 +31,8 @@ public class BlowFish : FishController
 
     // Update is called once per frame
     void Update() {
+        PositionCheckVertical();
+        PositionCheckHorizontal();
     }
 
     private void FixedUpdate() {
@@ -66,7 +70,7 @@ public class BlowFish : FishController
 
     public override void MoveFish() {
         SetPumpPower();
-        blowFish.AddForce(pumpDirection * pumpPower);
+        blowFish.AddForce(pumpDirection * pumpPower, ForceMode2D.Impulse);
     }
 
     private void InflateSFX() {
@@ -92,19 +96,37 @@ public class BlowFish : FishController
     private void OnTriggerEnter2D(Collider2D other) {
         if (this.tag == "Fish" && other.tag == "Wall") {
             //Debug.Log("BOUNCE");
+            //Bounce();
+        }
+    }
+
+    private void PositionCheckVertical() {
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+        if (screenPosition.y > (Screen.height - FISHHEIGHT/2) || screenPosition.y < (0f + FISHHEIGHT/2)) {
+            // x is clamped outside the bounds of the screen so the fish can go off screen for wrapping purposes
+            //screenPosition.x = Mathf.Clamp(screenPosition.x, 0f - FISHWIDTH*2, Screen.width + FISHWIDTH*2);
+            // y is clamped inside the screen with a border of half the height of the fish so it never actually goes past the screen
+            screenPosition.y = Mathf.Clamp(screenPosition.y, 0f, Screen.height);
+            Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+            this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
             Bounce();
         }
     }
 
-    private void PositionCheck() {
+    private void PositionCheckHorizontal() {
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
-        if((screenPosition.y > Screen.height) || (screenPosition.y < 0f) || (screenPosition.x > Screen.width) || (screenPosition.x <0f))
-        {
-            screenPosition.x = Mathf.Clamp(screenPosition.x, 0f + 440/2, Screen.width - 440/2);
-            screenPosition.y = Mathf.Clamp(screenPosition.y, 0f + 380/2, Screen.height - 380/2);
+        if (screenPosition.x < 0f - FISHWIDTH/2) {
+            // if fish goes off screen on one side, pop him on the other side
+            screenPosition.x = Screen.width;
+            //screenPosition.y = Mathf.Clamp(screenPosition.y, 0f + 380/2, Screen.height - 380/2);
             Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
             this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
-            Bounce();
+        } else if (screenPosition.x > Screen.width + FISHWIDTH/2) {
+            // if fish goes off screen on one side, pop him on the other side
+            screenPosition.x = 0f;
+            //screenPosition.y = Mathf.Clamp(screenPosition.y, 0f + 380/2, Screen.height - 380/2);
+            Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+            this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
         }
     }
 

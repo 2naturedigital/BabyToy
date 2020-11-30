@@ -1379,8 +1379,8 @@ MonoBehaviour:
   sndCtrl: {fileID: 0}
   pumpMinTime: 0.8
   pumpMaxTime: 15
-  pumpPowerMin: 1500
-  pumpPowerMax: 5000
+  pumpPowerMin: 50
+  pumpPowerMax: 150
   audioSrc: {fileID: 1184103759}
   inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
   deflateAudio: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
