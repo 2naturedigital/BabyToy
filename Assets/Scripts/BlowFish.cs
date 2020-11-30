@@ -43,7 +43,7 @@ public class BlowFish : FishController
                 pumpTimer -= Time.deltaTime;
             }
         } else {
-            base.MoveFish();
+            //base.MoveFish();
         }
 
         if (IsShaking() && !isInflated) {
@@ -66,7 +66,7 @@ public class BlowFish : FishController
 
     public override void MoveFish() {
         SetPumpPower();
-        blowFish.AddForce(pumpDirection * pumpPower);
+        blowFish.AddForce(pumpDirection * pumpPower, ForceMode2D.Impulse);
     }
 
     private void InflateSFX() {
