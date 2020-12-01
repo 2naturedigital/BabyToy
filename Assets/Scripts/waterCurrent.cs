@@ -4,21 +4,29 @@ using UnityEngine;
 public class WaterCurrent : MonoBehaviour {
 
    List<Rigidbody2D> bubblesInCurrent = new List<Rigidbody2D>();
-   private float currentStrength;
-   public float minStrength;
-   public float maxStrength;
+   public float currentStrength;
+   public float currentStrengthDuringShake;
    public Vector2 currentDirection;
-   public bool alternatingCurrent;
-   private float currentMovementPeriod = 5f;
+   private bool isShaking = false;
+   //public bool alternatingCurrent;
+   //private float currentMovementPeriod = 5f;
    //public int minMovementPeriod;
    //public int maxMovementPeriod;
-   private float elapsedTime = 0;
+   //private float elapsedTime = 0;
 
    private void Start() {
        // initialize direction, strength, and movement period for current
-       NewStrength();
+       //NewStrength();
        //NewMovementPeriod();
    }
+
+   public void StartShake(Vector3 mult) {
+        isShaking = true;
+    }
+
+    public void EndShake() {
+        isShaking = false;
+    }
 
 
     private void OnTriggerEnter2D(Collider2D col) {
@@ -34,33 +42,36 @@ public class WaterCurrent : MonoBehaviour {
             bubblesInCurrent.Remove(objectRigid);
     }    
 
-    private void NewDirection() {
-        // set a current that moves left or right or no direction at all
-        // if (currentDirection == null) {
-        //     currentDirection = new Vector2(Random.Range(-1, 1), 0);
-        // }
-        if (currentDirection == Vector2.left) {
-            currentDirection = Vector2.right;
-        } 
-        if (currentDirection == Vector2.right) {
-            currentDirection = Vector2.left;
-        }
-    }
+    // private void NewDirection() {
+    //     set a current that moves left or right or no direction at all
+    //     if (currentDirection == null) {
+    //         currentDirection = new Vector2(Random.Range(-1, 1), 0);
+    //     }
+    //     if (currentDirection == Vector2.left) {
+    //         currentDirection = Vector2.right;
+    //     } 
+    //     if (currentDirection == Vector2.right) {
+    //         currentDirection = Vector2.left;
+    //     }
+    // }
 
-    private void NewStrength() {
-        // set a new strength between the min and max provided
-        currentStrength = Random.Range(minStrength, maxStrength);
-    }
+    // private void NewStrength() {
+    //     // set a new strength between the min and max provided
+    //     currentStrength = Random.Range(minStrength, maxStrength);
+    // }
 
-    private void NewMovementPeriod() {
-        // set a new movement period from the min to max provided
-        //currentMovementPeriod = Random.Range(minMovementPeriod, maxMovementPeriod);
-    }
+    // private void NewMovementPeriod() {
+    //     //set a new movement period from the min to max provided
+    //     currentMovementPeriod = Random.Range(minMovementPeriod, maxMovementPeriod);
+    // }
 
 
     private void FixedUpdate() {
         foreach (Rigidbody2D bubble in bubblesInCurrent) {
-            if (bubble != null) {
+            if (bubble != null && isShaking) {
+                bubble.AddForce(currentStrengthDuringShake * currentDirection);
+            } 
+            if (bubble != null && !isShaking) {
                 bubble.AddForce(currentStrength * currentDirection);
             }
         }
@@ -68,15 +79,17 @@ public class WaterCurrent : MonoBehaviour {
 
     void Update() {
         // only do this when currents can alternate
-        if (alternatingCurrent) {
-            elapsedTime += Time.deltaTime;
-            // after movementPeriod has been reached, get a new direction and speed for the current
-            if (elapsedTime > currentMovementPeriod) {
-                elapsedTime = 0;
-                NewDirection();
-                //NewStrength();
-                //NewMovementPeriod();
-            }
-        }
+        // if (alternatingCurrent) {
+        //     elapsedTime += Time.deltaTime;
+        //     // after movementPeriod has been reached, get a new direction and speed for the current
+        //     if (elapsedTime > currentMovementPeriod) {
+        //         elapsedTime = 0;
+        //         NewDirection();
+        //         NewStrength();
+        //         NewMovementPeriod();
+        //     }
+        // }
     }
+
+    
 }

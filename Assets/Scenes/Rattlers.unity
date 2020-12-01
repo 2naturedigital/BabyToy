@@ -170,10 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStrength: 50
-  maxStrength: 50
+  currentStrength: 50
+  currentStrengthDuringShake: 100
   currentDirection: {x: 0, y: 1}
-  alternatingCurrent: 0
 --- !u!61 &110417622
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -249,10 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStrength: 40
-  maxStrength: 40
+  currentStrength: 40
+  currentStrengthDuringShake: 80
   currentDirection: {x: -1, y: 0}
-  alternatingCurrent: 0
 --- !u!61 &271795048
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -680,12 +678,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeForceMultiplier: 3
-  shakeResetTimer: 3
+  shakeResetTimer: 1.5
   Fishies:
   - {fileID: 1610959111}
   - {fileID: 1184103762}
   - {fileID: 1852925474}
   bubblesDup: {fileID: 528298670}
+  waterCurrent: {fileID: 0}
 --- !u!4 &650523471
 Transform:
   m_ObjectHideFlags: 0
@@ -749,10 +748,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStrength: 40
-  maxStrength: 40
+  currentStrength: 40
+  currentStrengthDuringShake: 80
   currentDirection: {x: -1, y: 0}
-  alternatingCurrent: 0
 --- !u!61 &673668690
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -909,10 +907,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStrength: 10
-  maxStrength: 10
+  currentStrength: 10
+  currentStrengthDuringShake: 20
   currentDirection: {x: 1, y: 0}
-  alternatingCurrent: 0
 --- !u!61 &765393355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -988,10 +985,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStrength: 50
-  maxStrength: 50
+  currentStrength: 50
+  currentStrengthDuringShake: 100
   currentDirection: {x: 1, y: 0}
-  alternatingCurrent: 0
 --- !u!61 &782968335
 BoxCollider2D:
   m_ObjectHideFlags: 0

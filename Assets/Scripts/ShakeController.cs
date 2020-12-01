@@ -3,9 +3,10 @@
 public class ShakeController : MonoBehaviour
 {
     public float shakeForceMultiplier;
-    public int shakeResetTimer = 3;
+    public float shakeResetTimer;
     public FishController[] Fishies;
     public BubblesDup bubblesDup;
+    public WaterCurrent waterCurrent;
     private float elapsedTime = 0;
 
     public void ShakeFish(Vector3 deviceAcceleration) {
