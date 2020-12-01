@@ -37,8 +37,10 @@ public class BlowFish : FishController
 
     private void FixedUpdate() {
         SetAnimatorShakeTrigger();
+
         // only do blowfish animations and movement when not shaking and pump timer has been reached
         if (!IsShaking()) {
+            PositionCheckVertical();            
             if (pumpTimer <= 0) {
                 AnimateFish();
                 MoveFish();
@@ -103,14 +105,16 @@ public class BlowFish : FishController
 
     private void PositionCheckVertical() {
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
-        if (screenPosition.y > (Screen.height - FISHHEIGHT/2) || screenPosition.y < (0f + FISHHEIGHT/2)) {
+        if (screenPosition.y > (Screen.height - FISHHEIGHT/2)) {
             // x is clamped outside the bounds of the screen so the fish can go off screen for wrapping purposes
             //screenPosition.x = Mathf.Clamp(screenPosition.x, 0f - FISHWIDTH*2, Screen.width + FISHWIDTH*2);
             // y is clamped inside the screen with a border of half the height of the fish so it never actually goes past the screen
-            screenPosition.y = Mathf.Clamp(screenPosition.y, 0f, Screen.height);
-            Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
-            this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
-            Bounce();
+            //screenPosition.y = Mathf.Clamp(screenPosition.y, 0f, Screen.height);
+            //Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+            //this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
+            pumpTimer = pumpMaxTime;
+        } else if (screenPosition.y < (0f + FISHHEIGHT/2)) {
+            pumpTimer = 0;
         }
     }
 
