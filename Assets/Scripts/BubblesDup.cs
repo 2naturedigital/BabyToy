@@ -8,8 +8,6 @@ public class BubblesDup : MonoBehaviour
     public GameObject bubbleContainer;
     public float bubbleSpawnMinTime;
     public float bubbleSpawnMaxTime;
-    public float bubblePopMinTime;
-    public float bubblePopMaxTime;
     public float bubbleMinScale;
     public float bubbleMaxScale;
     private bool isShaking = false;

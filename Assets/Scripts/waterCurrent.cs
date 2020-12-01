@@ -7,18 +7,17 @@ public class WaterCurrent : MonoBehaviour {
    private float currentStrength;
    public float minStrength;
    public float maxStrength;
-   private Vector2 currentDirection;
+   public Vector2 currentDirection;
    public bool alternatingCurrent;
-   private int currentMovementPeriod;
-   public int minMovementPeriod;
-   public int maxMovementPeriod;
+   private float currentMovementPeriod = 5f;
+   //public int minMovementPeriod;
+   //public int maxMovementPeriod;
    private float elapsedTime = 0;
 
    private void Start() {
        // initialize direction, strength, and movement period for current
-       NewDirection();
        NewStrength();
-       NewMovementPeriod();
+       //NewMovementPeriod();
    }
 
 
@@ -33,11 +32,19 @@ public class WaterCurrent : MonoBehaviour {
         Rigidbody2D objectRigid = col.gameObject.GetComponent<Rigidbody2D>();
         if (objectRigid != null)
             bubblesInCurrent.Remove(objectRigid);
-    }
+    }    
 
     private void NewDirection() {
         // set a current that moves left or right or no direction at all
-        currentDirection = new Vector2(Random.Range(-1, 2), 0);
+        // if (currentDirection == null) {
+        //     currentDirection = new Vector2(Random.Range(-1, 1), 0);
+        // }
+        if (currentDirection == Vector2.left) {
+            currentDirection = Vector2.right;
+        } 
+        if (currentDirection == Vector2.right) {
+            currentDirection = Vector2.left;
+        }
     }
 
     private void NewStrength() {
@@ -47,7 +54,7 @@ public class WaterCurrent : MonoBehaviour {
 
     private void NewMovementPeriod() {
         // set a new movement period from the min to max provided
-        currentMovementPeriod = Random.Range(minMovementPeriod, maxMovementPeriod);
+        //currentMovementPeriod = Random.Range(minMovementPeriod, maxMovementPeriod);
     }
 
 
@@ -67,8 +74,8 @@ public class WaterCurrent : MonoBehaviour {
             if (elapsedTime > currentMovementPeriod) {
                 elapsedTime = 0;
                 NewDirection();
-                NewStrength();
-                NewMovementPeriod();
+                //NewStrength();
+                //NewMovementPeriod();
             }
         }
     }

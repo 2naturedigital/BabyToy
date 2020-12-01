@@ -110,10 +110,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: -4
+  m_GravityScale: -2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -138,8 +138,8 @@ MonoBehaviour:
   bubblePitchMax: 1.2
   bubbleVolMin: 0.8
   bubbleVolMax: 1.2
-  bubbleLifetimeMin: 5
-  bubbleLifetimeMax: 10
+  bubbleLifetimeMin: 15
+  bubbleLifetimeMax: 30
   popSounds:
   - {fileID: 8300000, guid: 6bbac0e25d604cf4da0006503b2a3405, type: 3}
   - {fileID: 8300000, guid: 90d73fffd2a28de448c2e806cecb85ab, type: 3}
@@ -150,6 +150,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7f5f681c94b120446ba7babb3ee45a1d, type: 3}
   - {fileID: 8300000, guid: 58798de29c9c03c4484df9953737e141, type: 3}
   destroyAnimationTimer: 0.15
+  sndCtrl: {fileID: 0}
 --- !u!58 &-6430882718770392091
 CircleCollider2D:
   m_ObjectHideFlags: 0
