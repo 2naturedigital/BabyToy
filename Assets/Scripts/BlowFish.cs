@@ -42,6 +42,7 @@ public class BlowFish : FishController
             if (pumpTimer <= 0) {
                 AnimateFish();
                 MoveFish();
+                //if 
                 pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
             } else {
                 pumpTimer -= Time.deltaTime;
