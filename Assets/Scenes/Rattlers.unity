@@ -685,6 +685,10 @@ MonoBehaviour:
   - {fileID: 1852925474}
   bubblesDup: {fileID: 528298670}
   waterCurrent: {fileID: 0}
+  sndCtrl: {fileID: 0}
+  shake1: {fileID: 8300000, guid: 5bb48dc6196441343b566b51b5ef53dd, type: 3}
+  shake2: {fileID: 8300000, guid: 85aa452bb455b264489984b3a3527f71, type: 3}
+  shake3: {fileID: 0}
 --- !u!4 &650523471
 Transform:
   m_ObjectHideFlags: 0
@@ -1451,7 +1455,6 @@ MonoBehaviour:
   pumpMaxTime: 7
   pumpPowerMin: 100
   pumpPowerMax: 150
-  audioSrc: {fileID: 1184103759}
   inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
   deflateAudio: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
   swimAudio: {fileID: 8300000, guid: 21b455daae0663f41bf7f8f43b88c109, type: 3}

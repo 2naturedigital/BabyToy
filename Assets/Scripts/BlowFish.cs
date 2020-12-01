@@ -12,7 +12,7 @@ public class BlowFish : FishController
     private float pumpPower;
     private Vector2 pumpDirection;
     Rigidbody2D blowFish;
-    public AudioSource audioSrc;
+    //public AudioSource audioSrc;
     public AudioClip inflateAudio;
     public AudioClip deflateAudio;
     public AudioClip swimAudio;
@@ -22,7 +22,7 @@ public class BlowFish : FishController
     void Start() {
         sndCtrl = FindObjectOfType<SoundController>();
         blowFish = GetComponent<Rigidbody2D>();
-        audioSrc = GetComponent<AudioSource>();
+        //audioSrc = GetComponent<AudioSource>();
         pumpDirection = Vector2.up;
     }
 
@@ -68,7 +68,7 @@ public class BlowFish : FishController
         animator.SetTrigger("pumpOnce");
         //audioSrc.clip = swimAudio;
         //audioSrc.PlayOneShot(audioSrc.clip);
-        PlaySFX(swimAudio);
+        sndCtrl.PlaySFX(swimAudio);
     }
 
     public override void MoveFish() {
@@ -79,13 +79,13 @@ public class BlowFish : FishController
     private void InflateSFX() {
         // audioSrc.clip = inflateAudio;
         // audioSrc.PlayOneShot(audioSrc.clip);
-        PlaySFX(inflateAudio);
+        sndCtrl.PlaySFX(inflateAudio);
     }
 
     private void DeflateSFX() {
         // audioSrc.clip = deflateAudio;
         // audioSrc.PlayOneShot(audioSrc.clip);
-        PlaySFX(deflateAudio);
+        sndCtrl.PlaySFX(deflateAudio);
     }
 
     public float GetPumpPower() {
