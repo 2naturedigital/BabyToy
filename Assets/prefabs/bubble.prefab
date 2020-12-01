@@ -138,7 +138,7 @@ MonoBehaviour:
   bubblePitchMax: 1.2
   bubbleVolMin: 0.8
   bubbleVolMax: 1.2
-  bubbleLifetimeMin: 15
+  bubbleLifetimeMin: 10
   bubbleLifetimeMax: 30
   popSounds:
   - {fileID: 8300000, guid: 6bbac0e25d604cf4da0006503b2a3405, type: 3}
