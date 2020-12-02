@@ -14,6 +14,16 @@ public class BubblesDup : MonoBehaviour
     float bubbleTimer = 0;
     public float shakeBubbleTimer;
     public int shakeBubbleCount;
+    Vector3 CameraPos;
+    float defaultWidth;
+    float defaultHeight;
+    
+
+    private void Start() {
+        CameraPos = Camera.main.transform.position;
+        defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
+        defaultHeight = Camera.main.orthographicSize;
+    }
 
     // Update is called once per frame
     void Update() {
@@ -47,7 +57,7 @@ public class BubblesDup : MonoBehaviour
 
     public void MakeBubble(int count) {
         for (int i = 0; i < count; i++) {
-            Vector3 bubblePosition = new Vector3(Random.Range(-540.0f, 540.0f), -1000.0f, 0f);
+            Vector3 bubblePosition = new Vector3(Random.Range(CameraPos.x - defaultWidth, defaultWidth), CameraPos.y - defaultHeight, 0f);
             GameObject bubbleClone = Instantiate(bubbleOriginal, bubblePosition, bubbleOriginal.transform.rotation);
             bubbleClone.transform.SetParent(bubbleContainer.transform);
             bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale);

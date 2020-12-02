@@ -429,6 +429,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -444,6 +445,20 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d71594c61a89264aaf896b6f20b3713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maintainWidth: 0
+  adaptPosition: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -547,7 +562,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 528298669}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 50.503887, y: 27.153961, z: -483}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 788732148}
@@ -685,10 +700,6 @@ MonoBehaviour:
   - {fileID: 1852925474}
   bubblesDup: {fileID: 528298670}
   waterCurrent: {fileID: 0}
-  sndCtrl: {fileID: 0}
-  shake1: {fileID: 8300000, guid: 5bb48dc6196441343b566b51b5ef53dd, type: 3}
-  shake2: {fileID: 8300000, guid: 85aa452bb455b264489984b3a3527f71, type: 3}
-  shake3: {fileID: 0}
 --- !u!4 &650523471
 Transform:
   m_ObjectHideFlags: 0
@@ -837,7 +848,7 @@ SpriteRenderer:
   m_SortingLayerID: 1040928221
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b9f494264b31b0a41bea5a559b2fec44, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b1d9d778d469c84e881c7fbeca904da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -857,7 +868,7 @@ Transform:
   m_GameObject: {fileID: 723450739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
