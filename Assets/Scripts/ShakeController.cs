@@ -8,13 +8,23 @@ public class ShakeController : MonoBehaviour
     public BubblesDup bubblesDup;
     public WaterCurrent waterCurrent;
     private float elapsedTime = 0;
+    private bool isShaking = false;
 
     public void ShakeFish(Vector3 deviceAcceleration) {
-        foreach (var f in Fishies) {
-            f.StartShake(deviceAcceleration);
-            Debug.Log("shaking a fish");
+        if (!isShaking) {
+            isShaking = true;
+            foreach (var f in Fishies) {
+                f.StartShake(deviceAcceleration);
+                Debug.Log("shaking a fish");
+            }
+            bubblesDup.StartShake(deviceAcceleration);
+        } else {
+            foreach (var f in Fishies) {
+                f.ContinueShake(deviceAcceleration);
+                Debug.Log("continue to shake");
+            }
+            bubblesDup.StartShake(deviceAcceleration);
         }
-        bubblesDup.StartShake(deviceAcceleration);
         // resets the elapsed timer since shaking is still happening
         elapsedTime = 0;
     }
@@ -26,6 +36,7 @@ public class ShakeController : MonoBehaviour
             foreach (var f in Fishies) {
                 if (f != null){
                     f.EndShake();
+                    isShaking = false;
                 }
             }
             bubblesDup.EndShake();

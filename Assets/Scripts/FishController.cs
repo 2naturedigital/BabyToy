@@ -126,6 +126,12 @@ public class FishController : MonoBehaviour {
         shakeMultiplier = mult.sqrMagnitude;
         //Debug.Log("Magnintude: " + shakeMultiplier);
         SetIsShaking(true);
+        //PlaySFX(shake1);
+    }
+    public void ContinueShake(Vector3 mult) {
+        // do anything needed on a continued shake
+        shakeMultiplier = mult.sqrMagnitude;
+        //PlaySFX(shake2);
     }
     public void EndShake() {
         shakeMultiplier = 1;

@@ -34,23 +34,23 @@ public class SoundController : MonoBehaviour
     //             PlaySFX(shake1);
     //             shakePlayed = true;
     //         } else {
-    //             shakeCheckTimer -= Time.DeltaTime; 
+    //             shakeCheckTimer -= Time.DeltaTime;
     //         }
-            
+
     //         if (shakeCheckTimer <= 0 && shakePlayed == true && medShakePlayed == false) {
 
     //         }
-    //     } 
+    //     }
     //     if (isShaking && shakePlayed == true && shakeCheckTimer > 0) {
-    //         shakeCheckTimer -= Time.DeltaTime;            
-    //     } 
+    //         shakeCheckTimer -= Time.DeltaTime;
+    //     }
     //     if (medShakePlayed == false && shakeCheckTimer <= 0) {
     //         isStillShaking = true;
     //         audioSrc.Stop();
     //         PlaySFX(shake2);
     //         medShakePlayed == true;
     //         shakeCheckTimer = 1;
-    //     } 
+    //     }
     //     if (medShakePlayed == true && shakeCheckTimer > 0) {
     //         shakeCheckTimer -= Time.DeltaTime;
     //     }

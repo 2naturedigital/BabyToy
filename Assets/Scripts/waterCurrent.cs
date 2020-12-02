@@ -40,7 +40,7 @@ public class WaterCurrent : MonoBehaviour {
         Rigidbody2D objectRigid = col.gameObject.GetComponent<Rigidbody2D>();
         if (objectRigid != null)
             bubblesInCurrent.Remove(objectRigid);
-    }    
+    }
 
     // private void NewDirection() {
     //     set a current that moves left or right or no direction at all
@@ -49,7 +49,7 @@ public class WaterCurrent : MonoBehaviour {
     //     }
     //     if (currentDirection == Vector2.left) {
     //         currentDirection = Vector2.right;
-    //     } 
+    //     }
     //     if (currentDirection == Vector2.right) {
     //         currentDirection = Vector2.left;
     //     }
@@ -70,7 +70,7 @@ public class WaterCurrent : MonoBehaviour {
         foreach (Rigidbody2D bubble in bubblesInCurrent) {
             if (bubble != null && isShaking) {
                 bubble.AddForce(currentStrengthDuringShake * currentDirection);
-            } 
+            }
             if (bubble != null && !isShaking) {
                 bubble.AddForce(currentStrength * currentDirection);
             }
@@ -91,5 +91,5 @@ public class WaterCurrent : MonoBehaviour {
         // }
     }
 
-    
+
 }

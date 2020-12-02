@@ -40,11 +40,11 @@ public class BlowFish : FishController
 
         // only do blowfish animations and movement when not shaking and pump timer has been reached
         if (!IsShaking()) {
-            PositionCheckVertical();            
+            PositionCheckVertical();
             if (pumpTimer <= 0) {
                 AnimateFish();
                 MoveFish();
-                //if 
+                //if
                 pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
             } else {
                 pumpTimer -= Time.deltaTime;
@@ -122,13 +122,13 @@ public class BlowFish : FishController
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
         if (screenPosition.x < 0f - FISHWIDTH/2) {
             // if fish goes off screen on one side, pop him on the other side
-            screenPosition.x = Screen.width;
+            screenPosition.x = Screen.width + FISHWIDTH/2;
             //screenPosition.y = Mathf.Clamp(screenPosition.y, 0f + 380/2, Screen.height - 380/2);
             Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
             this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
         } else if (screenPosition.x > Screen.width + FISHWIDTH/2) {
             // if fish goes off screen on one side, pop him on the other side
-            screenPosition.x = 0f;
+            screenPosition.x = 0f - FISHWIDTH/2;
             //screenPosition.y = Mathf.Clamp(screenPosition.y, 0f + 380/2, Screen.height - 380/2);
             Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
             this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);

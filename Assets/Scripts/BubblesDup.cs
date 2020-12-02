@@ -17,7 +17,7 @@ public class BubblesDup : MonoBehaviour
     Vector3 CameraPos;
     float defaultWidth;
     float defaultHeight;
-    
+
 
     private void Start() {
         CameraPos = Camera.main.transform.position;
@@ -33,6 +33,11 @@ public class BubblesDup : MonoBehaviour
 
     public void StartShake(Vector3 mult) {
         isShaking = true;
+        bubbleTimer = shakeBubbleTimer;
+    }
+
+    public void ContinueShake(Vector3 mult) {
+        // do anything needed on a continued shake
         bubbleTimer = shakeBubbleTimer;
     }
 
