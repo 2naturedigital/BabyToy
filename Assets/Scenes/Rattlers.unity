@@ -307,7 +307,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &285497658
 AudioSource:
@@ -555,6 +555,8 @@ MonoBehaviour:
   bubbleMaxScale: 2.5
   shakeBubbleTimer: 0.15
   shakeBubbleCount: 1
+  shake1: {fileID: 8300000, guid: 5bb48dc6196441343b566b51b5ef53dd, type: 3}
+  shake2: {fileID: 8300000, guid: 85aa452bb455b264489984b3a3527f71, type: 3}
 --- !u!4 &528298671
 Transform:
   m_ObjectHideFlags: 0
@@ -693,14 +695,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c00d1d75238e04b9c7b95f71b4b864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeForceMultiplier: 3
   shakeResetTimer: 1.5
-  Fishies:
+  fishies:
   - {fileID: 1610959111}
   - {fileID: 1184103762}
   - {fileID: 1852925474}
+  waterCurrent:
+  - {fileID: 110417621}
+  - {fileID: 765393354}
+  - {fileID: 673668689}
+  - {fileID: 782968334}
+  - {fileID: 271795047}
   bubblesDup: {fileID: 528298670}
-  waterCurrent: {fileID: 0}
 --- !u!4 &650523471
 Transform:
   m_ObjectHideFlags: 0
@@ -713,7 +719,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &673668687
 GameObject:
@@ -1128,7 +1134,7 @@ RectTransform:
   - {fileID: 528298671}
   - {fileID: 826779767}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1454,16 +1460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee421e0ef14221419d960d6f22415a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -320
-  maxX: 320
-  minY: -770
-  maxY: 770
   minSpeed: 0
   maxSpeed: 0
-  isShaking: 0
-  isResetTime: 0
-  animator: {fileID: 1184103756}
-  sndCtrl: {fileID: 0}
   pumpMinTime: 1
   pumpMaxTime: 7
   pumpPowerMin: 100
@@ -1580,16 +1578,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d52d34a39eed7a4ea2bf877935a57be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -381
-  maxX: 381
-  minY: -789
-  maxY: 789
   minSpeed: 20
   maxSpeed: 40
-  isShaking: 0
-  isResetTime: 0
-  animator: {fileID: 1610959109}
-  sndCtrl: {fileID: 0}
 --- !u!50 &1610959112
 Rigidbody2D:
   serializedVersion: 4
@@ -1668,7 +1658,7 @@ RectTransform:
   m_GameObject: {fileID: 1852925465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 788732148}
   m_RootOrder: 3
@@ -1783,69 +1773,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6d9da73adc52c45a0ff6d3543d2dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -397
-  maxX: 397
-  minY: -825
-  maxY: 825
   minSpeed: 0
   maxSpeed: 0
-  isShaking: 0
-  isResetTime: 0
-  animator: {fileID: 1852925467}
-  sndCtrl: {fileID: 0}
   wobbleSpeed: 0.07
   wobbleShakeSpeed: 3
   wobbleMinAngle: 0.02
   wobbleMaxAngle: -0.02
---- !u!1 &2116744576
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2116744578}
-  - component: {fileID: 2116744577}
-  m_Layer: 0
-  m_Name: ScreenContainer
-  m_TagString: Wall
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!68 &2116744577
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116744576}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: f476d59623521134a8028f2a57f056fa, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 540, y: -960.00006}
-  - {x: 540, y: 959.99976}
-  - {x: -540.0003, y: 959.9997}
-  - {x: -540.0002, y: -960.0001}
-  - {x: 540, y: -960.00006}
---- !u!4 &2116744578
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116744576}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -3,7 +3,6 @@
 public class Bubble : MonoBehaviour
 {
     public Animator animator;
-    public AudioSource audioSrc;
     public AudioClip bubbleSound;
     public float bubblePitchMin;
     public float bubblePitchMax;
@@ -15,40 +14,35 @@ public class Bubble : MonoBehaviour
     public AudioClip[] popSounds;
     public float destroyAnimationTimer;
     private GameObject bubble;
-    private bool isShaking = false;
-    Collider2D col;
-    Rigidbody2D rb;
-    public SoundController sndCtrl;
+    private SoundController sndCtrl;
+    private Vector3 CameraPos;
+    private float defaultWidth;
+    private float defaultHeight;
 
 
-    void start() {
-        sndCtrl = FindObjectOfType<SoundController>();
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
-        animator = GetComponent<Animator>();
-        audioSrc = GetComponent<AudioSource>();
+    void Start() {
     }
 
+    // Bubbles are made and destroyed on the fly, so we are using Awake() instead of Start()
     void Awake() {
         sndCtrl = FindObjectOfType<SoundController>();
-        RandomizeBubbleSounds();
         lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
+        RandomizeBubbleSounds();
+        SetCameraProperties();
+        // Must set tag so only bubbles get affected by the small water currents
+        this.tag = "Bubble";
     }
 
     void Update() {
-        if (isShaking) {
-            Destroy(this.gameObject);
-        }
-
-        //get touch position when the screen is touched
+        // Get touch position when the screen is touched
         if (Input.touchCount > 0) {
             // Handle all touches
             foreach (Touch touch in Input.touches) {
                 Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 // When a touch begins, grab its location and see if it is overlaping a collider2d object
-                if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Ended) {
+                if (touch.phase == TouchPhase.Began) {
                     if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPosition)) {
-                        //set the collider2d object to a gameobject & destroy it
+                        // Set the collider2d object to a gameobject & destroy it
                         bubble = GetComponent<Collider2D>().gameObject;
                         PopBubble(bubble);
                     }
@@ -56,12 +50,12 @@ public class Bubble : MonoBehaviour
             }
         }
 
-        // autodestruct bubbles
-        // destroy bubbles above the screen
-        if (this.transform.position.y >= 1000.0f) {
+        // Autodestruct Bubbles
+        // Destroy bubbles above the screen
+        if (this.transform.position.y >= defaultHeight + 250) {
             Destroy(this.gameObject);
         }
-        // pop bubles based on timer
+        // Pop bubles based on timer
         if (lifetimer > 0) {
             lifetimer -= Time.deltaTime;
         }
@@ -71,31 +65,21 @@ public class Bubble : MonoBehaviour
         }
     }
 
-    public void StartShake(Vector3 mult) {
-        Debug.Log("bubble " + this.gameObject + " is shaking!");
-        isShaking = true;
+    public void SetCameraProperties() {
+        CameraPos = Camera.main.transform.position;
+        defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
+        defaultHeight = Camera.main.orthographicSize;
     }
 
-    public void EndShake() {
-        isShaking = false;
-    }
-
-    //triggers the pop animation, sets a random pop sound & plays, destroys bubble object
+    // Triggers the pop animation, sets a random pop sound & plays, destroys bubble object
     private void PopBubble(GameObject gameObject) {
         animator.SetTrigger("Touched");
-        // audioSrc.clip = popSounds[Random.Range(0, popSounds.Length)];
-        // audioSrc.PlayOneShot(audioSrc.clip);
         sndCtrl.PlaySFX(popSounds[Random.Range(0, popSounds.Length)]);
         Destroy(gameObject, destroyAnimationTimer);
     }
 
-    //sets the bubble sound, randomizes pitch & volume
+    // Sets the bubble sound, randomizes pitch & volume
     private void RandomizeBubbleSounds() {
-        // audioSrc.clip = bubbleSound;
-        // audioSrc.pitch = Random.Range(bubblePitchMin, bubblePitchMax);
-        // audioSrc.volume = Random.Range(bubbleVolMin, bubbleVolMax);
-        // audioSrc.PlayOneShot(audioSrc.clip);
         sndCtrl.PlaySFX(bubbleSound, Random.Range(bubbleVolMin, bubbleVolMax), Random.Range(bubblePitchMin, bubblePitchMax));
     }
-
-}
+}//end of Bubble

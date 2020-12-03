@@ -2,18 +2,16 @@
 
 public class Guppy : FishController
 {
-    //public Animator animator;
+    private const int FISHWIDTH = 318;
+    private const int FISHHEIGHT = 342;
 
-    // Start is called before the first frame update
     void Start() {
-        //animator = GetComponent<Animator>();
-        sndCtrl = FindObjectOfType<SoundController>();
+        SetCameraProperties();
+        SetSoundController(FindObjectOfType<SoundController>());
+        SetAnimator(GetComponent<Animator>());
+        SetFishSize(FISHWIDTH, FISHHEIGHT);
     }
 
-    void Awake() {
-    }
-
-    // Update is called once per frame
     void Update() {
         MoveFish();
     }
@@ -29,4 +27,4 @@ public class Guppy : FishController
             SetRandomTarget();
         }
     }
-}
+}//end of Guppy

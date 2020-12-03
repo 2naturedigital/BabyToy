@@ -3,93 +3,54 @@ using UnityEngine;
 
 public class WaterCurrent : MonoBehaviour {
 
-   List<Rigidbody2D> bubblesInCurrent = new List<Rigidbody2D>();
-   public float currentStrength;
-   public float currentStrengthDuringShake;
-   public Vector2 currentDirection;
-   private bool isShaking = false;
-   //public bool alternatingCurrent;
-   //private float currentMovementPeriod = 5f;
-   //public int minMovementPeriod;
-   //public int maxMovementPeriod;
-   //private float elapsedTime = 0;
+    private List<Rigidbody2D> bubblesInCurrent = new List<Rigidbody2D>();
+    public float currentStrength;
+    public float currentStrengthDuringShake;
+    private float shakeMult;
+    public Vector2 currentDirection;
+    private bool isShaking = false;
 
-   private void Start() {
-       // initialize direction, strength, and movement period for current
-       //NewStrength();
-       //NewMovementPeriod();
-   }
+    void Start() {
+    }
 
-   public void StartShake(Vector3 mult) {
+    public void StartShake(Vector3 mult) {
         isShaking = true;
+        shakeMult = mult.sqrMagnitude;
+    }
+
+    public void ContinueShake(Vector3 mult) {
+        // Do anything needed on a continued shake
+        shakeMult = mult.sqrMagnitude;
     }
 
     public void EndShake() {
         isShaking = false;
     }
 
-
     private void OnTriggerEnter2D(Collider2D col) {
         Rigidbody2D objectRigid = col.gameObject.GetComponent<Rigidbody2D>();
-        if (objectRigid != null)
+        // Add only bubbles
+        if (objectRigid != null && objectRigid.tag == "Bubble") {
             bubblesInCurrent.Add(objectRigid);
-    }
-
-
-    private void OnTriggerExit2D(Collider2D col) {
-        Rigidbody2D objectRigid = col.gameObject.GetComponent<Rigidbody2D>();
-        if (objectRigid != null)
-            bubblesInCurrent.Remove(objectRigid);
-    }
-
-    // private void NewDirection() {
-    //     set a current that moves left or right or no direction at all
-    //     if (currentDirection == null) {
-    //         currentDirection = new Vector2(Random.Range(-1, 1), 0);
-    //     }
-    //     if (currentDirection == Vector2.left) {
-    //         currentDirection = Vector2.right;
-    //     }
-    //     if (currentDirection == Vector2.right) {
-    //         currentDirection = Vector2.left;
-    //     }
-    // }
-
-    // private void NewStrength() {
-    //     // set a new strength between the min and max provided
-    //     currentStrength = Random.Range(minStrength, maxStrength);
-    // }
-
-    // private void NewMovementPeriod() {
-    //     //set a new movement period from the min to max provided
-    //     currentMovementPeriod = Random.Range(minMovementPeriod, maxMovementPeriod);
-    // }
-
-
-    private void FixedUpdate() {
-        foreach (Rigidbody2D bubble in bubblesInCurrent) {
-            if (bubble != null && isShaking) {
-                bubble.AddForce(currentStrengthDuringShake * currentDirection);
-            }
-            if (bubble != null && !isShaking) {
-                bubble.AddForce(currentStrength * currentDirection);
-            }
         }
     }
 
-    void Update() {
-        // only do this when currents can alternate
-        // if (alternatingCurrent) {
-        //     elapsedTime += Time.deltaTime;
-        //     // after movementPeriod has been reached, get a new direction and speed for the current
-        //     if (elapsedTime > currentMovementPeriod) {
-        //         elapsedTime = 0;
-        //         NewDirection();
-        //         NewStrength();
-        //         NewMovementPeriod();
-        //     }
-        // }
+    private void OnTriggerExit2D(Collider2D col) {
+        Rigidbody2D objectRigid = col.gameObject.GetComponent<Rigidbody2D>();
+        if (objectRigid != null) {
+            bubblesInCurrent.Remove(objectRigid);
+        }
     }
 
-
-}
+    private void FixedUpdate() {
+        foreach (Rigidbody2D bubble in bubblesInCurrent) {
+            if (bubble != null) {
+                if (isShaking) {
+                    bubble.AddForce(currentStrengthDuringShake * shakeMult * currentDirection);
+                } else {
+                    bubble.AddForce(currentStrength * currentDirection);
+                }
+            }
+        }
+    }
+}//end of WaterCurrent

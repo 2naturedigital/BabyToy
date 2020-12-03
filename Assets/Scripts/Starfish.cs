@@ -2,21 +2,22 @@
 
 public class Starfish : FishController
 {
-    //public Animator animator;
+    private const int FISHWIDTH = 577;
+    private const int FISHHEIGHT = 547;
     public float wobbleSpeed;
     public float wobbleShakeSpeed;
     public float wobbleMinAngle;
     public float wobbleMaxAngle;
     private int direction;
 
-    // Start is called before the first frame update
     void Start() {
+        SetCameraProperties();
+        SetSoundController(FindObjectOfType<SoundController>());
+        SetAnimator(GetComponent<Animator>());
+        SetFishSize(FISHWIDTH, FISHHEIGHT);
         direction = -1;
-        sndCtrl = FindObjectOfType<SoundController>();
-        //animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update() {
         MoveFish();
     }
@@ -47,7 +48,7 @@ public class Starfish : FishController
     }
 
     void Wobble(float speed) {
-        // rotation based on rotation created
+        // Rotation based on rotation created
         float rotation = 0;
         rotation = direction * speed * GetShakeMultiplier();
         transform.Rotate(0, 0, rotation);
@@ -60,4 +61,4 @@ public class Starfish : FishController
     private void OnTriggerEnter2D(Collider2D other) {
 
     }
-}
+}//end of Starfish

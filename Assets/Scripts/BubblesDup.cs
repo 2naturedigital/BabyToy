@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BubblesDup : MonoBehaviour
 {
@@ -11,34 +9,44 @@ public class BubblesDup : MonoBehaviour
     public float bubbleMinScale;
     public float bubbleMaxScale;
     private bool isShaking = false;
-    float bubbleTimer = 0;
+    private float bubbleTimer = 0;
     public float shakeBubbleTimer;
     public int shakeBubbleCount;
-    Vector3 CameraPos;
-    float defaultWidth;
-    float defaultHeight;
+    private Vector3 CameraPos;
+    private float defaultWidth;
+    private float defaultHeight;
+    public AudioClip shake1;
+    public AudioClip shake2;
+    private SoundController sndCtrl;
 
 
-    private void Start() {
+    void Start() {
+        Debug.Log("BubblesDup Started");
+        sndCtrl = FindObjectOfType<SoundController>();
+        SetCameraProperties();
+    }
+
+    void Update() {
+        bubbleTimer -= Time.deltaTime;
+        CreateBubbles();
+    }
+
+    public void SetCameraProperties() {
         CameraPos = Camera.main.transform.position;
         defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
         defaultHeight = Camera.main.orthographicSize;
     }
 
-    // Update is called once per frame
-    void Update() {
-        bubbleTimer -= Time.deltaTime;
-        CreateBubbles(); //need the number to be dynamic, reactive to the shake.
-    }
-
     public void StartShake(Vector3 mult) {
         isShaking = true;
         bubbleTimer = shakeBubbleTimer;
+        sndCtrl.PlaySFX(shake1);
     }
 
     public void ContinueShake(Vector3 mult) {
-        // do anything needed on a continued shake
+        // Do anything needed on a continued shake
         bubbleTimer = shakeBubbleTimer;
+        sndCtrl.PlaySFX(shake2);
     }
 
     public void EndShake() {
@@ -53,9 +61,6 @@ public class BubblesDup : MonoBehaviour
             }
         } else if (bubbleTimer <= 0) {
             MakeBubble(1);
-            //create a self-destruct timer for the bubble just created and set it
-            //bubbleDestoryTimer = Random.Range(bubblePopMinTime, bubblePopMaxTime);
-            //Destroy(bubbleClone, bubbleDestoryTimer);
             bubbleTimer = Random.Range(bubbleSpawnMinTime, bubbleSpawnMaxTime);
         }
     }
@@ -68,4 +73,4 @@ public class BubblesDup : MonoBehaviour
             bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale);
         }
     }
-}
+}//end of BubblesDup

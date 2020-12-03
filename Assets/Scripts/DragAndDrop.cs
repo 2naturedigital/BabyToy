@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour {
-    bool moveAllowed;
-    Collider2D col;
+    public bool moveAllowed;
+    private Collider2D col;
 
     private FishController thisFish;
 
-    // Start is called before the first frame update
     void Start() {
         col = GetComponent<Collider2D>();
     }
@@ -15,12 +14,10 @@ public class DragAndDrop : MonoBehaviour {
         thisFish = GameObject.FindObjectOfType<FishController>();
     }
 
-    // Update is called once per frame
     void Update() {
-
         if (Input.touchCount > 0) {
             foreach (Touch touch in Input.touches) {
-                // translates the position on the screen that has been touched to the scene world position
+                // Translates the position on the screen that has been touched to the scene world position
                 Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
 
                 // When a touch begins, grab its location and see if it is overlaping a collider2d object then set that object to moveable
@@ -45,4 +42,4 @@ public class DragAndDrop : MonoBehaviour {
             }
         }
     }
-}
+}//end of DragAndDrop
