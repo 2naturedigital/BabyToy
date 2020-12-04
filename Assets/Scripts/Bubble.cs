@@ -18,14 +18,15 @@ public class Bubble : MonoBehaviour
     private Vector3 CameraPos;
     private float defaultWidth;
     private float defaultHeight;
+    private Collider2D bubbleCollider;
+    private bool isPopped = false;
 
 
-    void Start() {
-    }
 
     // Bubbles are made and destroyed on the fly, so we are using Awake() instead of Start()
     void Awake() {
         sndCtrl = FindObjectOfType<SoundController>();
+        bubbleCollider = GetComponent<Collider2D>();
         lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
         RandomizeBubbleSounds();
         SetCameraProperties();
@@ -33,29 +34,32 @@ public class Bubble : MonoBehaviour
         this.tag = "Bubble";
     }
 
+    
     void Update() {
         // Get touch position when the screen is touched
         if (Input.touchCount > 0) {
-            // Handle all touches
+            //Handle all touches
             foreach (Touch touch in Input.touches) {
                 Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 // When a touch begins, grab its location and see if it is overlaping a collider2d object
-                if (touch.phase == TouchPhase.Began) {
-                    if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPosition)) {
-                        // Set the collider2d object to a gameobject & destroy it
-                        bubble = GetComponent<Collider2D>().gameObject;
+                
+                if (bubbleCollider == Physics2D.OverlapPoint(touchPosition)) {
+                    // Set the collider2d object to a gameobject & destroy it
+                    if (!isPopped) {                    
+                        bubble = bubbleCollider.gameObject;
                         PopBubble(bubble);
                     }
                 }
+                
             }
         }
 
         // Autodestruct Bubbles
         // Destroy bubbles above the screen
-        if (this.transform.position.y >= defaultHeight + 250) {
+        if (this.transform.position.y >= defaultHeight + 150) {
             Destroy(this.gameObject);
         }
-        // Pop bubles based on timer
+        // Pop bubbles based on timer
         if (lifetimer > 0) {
             lifetimer -= Time.deltaTime;
         }
@@ -63,6 +67,7 @@ public class Bubble : MonoBehaviour
             PopBubble(this.gameObject);
             lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
         }
+        
     }
 
     public void SetCameraProperties() {
@@ -76,6 +81,7 @@ public class Bubble : MonoBehaviour
         animator.SetTrigger("Touched");
         sndCtrl.PlaySFX(popSounds[Random.Range(0, popSounds.Length)]);
         Destroy(gameObject, destroyAnimationTimer);
+        isPopped = true;
     }
 
     // Sets the bubble sound, randomizes pitch & volume
