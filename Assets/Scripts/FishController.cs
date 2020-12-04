@@ -20,13 +20,14 @@ public class FishController : MonoBehaviour {
     private Vector2 targetPosition;
 
     void Start() {
-        Debug.Log("FishController Started");
+        //Debug.Log("FishController Started");
         // Get Camera info
-        SetCameraProperties();
+        //SetCameraProperties();
+        //SetFishStartingPoints();
         // Get a starting target position
-        sndCtrl = FindObjectOfType<SoundController>();
-        SetRandomTarget();
-        animator = GetComponent<Animator>();
+        //SetRandomTarget();
+        //sndCtrl = FindObjectOfType<SoundController>();
+        //animator = GetComponent<Animator>();
     }
 
     void Update() {
@@ -42,6 +43,13 @@ public class FishController : MonoBehaviour {
         CameraPos = Camera.main.transform.position;
         defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
         defaultHeight = Camera.main.orthographicSize;
+    }
+
+    public void SetFishStartingPoints() {
+        // Clamp x and y to inside the screen for starting positions
+        // This sets a randome target for each fish but then moves the fish to that target at the start of the game
+        SetRandomTarget();
+        this.transform.position = targetPosition;
     }
 
     public float GetDefaultWidth() {

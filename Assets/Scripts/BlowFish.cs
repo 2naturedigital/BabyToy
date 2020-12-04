@@ -18,11 +18,13 @@ public class BlowFish : FishController
     private bool isInflated = false;
 
     void Start() {
-        Debug.Log("BlowFish Started");
-        SetCameraProperties();
+        //Debug.Log("BlowFish Started");
         SetSoundController(FindObjectOfType<SoundController>());
         SetAnimator(GetComponent<Animator>());
+        SetCameraProperties();
         SetFishSize(FISHWIDTH, FISHHEIGHT);
+        SetFishStartingPoints();
+        //SetRandomTarget();
         blowFish = GetComponent<Rigidbody2D>();
         pumpDirection = Vector2.up;
     }
@@ -99,6 +101,7 @@ public class BlowFish : FishController
                 screenPosition.y = Mathf.Clamp(screenPosition.y, (0f + FISHHEIGHT/2), Screen.height);
                 Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
                 this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
+                Bounce();
             } else {
                 // Set pump timer to 0 so fish immediately pumps
                 pumpTimer = 0;
@@ -118,10 +121,9 @@ public class BlowFish : FishController
         this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
     }
 
-    /* Logic for bouncing off walls
+    // Logic for bouncing off walls
     private void Bounce() {
         Vector2 newVelocity = blowFish.velocity * -1;
         blowFish.velocity = newVelocity;
     }
-    */
 }//end of BlowFish

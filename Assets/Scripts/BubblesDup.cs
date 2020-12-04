@@ -23,7 +23,7 @@ public class BubblesDup : MonoBehaviour
 
 
     void Start() {
-        Debug.Log("BubblesDup Started");
+        //Debug.Log("BubblesDup Started");
         sndCtrl = FindObjectOfType<SoundController>();
         SetCameraProperties();
     }

@@ -6,10 +6,12 @@ public class Guppy : FishController
     private const int FISHHEIGHT = 342;
 
     void Start() {
-        SetCameraProperties();
         SetSoundController(FindObjectOfType<SoundController>());
         SetAnimator(GetComponent<Animator>());
+        SetCameraProperties();
         SetFishSize(FISHWIDTH, FISHHEIGHT);
+        SetFishStartingPoints();
+        SetRandomTarget();
     }
 
     void Update() {

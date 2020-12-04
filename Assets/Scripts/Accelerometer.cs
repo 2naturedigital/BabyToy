@@ -12,7 +12,7 @@ public class Accelerometer : MonoBehaviour
     private ShakeController shakeController;
 
     void Start() {
-        Debug.Log("Accelerometer Started");
+        //Debug.Log("Accelerometer Started");
         // Less system taxing to use squared magnintude rather than squareroot
         sqrShakeDetectionThreshold = Mathf.Pow(shakeDetectionThreshhold, 2);
         shakeController = GetComponent<ShakeController>();

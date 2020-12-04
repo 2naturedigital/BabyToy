@@ -11,7 +11,7 @@ public class CameraScreenScale : MonoBehaviour {
     // private float defaultHeight;
 
     void Start() {
-        Debug.Log("CameraScreenScale Started");
+        //Debug.Log("CameraScreenScale Started");
         // Calculate screen ratio
         float screenRatio = (float)Screen.width / (float)Screen.height;
         float targetRatio;

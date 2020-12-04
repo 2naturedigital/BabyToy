@@ -11,10 +11,12 @@ public class Starfish : FishController
     private int direction;
 
     void Start() {
-        SetCameraProperties();
         SetSoundController(FindObjectOfType<SoundController>());
         SetAnimator(GetComponent<Animator>());
+        SetCameraProperties();
         SetFishSize(FISHWIDTH, FISHHEIGHT);
+        SetFishStartingPoints();
+        //SetRandomTarget();
         direction = -1;
     }
 
