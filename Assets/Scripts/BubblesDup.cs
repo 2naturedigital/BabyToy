@@ -18,6 +18,8 @@ public class BubblesDup : MonoBehaviour
     public AudioClip shake1;
     public AudioClip shake2;
     private SoundController sndCtrl;
+    private float magnitudeMult = 1;
+    private float shakeForceMultiplier = 1;
 
 
     void Start() {
@@ -37,20 +39,26 @@ public class BubblesDup : MonoBehaviour
         defaultHeight = Camera.main.orthographicSize;
     }
 
-    public void StartShake(Vector3 mult) {
+    public void StartShake(Vector3 mult, float shakeForceMult) {
         isShaking = true;
         bubbleTimer = shakeBubbleTimer;
-        sndCtrl.PlaySFX(shake1);
+        sndCtrl.PlaySFX(shake1, 1f, 1f, true);
+        magnitudeMult = mult.sqrMagnitude;
+        shakeForceMultiplier = shakeForceMult;
     }
 
-    public void ContinueShake(Vector3 mult) {
+    public void ContinueShake(Vector3 mult, float shakeForceMult) {
         // Do anything needed on a continued shake
         bubbleTimer = shakeBubbleTimer;
-        sndCtrl.PlaySFX(shake2);
+        sndCtrl.PlaySFX(shake2, 1f, 1f, true);
+        magnitudeMult = mult.sqrMagnitude;
+        shakeForceMultiplier = shakeForceMult;
     }
 
     public void EndShake() {
         isShaking = false;
+        magnitudeMult = 1;
+        shakeForceMultiplier = 1;
     }
 
     public void CreateBubbles() {

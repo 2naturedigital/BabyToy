@@ -10,7 +10,8 @@ public class FishController : MonoBehaviour {
     private bool isShaking = false;
     private bool isResetTime = false;
     private Animator animator;
-    private float shakeMultiplier = 1;
+    private float magnitudeMult = 1;
+    private float shakeForceMultiplier = 1;
     private SoundController sndCtrl;
     private Vector3 CameraPos;
     private float defaultWidth;
@@ -121,7 +122,7 @@ public class FishController : MonoBehaviour {
     }
 
     public float GetSpeed() {
-        return speed * shakeMultiplier;
+        return speed * magnitudeMult;
     }
 
     public void SetSpeed() {
@@ -167,17 +168,20 @@ public class FishController : MonoBehaviour {
 
 
     // SHAKE RELATED
-    public void StartShake(Vector3 mult) {
-        shakeMultiplier = mult.sqrMagnitude;
+    public void StartShake(Vector3 mult, float shakeForceMult) {
+        magnitudeMult = mult.sqrMagnitude;
+        shakeForceMultiplier = shakeForceMult;
         //Debug.Log("Magnintude: " + shakeMultiplier);
         SetIsShaking(true);
     }
-    public void ContinueShake(Vector3 mult) {
+    public void ContinueShake(Vector3 mult, float shakeForceMult) {
         // Do anything needed on a continued shake
-        shakeMultiplier = mult.sqrMagnitude;
+        magnitudeMult = mult.sqrMagnitude;
+        shakeForceMultiplier = shakeForceMult;
     }
     public void EndShake() {
-        shakeMultiplier = 1;
+        magnitudeMult = 1;
+        shakeForceMultiplier = 1;
         SetIsShaking(false);
         SetResetTime(true);
     }
@@ -199,7 +203,7 @@ public class FishController : MonoBehaviour {
     }
 
     public float GetShakeMultiplier() {
-        return shakeMultiplier;
+        return magnitudeMult;
     }
 
 
