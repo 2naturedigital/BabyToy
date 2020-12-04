@@ -90,11 +90,19 @@ public class BlowFish : FishController
     private void PositionCheckVertical() {
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
         if (screenPosition.y > (Screen.height - FISHHEIGHT/2)) {
-            // Reset pump timer so he does not pump
+            // Reset pump timer so fish does not pump
             pumpTimer = pumpMaxTime;
         } else if (screenPosition.y < (0f + FISHHEIGHT/2)) {
-            // Set pump timer to 0 so he immediately pumps
+            // If floating around in puffed mode, bounce off the bottom
+            if (IsShaking()) {
+                // Clamp y to be inside the screen with a border of half the height of the fish so it never actually goes past the bottom of screen
+                screenPosition.y = Mathf.Clamp(screenPosition.y, (0f + FISHHEIGHT/2), Screen.height);
+                Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+                this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
+            } else {
+                // Set pump timer to 0 so fish immediately pumps
             pumpTimer = 0;
+            }
         }
     }
     private void PositionCheckHorizontal() {
