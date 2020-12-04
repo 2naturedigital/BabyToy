@@ -40,13 +40,13 @@ public class BubblesDup : MonoBehaviour
     public void StartShake(Vector3 mult) {
         isShaking = true;
         bubbleTimer = shakeBubbleTimer;
-        sndCtrl.PlaySFX(shake1);
+        sndCtrl.PlaySFX(shake1, 1f, 1f, true);
     }
 
     public void ContinueShake(Vector3 mult) {
         // Do anything needed on a continued shake
         bubbleTimer = shakeBubbleTimer;
-        sndCtrl.PlaySFX(shake2);
+        sndCtrl.PlaySFX(shake2, 1f, 1f, true);
     }
 
     public void EndShake() {
