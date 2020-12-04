@@ -93,7 +93,7 @@ public class BlowFish : FishController
             // Reset pump timer so fish does not pump
             pumpTimer = pumpMaxTime;
         } else if (screenPosition.y < (0f + FISHHEIGHT/2)) {
-            // If floating around in puffed mode, bounce off the bottom
+            // If floating around in puffed mode, bounce off the bottom, otherwise just pump right away near bottom
             if (IsShaking()) {
                 // Clamp y to be inside the screen with a border of half the height of the fish so it never actually goes past the bottom of screen
                 screenPosition.y = Mathf.Clamp(screenPosition.y, (0f + FISHHEIGHT/2), Screen.height);
@@ -101,7 +101,7 @@ public class BlowFish : FishController
                 this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
             } else {
                 // Set pump timer to 0 so fish immediately pumps
-            pumpTimer = 0;
+                pumpTimer = 0;
             }
         }
     }
