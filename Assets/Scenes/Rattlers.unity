@@ -171,7 +171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 50
-  currentStrengthDuringShake: 100
   currentDirection: {x: 0, y: 1}
 --- !u!61 &110417622
 BoxCollider2D:
@@ -249,7 +248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 40
-  currentStrengthDuringShake: 80
   currentDirection: {x: -1, y: 0}
 --- !u!61 &271795048
 BoxCollider2D:
@@ -583,7 +581,7 @@ GameObject:
   - component: {fileID: 543905424}
   - component: {fileID: 543905423}
   m_Layer: 5
-  m_Name: FullCurrent
+  m_Name: TankCurrent
   m_TagString: WaterCurrent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,6 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c00d1d75238e04b9c7b95f71b4b864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeForceMultiplier: 2
   shakeResetTimer: 1.5
   fishies:
   - {fileID: 1610959111}
@@ -707,6 +706,7 @@ MonoBehaviour:
   - {fileID: 782968334}
   - {fileID: 271795047}
   bubblesDup: {fileID: 528298670}
+  tankCurrent: {fileID: 543905423}
 --- !u!4 &650523471
 Transform:
   m_ObjectHideFlags: 0
@@ -771,7 +771,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 40
-  currentStrengthDuringShake: 80
   currentDirection: {x: -1, y: 0}
 --- !u!61 &673668690
 BoxCollider2D:
@@ -930,7 +929,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 10
-  currentStrengthDuringShake: 20
   currentDirection: {x: 1, y: 0}
 --- !u!61 &765393355
 BoxCollider2D:
@@ -1008,7 +1006,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 50
-  currentStrengthDuringShake: 100
   currentDirection: {x: 1, y: 0}
 --- !u!61 &782968335
 BoxCollider2D:

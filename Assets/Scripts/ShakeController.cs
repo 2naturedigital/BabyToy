@@ -2,12 +2,13 @@
 
 public class ShakeController : MonoBehaviour
 {
-    // Used to increase the magnintude of the shake but loses vector level information
-    //public float shakeForceMultiplier;
+    // Used to increase the magnintude of the shake all across the game
+    public float shakeForceMultiplier;
     public float shakeResetTimer;
     public FishController[] fishies;
     public WaterCurrent[] waterCurrent;
     public BubblesDup bubblesDup;
+    public TankCurrent tankCurrent;
     private float elapsedTime = 0;
     private bool isShaking = false;
 
@@ -15,24 +16,26 @@ public class ShakeController : MonoBehaviour
         if (!isShaking) {
             isShaking = true;
             foreach (var f in fishies) {
-                f.StartShake(deviceAcceleration);
+                f.StartShake(deviceAcceleration, shakeForceMultiplier);
                 //Debug.Log("shaking a fish");
             }
             foreach (var c in waterCurrent) {
-                c.StartShake(deviceAcceleration);
+                c.StartShake(deviceAcceleration, shakeForceMultiplier);
                 //Debug.Log("shaking a fish");
             }
-            bubblesDup.StartShake(deviceAcceleration);
+            bubblesDup.StartShake(deviceAcceleration, shakeForceMultiplier);
+            tankCurrent.StartShake(deviceAcceleration, shakeForceMultiplier);
         } else {
             foreach (var f in fishies) {
-                f.ContinueShake(deviceAcceleration);
+                f.ContinueShake(deviceAcceleration, shakeForceMultiplier);
                 //Debug.Log("continue to shake");
             }
             foreach (var c in waterCurrent) {
-                c.ContinueShake(deviceAcceleration);
+                c.ContinueShake(deviceAcceleration, shakeForceMultiplier);
                 //Debug.Log("shaking a fish");
             }
-            bubblesDup.ContinueShake(deviceAcceleration);
+            bubblesDup.ContinueShake(deviceAcceleration, shakeForceMultiplier);
+            tankCurrent.ContinueShake(deviceAcceleration, shakeForceMultiplier);
         }
         // Resets the elapsed timer since shaking is still happening
         elapsedTime = 0;
@@ -51,6 +54,7 @@ public class ShakeController : MonoBehaviour
                 //Debug.Log("shaking a fish");
             }
             bubblesDup.EndShake();
+            tankCurrent.EndShake();
             elapsedTime = 0;
         }
     }
