@@ -1463,7 +1463,7 @@ MonoBehaviour:
   minSpeed: 0
   maxSpeed: 0
   pumpMinTime: 1
-  pumpMaxTime: 7
+  pumpMaxTime: 5
   pumpPowerMin: 100
   pumpPowerMax: 150
   inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}

@@ -132,14 +132,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6968515196046032870}
-  audioSrc: {fileID: -4301321616469913055}
   bubbleSound: {fileID: 8300000, guid: 50e78bb03e367f74f8bb083a444c3fc9, type: 3}
   bubblePitchMin: 0.8
   bubblePitchMax: 1.2
   bubbleVolMin: 0.8
   bubbleVolMax: 1.2
-  bubbleLifetimeMin: 10
-  bubbleLifetimeMax: 30
+  bubbleLifetimeMin: 8
+  bubbleLifetimeMax: 16
   popSounds:
   - {fileID: 8300000, guid: 6bbac0e25d604cf4da0006503b2a3405, type: 3}
   - {fileID: 8300000, guid: 90d73fffd2a28de448c2e806cecb85ab, type: 3}
@@ -150,7 +149,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7f5f681c94b120446ba7babb3ee45a1d, type: 3}
   - {fileID: 8300000, guid: 58798de29c9c03c4484df9953737e141, type: 3}
   destroyAnimationTimer: 0.15
-  sndCtrl: {fileID: 0}
 --- !u!58 &-6430882718770392091
 CircleCollider2D:
   m_ObjectHideFlags: 0
