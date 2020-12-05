@@ -34,7 +34,7 @@ public class Bubble : MonoBehaviour
         this.tag = "Bubble";
     }
 
-    
+
     void Update() {
         // Get touch position when the screen is touched
         if (Input.touchCount > 0) {
@@ -42,21 +42,21 @@ public class Bubble : MonoBehaviour
             foreach (Touch touch in Input.touches) {
                 Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 // When a touch begins, grab its location and see if it is overlaping a collider2d object
-                
+
                 if (bubbleCollider == Physics2D.OverlapPoint(touchPosition)) {
                     // Set the collider2d object to a gameobject & destroy it
-                    if (!isPopped) {                    
+                    if (!isPopped) {
                         bubble = bubbleCollider.gameObject;
                         PopBubble(bubble);
                     }
                 }
-                
+
             }
         }
 
         // Autodestruct Bubbles
         // Destroy bubbles above the screen
-        if (this.transform.position.y >= defaultHeight + 150) {
+        if (this.transform.position.y >= defaultHeight + 3) {
             Destroy(this.gameObject);
         }
         // Pop bubbles based on timer
@@ -67,7 +67,7 @@ public class Bubble : MonoBehaviour
             PopBubble(this.gameObject);
             lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
         }
-        
+
     }
 
     public void SetCameraProperties() {

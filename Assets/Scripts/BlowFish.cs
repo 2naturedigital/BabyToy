@@ -85,15 +85,18 @@ public class BlowFish : FishController
         */
     }
     private void PositionCheckVertical() {
-        Vector3 screenPosition = GetFishOnScreenPosition();
-        if (screenPosition.y > (GetScreenHeight() - GetFishHeight()/2)) {
+        //float randomX = Random.Range(CameraPos.x - GetScreenWidth() + (GetFishWidth()/2), GetScreenWidth() - (GetFishWidth()/2));
+        //float randomY = Random.Range(CameraPos.y - GetScreenHeight() + (GetFishHeight()/2), GetScreenHeight() - (GetFishHeight()/2));
+        //Vector3 screenPosition = GetFishOnScreenPosition();
+        Vector3 screenPosition = this.transform.position;
+        if (screenPosition.y > (GetScreenHeight() - GetFishHeight()/2)) {// - GetFishHeight()/2)) {
             // Reset pump timer so fish does not pump
             pumpTimer = pumpMaxTime;
-        } else if (screenPosition.y < (0f + GetFishHeight()/2)) {
+        } else if (screenPosition.y < (0f - GetScreenHeight() + GetFishHeight()/2)) { // + GetFishHeight()/2)) {
             // If floating around in puffed mode, bounce off the bottom, otherwise just pump right away near bottom
             if (IsShaking()) {
                 // Clamp y to be inside the screen with a border of half the height of the fish so it never actually goes past the bottom of screen
-                screenPosition.y = Mathf.Clamp(screenPosition.y, (0f + GetFishHeight()/2), GetScreenHeight());
+                screenPosition.y = Mathf.Clamp(screenPosition.y, (0f - GetScreenHeight() + (GetFishHeight()/2)), GetScreenHeight());// + GetFishHeight()/2), GetScreenHeight());
                 SetFishOnScreenPosition(screenPosition);
                 Bounce();
             } else {
@@ -103,13 +106,14 @@ public class BlowFish : FishController
         }
     }
     private void PositionCheckHorizontal() {
-        Vector3 screenPosition = GetFishOnScreenPosition();
+        //Vector3 screenPosition = GetFishOnScreenPosition();
+        Vector3 screenPosition = this.transform.position;
         // If fish goes off screen on one side, pop him on the other side
-        if (screenPosition.x < 0f - GetFishWidth()/2) {
-            screenPosition.x = GetScreenWidth() + GetFishWidth()/2;
+        if (screenPosition.x < 0f - GetScreenWidth() + GetFishWidth()/2) {// - GetFishWidth()/2) {
+            screenPosition.x = GetScreenWidth() - GetFishWidth()/2;// + GetFishWidth()/2;
 
-        } else if (screenPosition.x > GetScreenWidth() + GetFishWidth()/2) {
-            screenPosition.x = 0f - GetFishWidth()/2;
+        } else if (screenPosition.x > GetScreenWidth() - GetFishWidth()/2) {// + GetFishWidth()/2) {
+            screenPosition.x = 0f - GetScreenWidth() + GetFishWidth()/2;// - GetFishWidth()/2;
         }
         SetFishOnScreenPosition(screenPosition);
     }

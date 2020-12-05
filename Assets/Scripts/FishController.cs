@@ -60,7 +60,7 @@ public class FishController : MonoBehaviour {
         return Camera.main.WorldToScreenPoint(this.transform.position);
     }
     public void SetFishOnScreenPosition(Vector3 pos) {
-        this.transform.position = Camera.main.ScreenToWorldPoint(pos);
+        this.transform.position = pos; //Camera.main.ScreenToWorldPoint(pos);
     }
     public Vector3 GetTarget() {
         //Debug.Log(this + " Is going towards: " + targetPosition.x + " " + targetPosition.y);
@@ -175,6 +175,7 @@ public class FishController : MonoBehaviour {
     }
     public void SetCameraProperties() {
         CameraPos = Camera.main.transform.position;
+        Debug.Log("Ortho Size Is: " + Camera.main.orthographicSize);
         screenWidth = Camera.main.orthographicSize * Camera.main.aspect;
         screenHeight = Camera.main.orthographicSize;
     }
