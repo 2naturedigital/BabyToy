@@ -2,31 +2,26 @@
 
 public class BlowFish : FishController
 {
-    private const int FISHWIDTH = 440;
-    private const int FISHHEIGHT = 380;
+    // User/Unity Adjustable Public Class Variables
     public float pumpMinTime = 0.3f;
     public float pumpMaxTime = 3f;
-    private float pumpTimer = 0;
     public float pumpPowerMin;
     public float pumpPowerMax;
-    private float pumpPower;
-    private Vector2 pumpDirection;
-    private Rigidbody2D blowFish;
     public AudioClip inflateAudio;
     public AudioClip deflateAudio;
     public AudioClip swimAudio;
+
+    // Private Class Variables
+    private float pumpTimer = 0;
+    private float pumpPower;
     private bool isInflated = false;
+    private Vector2 pumpDirection = Vector2.up;
 
     void Start() {
-        //Debug.Log("BlowFish Started");
-        SetSoundController(FindObjectOfType<SoundController>());
-        SetAnimator(GetComponent<Animator>());
-        SetCameraProperties();
-        SetFishSize(FISHWIDTH, FISHHEIGHT);
-        SetFishStartingPoints();
-        //SetRandomTarget();
-        blowFish = GetComponent<Rigidbody2D>();
-        pumpDirection = Vector2.up;
+        InitializeFish();
+        Debug.Log("BLOWFISH SAYS:");
+        Debug.Log("Screen dot W: " + Screen.width + " Screen dot H: " + Screen.height);
+        Debug.Log("Screen W: " + GetScreenWidth() + " Screen H: " + GetScreenHeight());
     }
 
     void Update() {
@@ -71,7 +66,7 @@ public class BlowFish : FishController
 
     public override void MoveFish() {
         SetPumpPower();
-        blowFish.AddForce(pumpDirection * GetPumpPower(), ForceMode2D.Impulse);
+        GetRigidbody2D().AddForce(pumpDirection * GetPumpPower(), ForceMode2D.Impulse);
     }
 
     public float GetPumpPower() {
@@ -90,17 +85,16 @@ public class BlowFish : FishController
         */
     }
     private void PositionCheckVertical() {
-        Vector2 screenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
-        if (screenPosition.y > (Screen.height - FISHHEIGHT/2)) {
+        Vector3 screenPosition = GetFishOnScreenPosition();
+        if (screenPosition.y > (GetScreenHeight() - GetFishHeight()/2)) {
             // Reset pump timer so fish does not pump
             pumpTimer = pumpMaxTime;
-        } else if (screenPosition.y < (0f + FISHHEIGHT/2)) {
+        } else if (screenPosition.y < (0f + GetFishHeight()/2)) {
             // If floating around in puffed mode, bounce off the bottom, otherwise just pump right away near bottom
             if (IsShaking()) {
                 // Clamp y to be inside the screen with a border of half the height of the fish so it never actually goes past the bottom of screen
-                screenPosition.y = Mathf.Clamp(screenPosition.y, (0f + FISHHEIGHT/2), Screen.height);
-                Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
-                this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
+                screenPosition.y = Mathf.Clamp(screenPosition.y, (0f + GetFishHeight()/2), GetScreenHeight());
+                SetFishOnScreenPosition(screenPosition);
                 Bounce();
             } else {
                 // Set pump timer to 0 so fish immediately pumps
@@ -109,21 +103,20 @@ public class BlowFish : FishController
         }
     }
     private void PositionCheckHorizontal() {
-        Vector2 screenPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+        Vector3 screenPosition = GetFishOnScreenPosition();
         // If fish goes off screen on one side, pop him on the other side
-        if (screenPosition.x < 0f - FISHWIDTH/2) {
-            screenPosition.x = Screen.width + FISHWIDTH/2;
+        if (screenPosition.x < 0f - GetFishWidth()/2) {
+            screenPosition.x = GetScreenWidth() + GetFishWidth()/2;
 
-        } else if (screenPosition.x > Screen.width + FISHWIDTH/2) {
-            screenPosition.x = 0f - FISHWIDTH/2;
+        } else if (screenPosition.x > GetScreenWidth() + GetFishWidth()/2) {
+            screenPosition.x = 0f - GetFishWidth()/2;
         }
-        Vector3 newWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
-        this.transform.position = new Vector2(newWorldPosition.x, newWorldPosition.y);
+        SetFishOnScreenPosition(screenPosition);
     }
 
     // Logic for bouncing off walls
     private void Bounce() {
-        Vector2 newVelocity = blowFish.velocity * -1;
-        blowFish.velocity = newVelocity;
+        Vector2 newVelocity = GetRigidbody2D().velocity * -1;
+        GetRigidbody2D().velocity = newVelocity;
     }
 }//end of BlowFish

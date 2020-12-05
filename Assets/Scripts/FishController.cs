@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
 public class FishController : MonoBehaviour {
-    private int fishWidth;
-    private int fishHeight;
+    // User/Unity Adjustable Public Class Variables
     public float minSpeed;
     public float maxSpeed;
+
+    // Private Class Variables
+    private float fishWidth;
+    private float fishHeight;
     private float speed;
     private bool isFacingLeft = true;
     private bool isShaking = false;
@@ -14,87 +17,26 @@ public class FishController : MonoBehaviour {
     private float shakeForceMultiplier = 1;
     private SoundController sndCtrl;
     private Vector3 CameraPos;
-    private float defaultWidth;
-    private float defaultHeight;
+    private float screenWidth;
+    private float screenHeight;
     // Keep track of current target position
     private Vector2 targetPosition;
+    private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rBody2D;
 
-    void Start() {
-        //Debug.Log("FishController Started");
-        // Get Camera info
-        //SetCameraProperties();
-        //SetFishStartingPoints();
-        // Get a starting target position
-        //SetRandomTarget();
-        //sndCtrl = FindObjectOfType<SoundController>();
-        //animator = GetComponent<Animator>();
+
+    // Start(), Update(), FixedUpdate() etc. are handled in the subclasses
+    public void InitializeFish() {
+        SetSoundController();
+        SetAnimator();
+        SetRigidbody2D();
+        SetSpriteRenderer();
+        SetCameraProperties();
+        SetFishSize();
+        SetFishStartingPoints();
     }
 
-    void Update() {
-        MoveFish();
-    }
-
-    private void FixedUpdate() {
-        SetAnimatorShakeTrigger();
-        AnimateFish();
-    }
-
-    public void SetCameraProperties() {
-        CameraPos = Camera.main.transform.position;
-        defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
-        defaultHeight = Camera.main.orthographicSize;
-    }
-
-    public void SetFishStartingPoints() {
-        // Clamp x and y to inside the screen for starting positions
-        // This sets a randome target for each fish but then moves the fish to that target at the start of the game
-        SetRandomTarget();
-        this.transform.position = targetPosition;
-    }
-
-    public float GetDefaultWidth() {
-        return defaultWidth;
-    }
-
-    public float GetDefaultHeight() {
-        return defaultHeight;
-    }
-
-    public SoundController GetSoundController() {
-        return sndCtrl;
-    }
-
-    public void SetSoundController(SoundController sc) {
-        sndCtrl = sc;
-    }
-
-    public void PlaySFX(AudioClip audioClip, float vol = 1f, float pitch = 1f) {
-        sndCtrl.PlaySFX(audioClip, vol, pitch);
-    }
-
-    public Animator GetAnimator() {
-        return animator;
-    }
-
-    public void SetAnimator(Animator a) {
-        animator = a;
-    }
-
-    public void SetFishSize(int w, int h) {
-        fishWidth = w;
-        fishHeight = h;
-    }
-
-    public int GetFishWidth() {
-        return fishWidth;
-    }
-
-    public int GetFishHeight() {
-        return fishHeight;
-    }
-
-
-    // TARGET RELATED
+    // POSITION & TARGET RELATED
     // Do a movement transformation if the target position and the current position don't match, otherwise fetch new target
     public virtual void MoveFish() {
         SetSpeed();
@@ -110,29 +52,30 @@ public class FishController : MonoBehaviour {
             SetRandomTarget();
         }
     }
-
     public void SetTarget(Vector2 newTarget) {
         //Debug.Log(this + " Is changing to x: " + newTarget.x + " " + newTarget.y);
         targetPosition = newTarget;
     }
-
-    public Vector2 GetTarget() {
+    public Vector3 GetFishOnScreenPosition() {
+        return Camera.main.WorldToScreenPoint(this.transform.position);
+    }
+    public void SetFishOnScreenPosition(Vector3 pos) {
+        this.transform.position = Camera.main.ScreenToWorldPoint(pos);
+    }
+    public Vector3 GetTarget() {
         //Debug.Log(this + " Is going towards: " + targetPosition.x + " " + targetPosition.y);
         return targetPosition;
     }
-
     public void SetRandomTarget() {
-        float randomX = Random.Range(CameraPos.x - defaultWidth + (GetFishWidth() / 2), defaultWidth - (GetFishWidth() / 2));
-        float randomY = Random.Range(CameraPos.y - defaultHeight + (GetFishHeight() / 2), defaultHeight - (GetFishHeight() / 2));
+        float randomX = Random.Range(CameraPos.x - screenWidth + (fishWidth/2), screenWidth - (fishWidth/2));
+        float randomY = Random.Range(CameraPos.y - screenHeight + (fishHeight/2), screenHeight - (fishHeight/2));
         //Debug.Log("Min: " + (CameraPos.x - defaultWidth) + " Max: " + defaultWidth);
         //Debug.Log("Min: " + (CameraPos.y - defaultHeight) + " Max: " + defaultHeight);
-        targetPosition = new Vector2(randomX, randomY);
+        targetPosition = new Vector3(randomX, randomY);
     }
-
     public float GetSpeed() {
         return speed * magnitudeMult;
     }
-
     public void SetSpeed() {
         speed = Random.Range(minSpeed, maxSpeed);
     }
@@ -146,32 +89,16 @@ public class FishController : MonoBehaviour {
     public virtual void AnimateFish() {
         // Animations implemented in each fish subclass
     }
-
+    public void PlaySFX(AudioClip audioClip, float vol = 1f, float pitch = 1f) {
+        sndCtrl.PlaySFX(audioClip, vol, pitch);
+    }
     public void FlipHorizontal() {
         if (this.tag == "Fish") {
             isFacingLeft = !isFacingLeft;
             transform.Rotate(0, 180, 0);
         }
     }
-
     public void Rotate() {
-    }
-
-
-    // COLLISION RELATED
-    private void OnTriggerEnter2D(Collider2D other) {
-        /* Used for swapping targets on collision
-        if (this.tag == "Fish" && other.tag == "Fish") {
-            //Debug.Log("Collision");
-            FishController otherFish = other.gameObject.GetComponent<FishController>();
-            if (otherFish != null) {
-                Vector2 thisTarget = this.GetTarget();
-                Vector2 otherTarget = otherFish.GetTarget();
-                this.SetTarget(otherTarget);
-                otherFish.SetTarget(thisTarget);
-            }
-        }
-        */
     }
 
 
@@ -193,25 +120,37 @@ public class FishController : MonoBehaviour {
         SetIsShaking(false);
         SetResetTime(true);
     }
-
     public bool IsShaking() {
         return isShaking;
     }
-
     public void SetIsShaking(bool b) {
         isShaking = b;
     }
-
     public bool IsResetTime() {
         return isResetTime;
     }
-
     public void SetResetTime(bool b) {
         isResetTime = b;
     }
-
     public float GetShakeMultiplier() {
         return magnitudeMult;
+    }
+
+
+    // COLLISION RELATED
+    private void OnTriggerEnter2D(Collider2D other) {
+        /* Used for swapping targets on collision
+        if (this.tag == "Fish" && other.tag == "Fish") {
+            //Debug.Log("Collision");
+            FishController otherFish = other.gameObject.GetComponent<FishController>();
+            if (otherFish != null) {
+                Vector2 thisTarget = this.GetTarget();
+                Vector2 otherTarget = otherFish.GetTarget();
+                this.SetTarget(otherTarget);
+                otherFish.SetTarget(thisTarget);
+            }
+        }
+        */
     }
 
 
@@ -220,4 +159,61 @@ public class FishController : MonoBehaviour {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+
+    // Initializing Setters
+    public void SetSoundController() {
+        sndCtrl = FindObjectOfType<SoundController>();
+    }
+    public void SetAnimator() {
+        animator = GetComponent<Animator>();
+    }
+    public void SetRigidbody2D() {
+        rBody2D = GetComponent<Rigidbody2D>();
+    }
+    public void SetSpriteRenderer() {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    public void SetCameraProperties() {
+        CameraPos = Camera.main.transform.position;
+        screenWidth = Camera.main.orthographicSize * Camera.main.aspect;
+        screenHeight = Camera.main.orthographicSize;
+    }
+    public void SetFishSize() {
+        fishWidth = spriteRenderer.bounds.size.x;
+        fishHeight = spriteRenderer.bounds.size.y;
+    }
+    public void SetFishStartingPoints() {
+        // Clamp x and y to inside the screen for starting positions
+        // This sets a randome target for each fish but then moves the fish to that target at the start of the game
+        float randomX = Random.Range(CameraPos.x - screenWidth + (fishWidth/2), screenWidth - (fishWidth/2));
+        float randomY = Random.Range(CameraPos.y - screenHeight + (fishHeight/2), screenHeight - (fishHeight/2));
+        SetFishOnScreenPosition(new Vector3(randomX, randomY));
+    }
+
+
+    // Initializing Getters
+    public SoundController GetSoundController() {
+        return sndCtrl;
+    }
+    public Animator GetAnimator() {
+        return animator;
+    }
+    public Rigidbody2D GetRigidbody2D() {
+        return rBody2D;
+    }
+    public SpriteRenderer GetSpriteRenderer() {
+        return spriteRenderer;
+    }
+    public float GetScreenWidth() {
+        return screenWidth;
+    }
+    public float GetScreenHeight() {
+        return screenHeight;
+    }
+    public float GetFishWidth() {
+        return fishWidth;
+    }
+    public float GetFishHeight() {
+        return fishHeight;
+    }
 }//end of FishController

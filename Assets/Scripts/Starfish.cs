@@ -2,22 +2,21 @@
 
 public class Starfish : FishController
 {
-    private const int FISHWIDTH = 577;
-    private const int FISHHEIGHT = 547;
+    // User/Unity Adjustable Public Class Variables
     public float wobbleSpeed;
     public float wobbleShakeSpeed;
     public float wobbleMinAngle;
     public float wobbleMaxAngle;
-    private int direction;
+
+    // Private Class Variables
+    private int direction = -1;
 
     void Start() {
-        SetSoundController(FindObjectOfType<SoundController>());
-        SetAnimator(GetComponent<Animator>());
-        SetCameraProperties();
-        SetFishSize(FISHWIDTH, FISHHEIGHT);
-        SetFishStartingPoints();
-        //SetRandomTarget();
-        direction = -1;
+        InitializeFish();
+        SetRandomTarget();
+        Debug.Log("STARFISH SAYS:");
+        Debug.Log("Screen dot W: " + Screen.width + " Screen dot H: " + Screen.height);
+        Debug.Log("Screen W: " + GetScreenWidth() + " Screen H: " + GetScreenHeight());
     }
 
     void Update() {

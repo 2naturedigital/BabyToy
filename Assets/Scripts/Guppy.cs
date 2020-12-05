@@ -2,16 +2,12 @@
 
 public class Guppy : FishController
 {
-    private const int FISHWIDTH = 318;
-    private const int FISHHEIGHT = 342;
-
     void Start() {
-        SetSoundController(FindObjectOfType<SoundController>());
-        SetAnimator(GetComponent<Animator>());
-        SetCameraProperties();
-        SetFishSize(FISHWIDTH, FISHHEIGHT);
-        SetFishStartingPoints();
+        InitializeFish();
         SetRandomTarget();
+        Debug.Log("GUPPY SAYS:");
+        Debug.Log("Screen dot W: " + Screen.width + " Screen dot H: " + Screen.height);
+        Debug.Log("Screen W: " + GetScreenWidth() + " Screen H: " + GetScreenHeight());
     }
 
     void Update() {
