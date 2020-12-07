@@ -12,9 +12,7 @@ public class CurrentInitializer : MonoBehaviour
         }
         foreach (var col in colliders) {
             Debug.Log("DOING SOME STUFF PLEASE SEEEEE MEEEEEEEEEE");
-            //col.size = new Vector3(1500, 200);
-            col.bounds.Expand(2.5f);
-            //col.size.Scale(new Vector2(12, 12));
+            col.size = new Vector3(1500, 200);
         }
         tankCollider.size = new Vector3(2000, 2500);
     }

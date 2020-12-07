@@ -13,7 +13,6 @@ public class TankCurrent : MonoBehaviour {
    public int minMovementPeriod;
    public int maxMovementPeriod;
    private float elapsedTime = 0;
-   private bool isShaking = false;
    private float magnitudeMult = 1;
    private float shakeForceMultiplier = 1;
 
@@ -48,7 +47,6 @@ public class TankCurrent : MonoBehaviour {
     }
 
    public void StartShake(Vector3 mult, float shakeForceMult) {
-        isShaking = true;
         magnitudeMult = mult.sqrMagnitude;
         shakeForceMultiplier = shakeForceMult;
     }
@@ -60,7 +58,6 @@ public class TankCurrent : MonoBehaviour {
     }
 
     public void EndShake() {
-        isShaking = false;
         magnitudeMult = 1;
         shakeForceMultiplier = 1;
     }

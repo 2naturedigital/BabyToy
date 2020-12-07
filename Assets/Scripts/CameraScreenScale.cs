@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
 public class CameraScreenScale : MonoBehaviour {
-    public const int PPU = 1;
-    public bool maintainWidth = false;
-    [Range(-1,1)]
-    public int adaptPosition;
     public SpriteRenderer bg;
+    // public bool maintainWidth = false;
+    // [Range(-1,1)]
+    // public int adaptPosition;
     // private Vector3 CameraPos;
     // private float defaultWidth;
     // private float defaultHeight;
@@ -23,7 +22,7 @@ public class CameraScreenScale : MonoBehaviour {
 
         if (screenRatio >= targetRatio) {
             Debug.Log("BG Size Is: " + bg.bounds.size.y);
-            Camera.main.orthographicSize = bg.bounds.size.y/2 * PPU;
+            Camera.main.orthographicSize = bg.bounds.size.y/2;
             Debug.Log("Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
@@ -31,7 +30,7 @@ public class CameraScreenScale : MonoBehaviour {
         } else {
             float differenceInSize = targetRatio / screenRatio;
             Debug.Log("BG Size Is: " + bg.bounds.size.y);
-            Camera.main.orthographicSize = bg.bounds.size.y/2 * differenceInSize * PPU;
+            Camera.main.orthographicSize = bg.bounds.size.y/2 * differenceInSize;
             Debug.Log("Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f  * differenceInSize;
