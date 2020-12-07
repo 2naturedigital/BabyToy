@@ -455,8 +455,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d71594c61a89264aaf896b6f20b3713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maintainWidth: 0
-  adaptPosition: 0
   bg: {fileID: 723450740}
 --- !u!20 &519420031
 Camera:
@@ -1357,7 +1355,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0.5
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1378,7 +1376,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 1.2
 --- !u!114 &1184103762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1395,8 +1393,8 @@ MonoBehaviour:
   maxSpeed: 0
   pumpMinTime: 1
   pumpMaxTime: 5
-  pumpPowerMin: 25
-  pumpPowerMax: 250
+  pumpPowerMin: 30
+  pumpPowerMax: 300
   inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
   deflateAudio: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
   swimAudio: {fileID: 8300000, guid: 21b455daae0663f41bf7f8f43b88c109, type: 3}
@@ -1521,8 +1519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d52d34a39eed7a4ea2bf877935a57be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 10
-  maxSpeed: 40
+  minSpeed: 20
+  maxSpeed: 50
 --- !u!50 &1610959112
 Rigidbody2D:
   serializedVersion: 4
@@ -1763,8 +1761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6d9da73adc52c45a0ff6d3543d2dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 0
-  maxSpeed: 0
+  minSpeed: 10
+  maxSpeed: 20
   wobbleSpeed: 0.07
   wobbleShakeSpeed: 3
   wobbleMinAngle: 0.02

@@ -107,11 +107,19 @@ public class BlowFish : FishController
         //Vector3 screenPosition = GetFishOnScreenPosition();
         Vector3 screenPosition = this.transform.position;
         // If fish goes off screen on one side, pop him on the other side
-        if (screenPosition.x < (-GetScreenWidth() - GetFishWidth()/2)) {
-            screenPosition.x = GetScreenWidth() + GetFishWidth()/2;
+        // Adjust width for inflated or not
+        float width;
+        if (!isInflated) {
+            width = GetFishWidth()/2/2;
+        } else {
+            width = GetFishWidth()/2;
+        }
 
-        } else if (screenPosition.x > (GetScreenWidth() + GetFishWidth()/2)) {
-            screenPosition.x = -GetScreenWidth() - GetFishWidth()/2;
+        if (screenPosition.x < (-GetScreenWidth() - width)) {
+            screenPosition.x = GetScreenWidth() + width;
+
+        } else if (screenPosition.x > (GetScreenWidth() + width)) {
+            screenPosition.x = -GetScreenWidth() - width;
         }
         SetFishOnScreenPosition(screenPosition);
     }
