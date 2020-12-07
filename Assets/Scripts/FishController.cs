@@ -23,6 +23,8 @@ public class FishController : MonoBehaviour {
     private Vector2 targetPosition;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rBody2D;
+    private CameraScreenScale cameraScreenScale;
+    private float spriteAdjustmentRatio;
 
 
     // Start(), Update(), FixedUpdate() etc. are handled in the subclasses
@@ -178,8 +180,11 @@ public class FishController : MonoBehaviour {
         //Debug.Log("Ortho Size Is: " + Camera.main.orthographicSize);
         screenWidth = Camera.main.orthographicSize * Camera.main.aspect;
         screenHeight = Camera.main.orthographicSize;
+        cameraScreenScale = FindObjectOfType<CameraScreenScale>();
     }
     public void SetFishSize() {
+        spriteAdjustmentRatio = cameraScreenScale.GetSpriteAdjustmentRatio();
+        spriteRenderer.transform.localScale *= spriteAdjustmentRatio;
         fishWidth = spriteRenderer.bounds.size.x;
         fishHeight = spriteRenderer.bounds.size.y;
     }
