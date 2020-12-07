@@ -90,11 +90,11 @@ public class BlowFish : FishController
         if (screenPosition.y > (GetScreenHeight() - GetFishHeight()/2)) {
             // Reset pump timer so fish does not pump
             pumpTimer = pumpMaxTime;
-        } else if (screenPosition.y < (0f - GetScreenHeight() + GetFishHeight()/2)) {
+        } else if (screenPosition.y < (-GetScreenHeight() + GetFishHeight()/2)) {
             // If floating around in puffed mode, bounce off the bottom, otherwise just pump right away near bottom
             if (IsShaking()) {
                 // Clamp y to be inside the screen with a border of half the height of the fish so it never actually goes past the bottom of screen
-                screenPosition.y = Mathf.Clamp(screenPosition.y, (0f - GetScreenHeight() + (GetFishHeight()/2)), GetScreenHeight());
+                screenPosition.y = Mathf.Clamp(screenPosition.y, (-GetScreenHeight() + (GetFishHeight()/2)), GetScreenHeight());
                 SetFishOnScreenPosition(screenPosition);
                 Bounce();
             } else {
@@ -107,11 +107,11 @@ public class BlowFish : FishController
         //Vector3 screenPosition = GetFishOnScreenPosition();
         Vector3 screenPosition = this.transform.position;
         // If fish goes off screen on one side, pop him on the other side
-        if (screenPosition.x < (0f - GetScreenWidth() - GetFishWidth()/2)) {
-            screenPosition.x = 0f + GetScreenWidth() + GetFishWidth()/2;
+        if (screenPosition.x < (-GetScreenWidth() - GetFishWidth()/2)) {
+            screenPosition.x = GetScreenWidth() + GetFishWidth()/2;
 
-        } else if (screenPosition.x > (0f + GetScreenWidth() + GetFishWidth()/2)) {
-            screenPosition.x = 0f - GetScreenWidth() - GetFishWidth()/2;
+        } else if (screenPosition.x > (GetScreenWidth() + GetFishWidth()/2)) {
+            screenPosition.x = -GetScreenWidth() - GetFishWidth()/2;
         }
         SetFishOnScreenPosition(screenPosition);
     }

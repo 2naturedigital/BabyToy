@@ -20,6 +20,7 @@ public class BubblesDup : MonoBehaviour
     private SoundController sndCtrl;
     private float magnitudeMult = 1;
     private float shakeForceMultiplier = 1;
+    private SpriteRenderer spriteRenderer;
 
 
     void Start() {
@@ -75,8 +76,12 @@ public class BubblesDup : MonoBehaviour
 
     public void MakeBubble(int count) {
         for (int i = 0; i < count; i++) {
-            Vector3 bubblePosition = new Vector3(Random.Range(CameraPos.x - defaultWidth, defaultWidth), CameraPos.y - defaultHeight, 0f);
-            GameObject bubbleClone = Instantiate(bubbleOriginal, bubblePosition, bubbleOriginal.transform.rotation);
+            // Instantiate first
+            GameObject bubbleClone = Instantiate(bubbleOriginal, new Vector3(0, 0, 0), bubbleOriginal.transform.rotation);
+            spriteRenderer = bubbleClone.GetComponent<SpriteRenderer>();
+            // Move to new position after finding size of bubble
+            Vector3 bubblePosition = new Vector3(Random.Range(CameraPos.x - defaultWidth, defaultWidth), CameraPos.y - defaultHeight - (spriteRenderer.bounds.size.y/2), 0f);
+            bubbleClone.transform.position = bubblePosition;
             bubbleClone.transform.SetParent(bubbleContainer.transform);
             bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale);
         }

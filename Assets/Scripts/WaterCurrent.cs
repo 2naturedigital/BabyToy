@@ -6,6 +6,7 @@ public class WaterCurrent : MonoBehaviour {
     private List<Rigidbody2D> bubblesInCurrent = new List<Rigidbody2D>();
     public float currentStrength;
     public Vector2 currentDirection;
+    private bool isShaking = false;
     private float magnitudeMult = 1;
     private float shakeForceMultiplier = 1;
 
@@ -13,6 +14,7 @@ public class WaterCurrent : MonoBehaviour {
     }
 
     public void StartShake(Vector3 mult, float shakeForceMult) {
+        isShaking = true;
         magnitudeMult = mult.sqrMagnitude;
         shakeForceMultiplier = shakeForceMult;
     }
@@ -24,6 +26,7 @@ public class WaterCurrent : MonoBehaviour {
     }
 
     public void EndShake() {
+        isShaking = false;
         magnitudeMult = 1;
         shakeForceMultiplier = 1;
     }
