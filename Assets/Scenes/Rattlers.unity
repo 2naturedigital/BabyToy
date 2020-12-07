@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 100
+  currentStrength: 0
   currentDirection: {x: -1, y: 0}
 --- !u!61 &271795048
 BoxCollider2D:
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 200
+  currentStrength: 0
   currentDirection: {x: -1, y: 0}
 --- !u!61 &673668690
 BoxCollider2D:
@@ -926,7 +926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 100
+  currentStrength: 0
   currentDirection: {x: 1, y: 0}
 --- !u!61 &765393355
 BoxCollider2D:
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 150
+  currentStrength: 0
   currentDirection: {x: 1, y: 0}
 --- !u!61 &782968335
 BoxCollider2D:
@@ -1386,8 +1386,8 @@ MonoBehaviour:
   maxSpeed: 0
   pumpMinTime: 1
   pumpMaxTime: 5
-  pumpPowerMin: 30
-  pumpPowerMax: 300
+  pumpPowerMin: 100
+  pumpPowerMax: 200
   inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
   deflateAudio: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
   swimAudio: {fileID: 8300000, guid: 21b455daae0663f41bf7f8f43b88c109, type: 3}
