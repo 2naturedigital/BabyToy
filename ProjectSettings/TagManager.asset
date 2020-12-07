@@ -19,7 +19,7 @@ TagManager:
   - 
   - 
   - Sprites
-  - 
+  - bubbles
   - 
   - 
   - 
@@ -51,4 +51,7 @@ TagManager:
     locked: 0
   - name: sprites
     uniqueID: 3732764845
+    locked: 0
+  - name: bubbles
+    uniqueID: 3112565053
     locked: 0
