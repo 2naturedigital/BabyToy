@@ -20,6 +20,7 @@ public class Bubble : MonoBehaviour
     private float defaultHeight;
     private Collider2D bubbleCollider;
     private bool isPopped = false;
+    private SpriteRenderer spriteRenderer;
 
 
 
@@ -27,6 +28,7 @@ public class Bubble : MonoBehaviour
     void Awake() {
         sndCtrl = FindObjectOfType<SoundController>();
         bubbleCollider = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
         RandomizeBubbleSounds();
         SetCameraProperties();
@@ -56,7 +58,7 @@ public class Bubble : MonoBehaviour
 
         // Autodestruct Bubbles
         // Destroy bubbles above the screen
-        if (this.transform.position.y >= defaultHeight + 3) {
+        if (this.transform.position.y >= defaultHeight + (spriteRenderer.bounds.size.y/2)) {
             Destroy(this.gameObject);
         }
         // Pop bubbles based on timer
