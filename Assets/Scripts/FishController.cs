@@ -175,7 +175,7 @@ public class FishController : MonoBehaviour {
     }
     public void SetCameraProperties() {
         CameraPos = Camera.main.transform.position;
-        Debug.Log("Ortho Size Is: " + Camera.main.orthographicSize);
+        //Debug.Log("Ortho Size Is: " + Camera.main.orthographicSize);
         screenWidth = Camera.main.orthographicSize * Camera.main.aspect;
         screenHeight = Camera.main.orthographicSize;
     }

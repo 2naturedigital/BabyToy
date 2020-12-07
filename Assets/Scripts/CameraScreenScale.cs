@@ -19,19 +19,23 @@ public class CameraScreenScale : MonoBehaviour {
         } else {
             targetRatio = bg.bounds.size.y / bg.bounds.size.x;
         }
+        Debug.Log("screen ratio is: " + screenRatio);
+        Debug.Log("target ratio is: " + targetRatio);
 
         if (screenRatio >= targetRatio) {
-            Debug.Log("BG Size Is: " + bg.bounds.size.y);
+            //Debug.Log("BG Size Is: " + bg.bounds.size.y);
+            float differenceInSize = screenRatio / targetRatio;
+            Debug.Log("1 ratio diff is: " + differenceInSize);
             Camera.main.orthographicSize = bg.bounds.size.y/2;
-            Debug.Log("Ortho Size Set: " + Camera.main.orthographicSize);
+            Debug.Log("1 Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
             //Debug.Log("Screen Larger so Ortho Size is: " + Camera.main.orthographicSize);
         } else {
             float differenceInSize = targetRatio / screenRatio;
-            Debug.Log("BG Size Is: " + bg.bounds.size.y);
+            Debug.Log("2 ratio diff is: " + differenceInSize);
             Camera.main.orthographicSize = bg.bounds.size.y/2 * differenceInSize;
-            Debug.Log("Ortho Size Set: " + Camera.main.orthographicSize);
+            Debug.Log("2 Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f  * differenceInSize;
             //Debug.Log("Screen Smaller so Ortho Size is: " + Camera.main.orthographicSize);

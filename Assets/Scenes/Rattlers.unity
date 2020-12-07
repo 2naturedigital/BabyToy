@@ -1519,8 +1519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d52d34a39eed7a4ea2bf877935a57be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 20
-  maxSpeed: 50
+  minSpeed: 50
+  maxSpeed: 150
 --- !u!50 &1610959112
 Rigidbody2D:
   serializedVersion: 4
@@ -1761,8 +1761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6d9da73adc52c45a0ff6d3543d2dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 10
-  maxSpeed: 20
+  minSpeed: 5
+  maxSpeed: 15
   wobbleSpeed: 0.07
   wobbleShakeSpeed: 3
   wobbleMinAngle: 0.02
