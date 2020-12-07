@@ -14,9 +14,6 @@ public class Starfish : FishController
     void Start() {
         InitializeFish();
         SetRandomTarget();
-        Debug.Log("STARFISH SAYS:");
-        Debug.Log("Screen dot W: " + Screen.width + " Screen dot H: " + Screen.height);
-        Debug.Log("Screen W: " + GetScreenWidth() + " Screen H: " + GetScreenHeight());
     }
 
     void Update() {

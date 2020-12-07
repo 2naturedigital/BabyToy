@@ -19,9 +19,6 @@ public class BlowFish : FishController
 
     void Start() {
         InitializeFish();
-        Debug.Log("BLOWFISH SAYS:");
-        Debug.Log("Screen dot W: " + Screen.width + " Screen dot H: " + Screen.height);
-        Debug.Log("Screen W: " + GetScreenWidth() + " Screen H: " + GetScreenHeight());
     }
 
     void Update() {

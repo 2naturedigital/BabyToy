@@ -21,6 +21,8 @@ public class BubblesDup : MonoBehaviour
     private float magnitudeMult = 1;
     private float shakeForceMultiplier = 1;
     private SpriteRenderer spriteRenderer;
+    private CameraScreenScale cameraScreenScale;
+    private float spriteAdjustmentRatio;
 
 
     void Start() {
@@ -38,6 +40,8 @@ public class BubblesDup : MonoBehaviour
         CameraPos = Camera.main.transform.position;
         defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
         defaultHeight = Camera.main.orthographicSize;
+        cameraScreenScale = FindObjectOfType<CameraScreenScale>();
+        spriteAdjustmentRatio = cameraScreenScale.GetSpriteAdjustmentRatio();
     }
 
     public void StartShake(Vector3 mult, float shakeForceMult) {
@@ -83,7 +87,7 @@ public class BubblesDup : MonoBehaviour
             Vector3 bubblePosition = new Vector3(Random.Range(CameraPos.x - defaultWidth, defaultWidth), CameraPos.y - defaultHeight - (spriteRenderer.bounds.size.y/2), 0f);
             bubbleClone.transform.position = bubblePosition;
             bubbleClone.transform.SetParent(bubbleContainer.transform);
-            bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale);
+            bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale) * spriteAdjustmentRatio;
         }
     }
 }//end of BubblesDup

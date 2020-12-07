@@ -2,6 +2,7 @@
 
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
+    private float spriteAdjustmentRatio;
     // public bool maintainWidth = false;
     // [Range(-1,1)]
     // public int adaptPosition;
@@ -19,19 +20,19 @@ public class CameraScreenScale : MonoBehaviour {
         } else {
             targetRatio = bg.bounds.size.y / bg.bounds.size.x;
         }
+        spriteAdjustmentRatio = targetRatio;
 
         if (screenRatio >= targetRatio) {
-            Debug.Log("BG Size Is: " + bg.bounds.size.y);
+            //Debug.Log("BG Size Is: " + bg.bounds.size.y);
             Camera.main.orthographicSize = bg.bounds.size.y/2;
-            Debug.Log("Ortho Size Set: " + Camera.main.orthographicSize);
+            Debug.Log("1 Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
             //Debug.Log("Screen Larger so Ortho Size is: " + Camera.main.orthographicSize);
         } else {
             float differenceInSize = targetRatio / screenRatio;
-            Debug.Log("BG Size Is: " + bg.bounds.size.y);
             Camera.main.orthographicSize = bg.bounds.size.y/2 * differenceInSize;
-            Debug.Log("Ortho Size Set: " + Camera.main.orthographicSize);
+            Debug.Log("2 Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f  * differenceInSize;
             //Debug.Log("Screen Smaller so Ortho Size is: " + Camera.main.orthographicSize);
@@ -54,4 +55,8 @@ public class CameraScreenScale : MonoBehaviour {
         }
     }
     */
+
+    public float GetSpriteAdjustmentRatio() {
+        return spriteAdjustmentRatio;
+    }
 }//end of CameraScreenScale
