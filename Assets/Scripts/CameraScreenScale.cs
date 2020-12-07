@@ -17,10 +17,11 @@ public class CameraScreenScale : MonoBehaviour {
         float targetRatio;
         if (bg.bounds.size.x <= bg.bounds.size.y) {
             targetRatio = bg.bounds.size.x / bg.bounds.size.y;
+            spriteAdjustmentRatio = 1;
         } else {
             targetRatio = bg.bounds.size.y / bg.bounds.size.x;
+            spriteAdjustmentRatio = targetRatio;
         }
-        spriteAdjustmentRatio = targetRatio;
 
         if (screenRatio >= targetRatio) {
             //Debug.Log("BG Size Is: " + bg.bounds.size.y);

@@ -84,7 +84,7 @@ public class BubblesDup : MonoBehaviour
             GameObject bubbleClone = Instantiate(bubbleOriginal, new Vector3(0, 0, 0), bubbleOriginal.transform.rotation);
             spriteRenderer = bubbleClone.GetComponent<SpriteRenderer>();
             // Move to new position after finding size of bubble
-            Vector3 bubblePosition = new Vector3(Random.Range(CameraPos.x - defaultWidth, defaultWidth), CameraPos.y - defaultHeight - (spriteRenderer.bounds.size.y/2), 0f);
+            Vector3 bubblePosition = new Vector3(Random.Range(CameraPos.x - defaultWidth, defaultWidth), CameraPos.y - defaultHeight - (spriteRenderer.bounds.size.y/4), 0f);
             bubbleClone.transform.position = bubblePosition;
             bubbleClone.transform.SetParent(bubbleContainer.transform);
             bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale) * spriteAdjustmentRatio;
