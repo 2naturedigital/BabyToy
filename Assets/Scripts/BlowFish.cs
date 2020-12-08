@@ -36,9 +36,9 @@ public class BlowFish : FishController
             // Head back to reset position
             if (IsResetTime()) {
                 Rotate(rotationSpeed + 2);
-                Debug.Log("Z at: " + transform.rotation.z);
+                //Debug.Log("Z at: " + transform.rotation.z);
                 if (transform.rotation.z <= 0.02f && transform.rotation.z >= -0.02f) {
-                    Debug.Log("Reset Complete");
+                    //Debug.Log("Reset Complete");
                     Vector3 currentPos = transform.position;
                     transform.position = new Vector3(currentPos.x, currentPos.y, 0);
                     SetResetTime(false);
@@ -48,6 +48,8 @@ public class BlowFish : FishController
             if (pumpTimer <= 0) {
                 AnimateFish();
                 MoveFish();
+                // Change rotation direction once in a while
+                FlipRotationDirection();
                 pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
             } else {
                 pumpTimer -= Time.deltaTime;
