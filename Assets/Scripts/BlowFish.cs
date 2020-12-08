@@ -10,6 +10,7 @@ public class BlowFish : FishController
     public AudioClip inflateAudio;
     public AudioClip deflateAudio;
     public AudioClip swimAudio;
+    public float rotationSpeed;
 
     // Private Class Variables
     private float pumpTimer = 0;
@@ -32,6 +33,18 @@ public class BlowFish : FishController
         // Only do blowfish animations and movement when not shaking and pump timer has been reached
         if (!IsShaking()) {
             PositionCheckVertical();
+            // Head back to reset position
+            if (IsResetTime()) {
+                Rotate(rotationSpeed + 2);
+                Debug.Log("Z at: " + transform.rotation.z);
+                if (transform.rotation.z <= 0.02f && transform.rotation.z >= -0.02f) {
+                    Debug.Log("Reset Complete");
+                    Vector3 currentPos = transform.position;
+                    transform.position = new Vector3(currentPos.x, currentPos.y, 0);
+                    SetResetTime(false);
+                }
+            }
+            // Initiate a pump or count down the timer
             if (pumpTimer <= 0) {
                 AnimateFish();
                 MoveFish();
@@ -40,8 +53,8 @@ public class BlowFish : FishController
                 pumpTimer -= Time.deltaTime;
             }
         } else {
-            //TODO: rotate the blowfish
-            //base.MoveFish();
+            // Rotate while device is shaking
+            Rotate(rotationSpeed);
         }
 
         // Play inflating and deflating sounds based on fish state

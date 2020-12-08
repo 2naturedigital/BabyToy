@@ -8,9 +8,6 @@ public class Starfish : FishController
     public float wobbleMinAngle;
     public float wobbleMaxAngle;
 
-    // Private Class Variables
-    private int direction = -1;
-
     void Start() {
         InitializeFish();
         SetRandomTarget();
@@ -30,30 +27,19 @@ public class Starfish : FishController
         if (!IsShaking() && !IsResetTime()) {                                    // wobble normally
             // flip wobble direction after max or min is reached
             if (transform.rotation.z >= wobbleMinAngle || transform.rotation.z <= wobbleMaxAngle) {
-                FlipWobble();
+                FlipRotationDirection();
             }
-            Wobble(wobbleSpeed);
+            Rotate(wobbleSpeed);
         } else if (IsShaking()) {                              // spin fast
-            Wobble(wobbleShakeSpeed);
+            Rotate(wobbleShakeSpeed);
         } else if (IsResetTime()) {                           // head back to reset position
-            Wobble(wobbleShakeSpeed - 2);
+            Rotate(wobbleShakeSpeed - 2);
             if (transform.rotation.z <= wobbleMinAngle && transform.rotation.z >= wobbleMaxAngle) {
                 //Debug.Log("Reset Complete");
                 //Debug.Log("Complete Z at: " + transform.rotation.z);
                 SetResetTime(false);
             }
         }
-    }
-
-    void Wobble(float speed) {
-        // Rotation based on rotation created
-        float rotation = 0;
-        rotation = direction * speed * GetShakeMultiplier();
-        transform.Rotate(0, 0, rotation);
-    }
-
-    void FlipWobble() {
-        direction *= -1;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
