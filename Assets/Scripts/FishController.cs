@@ -25,6 +25,7 @@ public class FishController : MonoBehaviour {
     private Rigidbody2D rBody2D;
     private CameraScreenScale cameraScreenScale;
     private float spriteAdjustmentRatio;
+    private int rotationDirection = -1;
 
 
     // Start(), Update(), FixedUpdate() etc. are handled in the subclasses
@@ -100,7 +101,16 @@ public class FishController : MonoBehaviour {
             transform.Rotate(0, 180, 0);
         }
     }
-    public void Rotate() {
+    public int GetRotationDirection() {
+        return rotationDirection;
+    }
+    public void Rotate(float speed) {
+        float rotation = 0;
+        rotation = rotationDirection * speed * GetShakeMultiplier();
+        transform.Rotate(0, 0, rotation);
+    }
+    public void FlipRotationDirection() {
+        rotationDirection *= -1;
     }
 
 

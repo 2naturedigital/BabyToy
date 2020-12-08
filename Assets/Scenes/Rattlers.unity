@@ -1391,6 +1391,7 @@ MonoBehaviour:
   inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
   deflateAudio: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
   swimAudio: {fileID: 8300000, guid: 21b455daae0663f41bf7f8f43b88c109, type: 3}
+  rotationSpeed: 2
 --- !u!1 &1610959105
 GameObject:
   m_ObjectHideFlags: 0

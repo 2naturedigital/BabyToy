@@ -42,20 +42,22 @@ public class ShakeController : MonoBehaviour
     }
 
     void Update() {
-        // Timer to check for shake (just for testing)
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime > shakeResetTimer) {
-            isShaking = false;
-            foreach (var f in fishies) {
-                f.EndShake();
+        // If shaking, countdown the timer to call endshake on objects
+        if (isShaking) {
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime > shakeResetTimer) {
+                isShaking = false;
+                foreach (var f in fishies) {
+                    f.EndShake();
+                }
+                foreach (var c in waterCurrent) {
+                    c.EndShake();
+                    //Debug.Log("shaking a fish");
+                }
+                bubblesDup.EndShake();
+                tankCurrent.EndShake();
+                elapsedTime = 0;
             }
-            foreach (var c in waterCurrent) {
-                c.EndShake();
-                //Debug.Log("shaking a fish");
-            }
-            bubblesDup.EndShake();
-            tankCurrent.EndShake();
-            elapsedTime = 0;
         }
     }
 }//end of ShakeController
