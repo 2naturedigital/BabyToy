@@ -25,7 +25,7 @@ public class Starfish : FishController
     public override void AnimateFish() {
         //Debug.Log("MY Z IS AT: " + transform.rotation.z);
         if (!IsShaking() && !IsResetTime()) {                                    // wobble normally
-            // flip wobble direction after max or min is reached
+            // Flip wobble direction after max or min is reached
             if (transform.rotation.z >= wobbleMinAngle || transform.rotation.z <= wobbleMaxAngle) {
                 FlipRotationDirection();
             }
@@ -35,8 +35,6 @@ public class Starfish : FishController
         } else if (IsResetTime()) {                           // head back to reset position
             Rotate(wobbleShakeSpeed - 2);
             if (transform.rotation.z <= wobbleMinAngle && transform.rotation.z >= wobbleMaxAngle) {
-                //Debug.Log("Reset Complete");
-                //Debug.Log("Complete Z at: " + transform.rotation.z);
                 SetResetTime(false);
             }
         }
