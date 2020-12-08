@@ -20,7 +20,7 @@ public class CurrentInitializer : MonoBehaviour
             c.GetComponent<BoxCollider2D>().size = new Vector3(screenWidth*2 * 1.1f, screenHeight*2 / 10);
             // Adjust each collider to be a bit closer to the top
             c.GetComponent<BoxCollider2D>().offset = new Vector3(0, -(screenHeight * 1.1f * offset));
-            offset -= 0.5f;
+            offset -= 0.25f;
         }
         // Adjust the tank current to encompase an area slightly larger than the screen
         tankCurrent.GetComponent<BoxCollider2D>().size = new Vector3(screenWidth*2 * 1.2f, screenHeight*2 * 1.2f);
