@@ -7,7 +7,7 @@ public class TankCurrent : MonoBehaviour {
    private float currentStrength;
    public float minStrength;
    public float maxStrength;
-   private Vector2 currentDirection;
+   private Vector3 currentDirection;
    public bool alternatingCurrent;
    private int currentMovementPeriod;
    public int minMovementPeriod;
@@ -67,7 +67,11 @@ public class TankCurrent : MonoBehaviour {
 
     private void NewDirection() {
         // Set a current that moves left or right or no direction at all
-        currentDirection = new Vector2(Random.Range(-1, 2), 0);
+        int x = 0;
+        while (currentDirection.x == 0) {
+            x = Random.Range(-1, 2);
+        }
+        currentDirection = new Vector3(x, 0, 0);
     }
 
     private void NewStrength() {

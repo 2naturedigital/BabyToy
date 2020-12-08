@@ -616,8 +616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67807d3ab783297418ed08c20b81ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStrength: 200
-  maxStrength: 400
+  minStrength: 100
+  maxStrength: 200
   alternatingCurrent: 1
   minMovementPeriod: 3
   maxMovementPeriod: 10
