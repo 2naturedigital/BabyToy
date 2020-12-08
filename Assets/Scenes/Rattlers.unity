@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 100
+  currentStrength: 20
   currentDirection: {x: 0, y: 1}
 --- !u!61 &110417622
 BoxCollider2D:
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 0
+  currentStrength: 80
   currentDirection: {x: -1, y: 0}
 --- !u!61 &271795048
 BoxCollider2D:
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 0
+  currentStrength: 120
   currentDirection: {x: -1, y: 0}
 --- !u!61 &673668690
 BoxCollider2D:
@@ -926,7 +926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 0
+  currentStrength: 80
   currentDirection: {x: 1, y: 0}
 --- !u!61 &765393355
 BoxCollider2D:
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79aedb16efbaeb4abbab94c7654123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStrength: 0
+  currentStrength: 100
   currentDirection: {x: 1, y: 0}
 --- !u!61 &782968335
 BoxCollider2D:
@@ -1158,7 +1158,7 @@ RectTransform:
   m_GameObject: {fileID: 1184103754}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 120, y: 120, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 1812279119}
   m_RootOrder: 2
@@ -1421,7 +1421,7 @@ RectTransform:
   m_GameObject: {fileID: 1610959105}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 80, y: 80, z: 1}
   m_Children: []
   m_Father: {fileID: 1812279119}
   m_RootOrder: 1
@@ -1626,7 +1626,7 @@ RectTransform:
   m_GameObject: {fileID: 1852925465}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 60, y: 60, z: 1}
+  m_LocalScale: {x: 50, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 1812279119}
   m_RootOrder: 0
@@ -1693,7 +1693,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -562202451
   m_SortingLayer: 1
-  m_SortingOrder: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2ec1de023b0e5614b988fafaef2b2d04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
