@@ -67,9 +67,9 @@ public class TankCurrent : MonoBehaviour {
 
     private void NewDirection() {
         // Set a current that moves left or right or no direction at all
-        int x = 0;
-        while (currentDirection.x == 0) {
-            x = Random.Range(-1, 2);
+        int x = Random.Range(0, 2);
+        if (x == 0) {
+            x = -1;
         }
         currentDirection = new Vector3(x, 0, 0);
     }
