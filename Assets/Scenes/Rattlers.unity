@@ -616,11 +616,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67807d3ab783297418ed08c20b81ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStrength: 100
-  maxStrength: 200
+  minStrength: 50
+  maxStrength: 150
   alternatingCurrent: 1
-  minMovementPeriod: 3
-  maxMovementPeriod: 10
+  minMovementPeriod: 2
+  maxMovementPeriod: 7
 --- !u!61 &543905424
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1385,9 +1385,9 @@ MonoBehaviour:
   minSpeed: 0
   maxSpeed: 0
   pumpMinTime: 1
-  pumpMaxTime: 5
-  pumpPowerMin: 100
-  pumpPowerMax: 300
+  pumpMaxTime: 6
+  pumpPowerMin: 125
+  pumpPowerMax: 350
   inflateAudio: {fileID: 8300000, guid: a1335cbd39c12d641957f006058317cf, type: 3}
   deflateAudio: {fileID: 8300000, guid: f387e48d7483f284fae7ff91b5d850fe, type: 3}
   swimAudio: {fileID: 8300000, guid: 21b455daae0663f41bf7f8f43b88c109, type: 3}

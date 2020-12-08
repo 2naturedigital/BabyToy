@@ -8,6 +8,7 @@ public class TankCurrent : MonoBehaviour {
    public float minStrength;
    public float maxStrength;
    private Vector3 currentDirection;
+   private Vector3 shakeData;
    public bool alternatingCurrent;
    private int currentMovementPeriod;
    public int minMovementPeriod;
@@ -32,7 +33,9 @@ public class TankCurrent : MonoBehaviour {
             // After movementPeriod has been reached, get a new direction and speed for the current
             if (elapsedTime > currentMovementPeriod) {
                 elapsedTime = 0;
-                NewDirection();
+                if (!isShaking) {
+                    NewDirection();
+                }
                 NewStrength();
                 NewMovementPeriod();
             }
@@ -51,27 +54,45 @@ public class TankCurrent : MonoBehaviour {
         isShaking = true;
         magnitudeMult = mult.sqrMagnitude;
         shakeForceMultiplier = shakeForceMult;
+        shakeData = mult;
+        CurrentModification();
     }
 
     public void ContinueShake(Vector3 mult, float shakeForceMult) {
         // Do anything needed on a continued shake
         magnitudeMult = mult.sqrMagnitude;
         shakeForceMultiplier = shakeForceMult;
+        shakeData = mult;
+        CurrentModification();
     }
 
     public void EndShake() {
         isShaking = false;
         magnitudeMult = 1;
         shakeForceMultiplier = 1;
+        shakeData = new Vector3(0,0,0);
     }
 
     private void NewDirection() {
-        // Set a current that moves left or right or no direction at all
+        // Set a current that moves left or right
         int x = Random.Range(0, 2);
-        if (x == 0) {
-            x = -1;
+        if (!isShaking) {
+            if (x == 0) {
+                x = -1;
+            }
+            currentDirection = new Vector3(x, 0, 0);
+        // If shaking, then set current to direction of the shake force
+        } else {
+            x = 1;
+            int y = 10;
+            if (shakeData.x < 0) {
+                x = -1;
+            }
+            if (shakeData.y < 0) {
+                y = -1;
+            }
+            currentDirection = new Vector3(x, y, 0);
         }
-        currentDirection = new Vector3(x, 0, 0);
     }
 
     private void NewStrength() {
@@ -82,5 +103,10 @@ public class TankCurrent : MonoBehaviour {
     private void NewMovementPeriod() {
         // Set a new movement period from the min to max provided
         currentMovementPeriod = Random.Range(minMovementPeriod, maxMovementPeriod);
+    }
+
+    private void CurrentModification() {
+        elapsedTime = 0;
+        NewDirection();
     }
 }//end of FullWaterCurrent

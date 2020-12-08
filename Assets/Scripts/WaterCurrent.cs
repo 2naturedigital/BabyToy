@@ -6,29 +6,34 @@ public class WaterCurrent : MonoBehaviour {
     private List<Rigidbody2D> bubblesInCurrent = new List<Rigidbody2D>();
     public float currentStrength;
     public Vector2 currentDirection;
-    private bool isShaking = false;
+    //private bool isShaking = false;
+    //private Vector3 shakeData;
     private float magnitudeMult = 1;
     private float shakeForceMultiplier = 1;
+
 
     void Start() {
     }
 
     public void StartShake(Vector3 mult, float shakeForceMult) {
-        isShaking = true;
+        //isShaking = true;
         magnitudeMult = mult.sqrMagnitude;
         shakeForceMultiplier = shakeForceMult;
+        //shakeData = mult;
     }
 
     public void ContinueShake(Vector3 mult, float shakeForceMult) {
         // Do anything needed on a continued shake
         magnitudeMult = mult.sqrMagnitude;
         shakeForceMultiplier = shakeForceMult;
+        //shakeData = mult;
     }
 
     public void EndShake() {
-        isShaking = false;
+        //isShaking = false;
         magnitudeMult = 1;
         shakeForceMultiplier = 1;
+        //shakeData = new Vector3(0,0,0);
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
@@ -49,7 +54,7 @@ public class WaterCurrent : MonoBehaviour {
     private void FixedUpdate() {
         foreach (Rigidbody2D bubble in bubblesInCurrent) {
             if (bubble != null) {
-                bubble.AddForce(currentStrength * magnitudeMult * currentDirection);
+                bubble.AddForce(currentStrength * magnitudeMult * shakeForceMultiplier * currentDirection);
             }
         }
     }
