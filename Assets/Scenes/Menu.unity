@@ -1463,7 +1463,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2066398526}
-        m_MethodName: ShakePowerChanged
+        m_MethodName: BubbleCountChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
