@@ -6,10 +6,16 @@ public class OptionsMenuScript : MonoBehaviour
 {
     //public Slider mainSlider;
     private float currentVolume;
-    public void VolumeChanged(float v) {
+    private int currentShakePower;
+    public void VolumeChanged(float vol) {
         // Store volume changes for use by rattler
-        Debug.Log("Volume Changed");
-        currentVolume = v;
-        Debug.Log("Volume: " + currentVolume);
+        //Debug.Log("Volume Changed");
+        currentVolume = vol;
+        //Debug.Log("Volume: " + currentVolume);
+    }
+
+    public void ShakePowerChanged(int power) {
+        // Store shake power changes for use by rattler
+        currentShakePower = power;
     }
 }
