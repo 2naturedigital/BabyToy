@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-//using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class OptionsMenuScript : MonoBehaviour
 {
+    //public Slider slider;
     public float currentVolume = 1f;
     public float currentShakePower = 1f;
     public float currentBubbleAmount = 0.15f;
     public float currentBubbleCount = 1f;
 
     void Awake() {
+        //slider = GetComponent<Slider>();
         Debug.Log("Volume: " + currentVolume);
         Debug.Log("Power: " + currentShakePower);
         Debug.Log("Bubble Amount: " + currentBubbleAmount);
@@ -43,6 +45,7 @@ public class OptionsMenuScript : MonoBehaviour
 
     public void DefaultSettings() {
         // Reset defaults
+        //Debug.Log("Slider? " + slider.value);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

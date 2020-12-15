@@ -8,7 +8,7 @@ public class SoundController : MonoBehaviour
 
     void Awake() {
         //Debug.Log("Awake");
-        //userOptions = FindObjectOfType<OptionsMenuScript>();
+        //userOptions = GetComponent<OptionsMenuScript>();
     }
 
     void OnEnable() {
