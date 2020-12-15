@@ -3914,6 +3914,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eabdb884c69b2d458ca5574a2590e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentVolume: 1
+  currentShakePower: 1
+  currentBubbleAmount: 0.15
+  currentBubbleCount: 1
 --- !u!1 &2066874518
 GameObject:
   m_ObjectHideFlags: 0
