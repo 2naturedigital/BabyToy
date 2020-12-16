@@ -21,7 +21,7 @@ public class FishController : MonoBehaviour {
     private float screenWidth;
     private float screenHeight;
     // Keep track of current target position
-    private Vector2 targetPosition;
+    private Vector3 targetPosition;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rBody2D;
     private CameraScreenScale cameraScreenScale;
@@ -44,19 +44,19 @@ public class FishController : MonoBehaviour {
     // Do a movement transformation if the target position and the current position don't match, otherwise fetch new target
     public virtual void MoveFish() {
         SetSpeed();
-        if ((Vector2)transform.position != targetPosition) {
+        if ((Vector3)transform.position != targetPosition) {
             // Flip the sprite to face the right direction when swimming
             if (transform.position.x > targetPosition.x && !isFacingLeft) {
                 FlipHorizontal();
             } else if (transform.position.x < targetPosition.x && isFacingLeft) {
                 FlipHorizontal();
             }
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * GetSpeed());
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * GetSpeed());
         } else {
             SetRandomTarget();
         }
     }
-    public void SetTarget(Vector2 newTarget) {
+    public void SetTarget(Vector3 newTarget) {
         //Debug.Log(this + " Is changing to x: " + newTarget.x + " " + newTarget.y);
         targetPosition = newTarget;
     }
@@ -157,8 +157,8 @@ public class FishController : MonoBehaviour {
             //Debug.Log("Collision");
             FishController otherFish = other.gameObject.GetComponent<FishController>();
             if (otherFish != null) {
-                Vector2 thisTarget = this.GetTarget();
-                Vector2 otherTarget = otherFish.GetTarget();
+                Vector3 thisTarget = this.GetTarget();
+                Vector3 otherTarget = otherFish.GetTarget();
                 this.SetTarget(otherTarget);
                 otherFish.SetTarget(thisTarget);
             }

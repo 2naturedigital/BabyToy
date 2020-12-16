@@ -333,7 +333,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 20
-  currentDirection: {x: 0, y: 1}
+  currentDirection: {x: 0, y: 1, z: 0}
+  alternatingCurrent: 0
+  minMovementPeriod: 0
+  maxMovementPeriod: 0
 --- !u!61 &110417622
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -410,7 +413,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 20
-  currentDirection: {x: -1, y: 0}
+  currentDirection: {x: -1, y: 0, z: 0}
+  alternatingCurrent: 1
+  minMovementPeriod: 6
+  maxMovementPeriod: 9
 --- !u!61 &271795048
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -578,7 +584,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSrc: {fileID: 285497658}
-  userOptions: {fileID: 0}
 --- !u!1 &385894422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,7 +1099,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 40
-  currentDirection: {x: -1, y: 0}
+  currentDirection: {x: -1, y: 0, z: 0}
+  alternatingCurrent: 0
+  minMovementPeriod: 0
+  maxMovementPeriod: 0
 --- !u!61 &673668690
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1252,7 +1260,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 20
-  currentDirection: {x: 1, y: 0}
+  currentDirection: {x: 1, y: 0, z: 0}
+  alternatingCurrent: 1
+  minMovementPeriod: 5
+  maxMovementPeriod: 8
 --- !u!61 &765393355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1329,7 +1340,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStrength: 50
-  currentDirection: {x: 1, y: 0}
+  currentDirection: {x: 1, y: 0, z: 0}
+  alternatingCurrent: 0
+  minMovementPeriod: 0
+  maxMovementPeriod: 0
 --- !u!61 &782968335
 BoxCollider2D:
   m_ObjectHideFlags: 0

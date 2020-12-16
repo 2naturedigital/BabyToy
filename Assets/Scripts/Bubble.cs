@@ -42,7 +42,7 @@ public class Bubble : MonoBehaviour
         if (Input.touchCount > 0) {
             //Handle all touches
             foreach (Touch touch in Input.touches) {
-                Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 // When a touch begins, grab its location and see if it is overlaping a collider2d object
 
                 if (bubbleCollider == Physics2D.OverlapPoint(touchPosition)) {

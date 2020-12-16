@@ -31,6 +31,14 @@ public class BubblesDup : MonoBehaviour
         SetCameraProperties();
     }
 
+    void OnEnable() {
+        // Grab user volume options
+        shakeBubbleTimer = PlayerPrefs.GetFloat("bubbleamount");
+        shakeBubbleCount = (int)PlayerPrefs.GetFloat("bubblecount");
+        Debug.Log("Bubble Amount: " + shakeBubbleTimer);
+        Debug.Log("Bubble Count: " + shakeBubbleCount);
+    }
+
     void Update() {
         bubbleTimer -= Time.deltaTime;
         CreateBubbles();

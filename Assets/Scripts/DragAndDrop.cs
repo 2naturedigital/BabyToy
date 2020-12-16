@@ -18,7 +18,7 @@ public class DragAndDrop : MonoBehaviour {
         if (Input.touchCount > 0) {
             foreach (Touch touch in Input.touches) {
                 // Translates the position on the screen that has been touched to the scene world position
-                Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
 
                 // When a touch begins, grab its location and see if it is overlaping a collider2d object then set that object to moveable
                 if (touch.phase == TouchPhase.Began) {
@@ -31,7 +31,7 @@ public class DragAndDrop : MonoBehaviour {
                 // Move the object to where the touch is moving
                 if (touch.phase == TouchPhase.Moved) {
                     if (moveAllowed) {
-                        transform.position = new Vector2(touchPosition.x, touchPosition.y);
+                        transform.position = new Vector3(touchPosition.x, touchPosition.y);
                     }
                 }
 

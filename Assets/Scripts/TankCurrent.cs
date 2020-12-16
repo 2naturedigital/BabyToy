@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class TankCurrent : MonoBehaviour {
 
-   private List<Rigidbody2D> fishInCurrent = new List<Rigidbody2D>();
-   private float currentStrength;
-   public float minStrength;
-   public float maxStrength;
-   private Vector3 currentDirection;
-   private Vector3 shakeData;
-   public bool alternatingCurrent;
-   private int currentMovementPeriod;
-   public int minMovementPeriod;
-   public int maxMovementPeriod;
-   private float elapsedTime = 0;
-   private bool isShaking = false;
-   private float magnitudeMult = 1;
-   private float shakeForceMultiplier = 1;
+    private List<Rigidbody2D> fishInCurrent = new List<Rigidbody2D>();
+    private float currentStrength;
+    public float minStrength;
+    public float maxStrength;
+    private Vector3 currentDirection;
+    private Vector3 shakeData;
+    public bool alternatingCurrent;
+    private int currentMovementPeriod;
+    public int minMovementPeriod;
+    public int maxMovementPeriod;
+    private float elapsedTime = 0;
+    private bool isShaking = false;
+    private float magnitudeMult = 1;
+    private float shakeForceMultiplier = 1;
 
-   private void Start() {
+    private void Start() {
        // Initialize direction, strength, and movement period for current
        NewDirection();
        NewStrength();
@@ -26,7 +26,7 @@ public class TankCurrent : MonoBehaviour {
        fishInCurrent.Add(FindObjectOfType<BlowFish>().GetComponent<Rigidbody2D>());
    }
 
-   void Update() {
+    void Update() {
         // Only do this when currents can alternate
         if (alternatingCurrent) {
             elapsedTime += Time.deltaTime;
@@ -50,7 +50,7 @@ public class TankCurrent : MonoBehaviour {
         }
     }
 
-   public void StartShake(Vector3 mult, float shakeForceMult) {
+    public void StartShake(Vector3 mult, float shakeForceMult) {
         isShaking = true;
         magnitudeMult = mult.sqrMagnitude;
         shakeForceMultiplier = shakeForceMult;

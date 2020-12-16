@@ -16,7 +16,7 @@ public class BlowFish : FishController
     private float pumpTimer = 0;
     private float pumpPower;
     private bool isInflated = false;
-    private Vector2 pumpDirection = Vector2.up;
+    private Vector3 pumpDirection = Vector3.up;
 
     void Start() {
         InitializeFish();
@@ -138,7 +138,7 @@ public class BlowFish : FishController
 
     // Logic for bouncing off walls
     private void Bounce() {
-        Vector2 newVelocity = GetRigidbody2D().velocity * -1;
+        Vector3 newVelocity = GetRigidbody2D().velocity * -1;
         GetRigidbody2D().velocity = newVelocity;
     }
 }//end of BlowFish
