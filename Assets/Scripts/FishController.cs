@@ -26,6 +26,7 @@ public class FishController : MonoBehaviour {
     private Rigidbody2D rBody2D;
     private CameraScreenScale cameraScreenScale;
     private float spriteAdjustmentRatio;
+    public float userSpriteSize;
     private int rotationDirection = -1;
 
 
@@ -196,8 +197,12 @@ public class FishController : MonoBehaviour {
     public void SetFishSize() {
         spriteAdjustmentRatio = cameraScreenScale.GetSpriteAdjustmentRatio();
         spriteRenderer.transform.localScale *= spriteAdjustmentRatio;
+        spriteRenderer.transform.localScale *= userSpriteSize;
         fishWidth = spriteRenderer.bounds.size.x;
         fishHeight = spriteRenderer.bounds.size.y;
+    }
+    public void SetUserSpriteSize(float size) {
+        userSpriteSize = size;
     }
     public void SetFishStartingPoints() {
         // Clamp x and y to inside the screen for starting positions

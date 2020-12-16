@@ -22,6 +22,11 @@ public class BlowFish : FishController
         InitializeFish();
     }
 
+    void OnEnable() {
+        // Grab user options
+        userSpriteSize = PlayerPrefs.GetFloat("blowfishsize");
+    }
+
     void Update() {
         PositionCheckVertical();
         PositionCheckHorizontal();

@@ -7,6 +7,11 @@ public class Guppy : FishController
         SetRandomTarget();
     }
 
+    void OnEnable() {
+        // Grab user options
+        SetUserSpriteSize(PlayerPrefs.GetFloat("guppysize"));
+    }
+
     void Update() {
         MoveFish();
     }

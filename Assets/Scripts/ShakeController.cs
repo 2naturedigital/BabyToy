@@ -13,9 +13,9 @@ public class ShakeController : MonoBehaviour
     private bool isShaking = false;
 
     void OnEnable() {
-        // Grab user volume options
+        // Grab user options
         shakeForceMultiplier = PlayerPrefs.GetFloat("shakepower");
-        Debug.Log("Shake Power: " + shakeForceMultiplier);
+        //Debug.Log("Shake Power: " + shakeForceMultiplier);
     }
 
     public void Shake(Vector3 deviceAcceleration) {

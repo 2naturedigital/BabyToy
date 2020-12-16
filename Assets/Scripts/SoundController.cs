@@ -6,9 +6,9 @@ public class SoundController : MonoBehaviour
     private float volumeModifier;
 
     void OnEnable() {
-        // Grab user volume options
+        // Grab user options
         volumeModifier = PlayerPrefs.GetFloat("volume");
-        Debug.Log("Volume: " + volumeModifier);
+        //Debug.Log("Volume: " + volumeModifier);
     }
 
     public void PlaySFX(AudioClip audioClip, float vol = 1f, float pitch = 1f, bool stop = false) {

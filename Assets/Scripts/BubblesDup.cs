@@ -23,6 +23,7 @@ public class BubblesDup : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private CameraScreenScale cameraScreenScale;
     private float spriteAdjustmentRatio;
+    private float userSpriteSize;
 
 
     void Start() {
@@ -32,11 +33,13 @@ public class BubblesDup : MonoBehaviour
     }
 
     void OnEnable() {
-        // Grab user volume options
-        shakeBubbleTimer = PlayerPrefs.GetFloat("bubbleamount");
+        // Grab user options
+        shakeBubbleTimer = PlayerPrefs.GetFloat("bubblefrequency");
         shakeBubbleCount = (int)PlayerPrefs.GetFloat("bubblecount");
-        Debug.Log("Bubble Amount: " + shakeBubbleTimer);
-        Debug.Log("Bubble Count: " + shakeBubbleCount);
+        float bubblevariation = PlayerPrefs.GetFloat("bubblesizevariation");
+        bubbleMinScale =  1 - bubblevariation;
+        bubbleMaxScale = 1 + bubblevariation;
+        userSpriteSize = PlayerPrefs.GetFloat("bubblesize");
     }
 
     void Update() {
@@ -95,7 +98,7 @@ public class BubblesDup : MonoBehaviour
             Vector3 bubblePosition = new Vector3(Random.Range(CameraPos.x - defaultWidth, defaultWidth), CameraPos.y - defaultHeight - (spriteRenderer.bounds.size.y/4), 0f);
             bubbleClone.transform.position = bubblePosition;
             bubbleClone.transform.SetParent(bubbleContainer.transform);
-            bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale) * spriteAdjustmentRatio;
+            bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale) * spriteAdjustmentRatio * userSpriteSize;
         }
     }
 }//end of BubblesDup

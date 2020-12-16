@@ -13,6 +13,11 @@ public class Starfish : FishController
         SetRandomTarget();
     }
 
+    void OnEnable() {
+        // Grab user options
+        SetUserSpriteSize(PlayerPrefs.GetFloat("starfishsize"));
+    }
+
     void Update() {
         MoveFish();
     }
