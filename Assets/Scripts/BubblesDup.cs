@@ -33,7 +33,16 @@ public class BubblesDup : MonoBehaviour
 
     void OnEnable() {
         // Grab user options
-        shakeBubbleTimer = PlayerPrefs.GetFloat("bubblefrequency");
+        float bubblefrequency = PlayerPrefs.GetFloat("bubblefrequency");
+        bubbleSpawnMinTime = bubblefrequency - 2;
+        bubbleSpawnMaxTime = bubblefrequency + 2;
+        // Min spawn time adjustmentsust
+        if (bubbleSpawnMinTime == 0) {
+            bubbleSpawnMinTime = 0.75f;
+        } else if (bubbleSpawnMinTime == -1) {
+            bubbleSpawnMinTime = 0.5f;
+        }
+        shakeBubbleTimer = PlayerPrefs.GetFloat("shakenbubblefrequency");
         shakeBubbleCount = (int)PlayerPrefs.GetFloat("bubblecount");
         float bubblevariation = PlayerPrefs.GetFloat("bubblesizevariation");
         bubbleMinScale =  1 - bubblevariation;
