@@ -41,9 +41,8 @@ public class BlowFish : FishController
             // Head back to reset position
             if (IsResetTime()) {
                 Rotate(rotationSpeed + 2);
-                //Debug.Log("Z at: " + transform.rotation.z);
                 if (transform.rotation.z <= 0.02f && transform.rotation.z >= -0.02f) {
-                    //Debug.Log("Reset Complete");
+                    //Debug.Log("Blowfish - Reset Complete");
                     Vector3 currentPos = transform.position;
                     transform.position = new Vector3(currentPos.x, currentPos.y, 0);
                     SetResetTime(false);
@@ -96,7 +95,7 @@ public class BlowFish : FishController
     private void OnTriggerEnter2D(Collider2D other) {
         /* logic for collisions with blowfish
         if (this.tag == "Fish" && other.tag == "Wall") {
-            Debug.Log("BOUNCE");
+            Debug.Log("Blowfish - BOUNCE");
             Bounce();
         }
         */

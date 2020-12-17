@@ -27,7 +27,6 @@ public class BubblesDup : MonoBehaviour
 
 
     void Start() {
-        //Debug.Log("BubblesDup Started");
         sndCtrl = FindObjectOfType<SoundController>();
         SetCameraProperties();
     }
@@ -39,6 +38,8 @@ public class BubblesDup : MonoBehaviour
         float bubblevariation = PlayerPrefs.GetFloat("bubblesizevariation");
         bubbleMinScale =  1 - bubblevariation;
         bubbleMaxScale = 1 + bubblevariation;
+        Debug.Log("BubblesDup - Min: " + bubbleMinScale);
+        Debug.Log("BubblesDup - Max: " + bubbleMaxScale);
         userSpriteSize = PlayerPrefs.GetFloat("bubblesize");
     }
 

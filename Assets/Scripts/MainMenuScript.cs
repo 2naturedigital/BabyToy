@@ -8,7 +8,7 @@ public class MainMenuScript : MonoBehaviour
     }
 
     public void ExitGame() {
-        Debug.Log ("Exiting App");
+        Debug.Log ("MainMenuScript - Exiting App");
         Application.Quit();
     }
 }

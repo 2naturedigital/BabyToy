@@ -22,7 +22,7 @@ public class Guppy : FishController
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        //Debug.Log("Guppy Bumpy!");
+        //Debug.Log("Guppy - Guppy Bumpy!");
         if (other.tag == "Fish") {
             SetRandomTarget();
         }

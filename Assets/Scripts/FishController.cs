@@ -58,7 +58,7 @@ public class FishController : MonoBehaviour {
         }
     }
     public void SetTarget(Vector3 newTarget) {
-        //Debug.Log(this + " Is changing to x: " + newTarget.x + " " + newTarget.y);
+        //Debug.Log("FishController - " + this + " Is changing to x: " + newTarget.x + " " + newTarget.y);
         targetPosition = newTarget;
     }
     public Vector3 GetFishOnScreenPosition() {
@@ -68,14 +68,14 @@ public class FishController : MonoBehaviour {
         this.transform.position = pos; //Camera.main.ScreenToWorldPoint(pos);
     }
     public Vector3 GetTarget() {
-        //Debug.Log(this + " Is going towards: " + targetPosition.x + " " + targetPosition.y);
+        //Debug.Log("FishController - " + this + " Is going towards: " + targetPosition.x + " " + targetPosition.y);
         return targetPosition;
     }
     public void SetRandomTarget() {
         float randomX = Random.Range(CameraPos.x - screenWidth + (fishWidth/2), screenWidth - (fishWidth/2));
         float randomY = Random.Range(CameraPos.y - screenHeight + (fishHeight/2), screenHeight - (fishHeight/2));
-        //Debug.Log("Min: " + (CameraPos.x - defaultWidth) + " Max: " + defaultWidth);
-        //Debug.Log("Min: " + (CameraPos.y - defaultHeight) + " Max: " + defaultHeight);
+        //Debug.Log("FishController - Min: " + (CameraPos.x - defaultWidth) + " Max: " + defaultWidth);
+        //Debug.Log("FishController - Min: " + (CameraPos.y - defaultHeight) + " Max: " + defaultHeight);
         targetPosition = new Vector3(randomX, randomY);
     }
     public float GetSpeed() {
@@ -120,7 +120,6 @@ public class FishController : MonoBehaviour {
     public void StartShake(Vector3 mult, float shakeForceMult) {
         magnitudeMult = mult.sqrMagnitude;
         shakeForceMultiplier = shakeForceMult;
-        //Debug.Log("Magnintude: " + shakeMultiplier);
         SetIsShaking(true);
     }
     public void ContinueShake(Vector3 mult, float shakeForceMult) {
@@ -155,7 +154,7 @@ public class FishController : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         /* Used for swapping targets on collision
         if (this.tag == "Fish" && other.tag == "Fish") {
-            //Debug.Log("Collision");
+            //Debug.Log("FishController - Collision");
             FishController otherFish = other.gameObject.GetComponent<FishController>();
             if (otherFish != null) {
                 Vector3 thisTarget = this.GetTarget();
@@ -189,7 +188,7 @@ public class FishController : MonoBehaviour {
     }
     public void SetCameraProperties() {
         CameraPos = Camera.main.transform.position;
-        //Debug.Log("Ortho Size Is: " + Camera.main.orthographicSize);
+        //Debug.Log("FishController - Ortho Size Is: " + Camera.main.orthographicSize);
         screenWidth = Camera.main.orthographicSize * Camera.main.aspect;
         screenHeight = Camera.main.orthographicSize;
         cameraScreenScale = FindObjectOfType<CameraScreenScale>();

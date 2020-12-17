@@ -15,7 +15,7 @@ public class ShakeController : MonoBehaviour
     void OnEnable() {
         // Grab user options
         shakeForceMultiplier = PlayerPrefs.GetFloat("shakepower");
-        //Debug.Log("Shake Power: " + shakeForceMultiplier);
+        //Debug.Log("ShakeController - Shake Power: " + shakeForceMultiplier);
     }
 
     public void Shake(Vector3 deviceAcceleration) {
@@ -23,22 +23,18 @@ public class ShakeController : MonoBehaviour
             isShaking = true;
             foreach (var f in fishies) {
                 f.StartShake(deviceAcceleration, shakeForceMultiplier);
-                //Debug.Log("shaking a fish");
             }
             foreach (var c in waterCurrent) {
                 c.StartShake(deviceAcceleration, shakeForceMultiplier);
-                //Debug.Log("shaking a fish");
             }
             bubblesDup.StartShake(deviceAcceleration, shakeForceMultiplier);
             tankCurrent.StartShake(deviceAcceleration, shakeForceMultiplier);
         } else {
             foreach (var f in fishies) {
                 f.ContinueShake(deviceAcceleration, shakeForceMultiplier);
-                //Debug.Log("continue to shake");
             }
             foreach (var c in waterCurrent) {
                 c.ContinueShake(deviceAcceleration, shakeForceMultiplier);
-                //Debug.Log("shaking a fish");
             }
             bubblesDup.ContinueShake(deviceAcceleration, shakeForceMultiplier);
             tankCurrent.ContinueShake(deviceAcceleration, shakeForceMultiplier);
@@ -58,7 +54,6 @@ public class ShakeController : MonoBehaviour
                 }
                 foreach (var c in waterCurrent) {
                     c.EndShake();
-                    //Debug.Log("shaking a fish");
                 }
                 bubblesDup.EndShake();
                 tankCurrent.EndShake();

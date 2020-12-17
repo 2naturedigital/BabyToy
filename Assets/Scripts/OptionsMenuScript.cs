@@ -88,7 +88,7 @@ public class OptionsMenuScript : MonoBehaviour
         PlayerPrefs.SetFloat("shakepower", currentShakePower);
         PlayerPrefs.SetFloat("bubblefrequency", currentBubbleFrequency);
         PlayerPrefs.SetFloat("bubblecount", currentBubbleCount);
-        PlayerPrefs.SetFloat("bubblevariation", currentBubbleSizeVariation);
+        PlayerPrefs.SetFloat("bubblesizevariation", currentBubbleSizeVariation);
         PlayerPrefs.SetFloat("bubblesize", currentBubbleSize);
         PlayerPrefs.SetFloat("blowfishsize", currentBlowfishSize);
         PlayerPrefs.SetFloat("guppysize", currentGuppySize);

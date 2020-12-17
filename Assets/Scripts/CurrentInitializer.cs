@@ -13,7 +13,6 @@ public class CurrentInitializer : MonoBehaviour
     void Start() {
         SetCameraProperties();
 
-        //Debug.Log("Adjusting the currents");
         float offset = 1.0f;
         foreach (var c in waterCurrents) {
             // Adjust the water currents to be wider than the screen by a small margin and cut into slices by the aspect ratio

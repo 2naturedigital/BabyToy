@@ -12,18 +12,17 @@ public class Accelerometer : MonoBehaviour
     private ShakeController shakeController;
 
     void Start() {
-        //Debug.Log("Accelerometer Started");
         // Less system taxing to use squared magnintude rather than squareroot
         sqrShakeDetectionThreshold = Mathf.Pow(shakeDetectionThreshhold, 2);
         shakeController = GetComponent<ShakeController>();
     }
 
     void Update() {
-        //Debug.Log("sqrmagnitude: " + Input.acceleration.sqrMagnitude);
+        //Debug.Log("Accelerometer - sqrmagnitude: " + Input.acceleration.sqrMagnitude);
         // Shake only if threshold is met and it's been enough time since last shake
         if (Input.acceleration.sqrMagnitude >= sqrShakeDetectionThreshold
             && Time.unscaledTime >= timeSinceLastShake + minShakeInterval) {
-            //Debug.Log("Shake Detected");
+            //Debug.Log("Accelerometer - Shake Detected");
             if (shakeController != null) {
                 shakeController.Shake(Input.acceleration);
             }

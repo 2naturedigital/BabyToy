@@ -11,7 +11,6 @@ public class CameraScreenScale : MonoBehaviour {
     // private float defaultHeight;
 
     void Start() {
-        //Debug.Log("CameraScreenScale Started");
         // Calculate screen ratio
         float screenRatio = (float)Screen.width / (float)Screen.height;
         float targetRatio;
@@ -24,19 +23,17 @@ public class CameraScreenScale : MonoBehaviour {
         }
 
         if (screenRatio >= targetRatio) {
-            //Debug.Log("BG Size Is: " + bg.bounds.size.y);
+            //Debug.Log("CameraScreenScale - BG Size Is: " + bg.bounds.size.y);
             Camera.main.orthographicSize = bg.bounds.size.y/2;
-            Debug.Log("1 Ortho Size Set: " + Camera.main.orthographicSize);
+            Debug.Log("CameraScreenScale - ScreenRatio Larger - Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
-            //Debug.Log("Screen Larger so Ortho Size is: " + Camera.main.orthographicSize);
         } else {
             float differenceInSize = targetRatio / screenRatio;
             Camera.main.orthographicSize = bg.bounds.size.y/2 * differenceInSize;
-            Debug.Log("2 Ortho Size Set: " + Camera.main.orthographicSize);
+            Debug.Log("CameraScreenScale - TargetRatio Larger - Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f  * differenceInSize;
-            //Debug.Log("Screen Smaller so Ortho Size is: " + Camera.main.orthographicSize);
         }
 
         /*In case we decide to go with landscape rotation **
