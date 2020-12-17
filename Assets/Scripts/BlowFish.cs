@@ -52,8 +52,10 @@ public class BlowFish : FishController
             if (pumpTimer <= 0) {
                 AnimateFish();
                 MoveFish();
-                // Change rotation direction once in a while
-                FlipRotationDirection();
+                // Change rotation direction once in a while if not inflated and not reset
+                if (!isInflated && !IsResetTime()) {
+                    FlipRotationDirection();
+                }
                 pumpTimer = Random.Range(pumpMinTime, pumpMaxTime);
             } else {
                 pumpTimer -= Time.deltaTime;

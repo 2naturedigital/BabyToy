@@ -84,7 +84,7 @@ public class TankCurrent : MonoBehaviour {
         // If shaking, then set current to direction of the shake force
         } else {
             x = 1;
-            int y = 10;
+            int y = 1;
             if (shakeData.x < 0) {
                 x = -1;
             }
@@ -93,11 +93,13 @@ public class TankCurrent : MonoBehaviour {
             }
             currentDirection = new Vector3(x, y, 0);
         }
+        //Debug.Log("TankCurrent - Direction: " + currentDirection);
     }
 
     private void NewStrength() {
         // Set a new strength between the min and max provided
         currentStrength = Random.Range(minStrength * magnitudeMult, maxStrength * magnitudeMult);
+        //Debug.Log("TankCurrent - Strength: " + currentStrength);
     }
 
     private void NewMovementPeriod() {
