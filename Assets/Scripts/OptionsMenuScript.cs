@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+//using UnityEngine.UIElements;
 using TMPro;
 public class OptionsMenuScript : MonoBehaviour
 {
@@ -15,17 +17,20 @@ public class OptionsMenuScript : MonoBehaviour
     private const float DEFAULTBUBBLESIZEVARIATION = 0.5f;
     private const float DEFAULTSPRITESIZE = 1.0f;
 
-    public bool currentBlur = DEFAULTBLUR;
-    public float currentVolume = DEFAULTVOLUME;
-    public float currentShakePower = DEFAULTSHAKEPOWER;
-    public float currentBubbleFrequency = DEFAULTBUBBLEFREQUENCY;
-    public float currentShakenBubbleFrequency = DEFAULTSHAKENBUBBLEFREQUENCY;
-    public float currentBubbleCount = DEFAULTBUBBLECOUNT;
-    public float currentBubbleSizeVariation = DEFAULTBUBBLESIZEVARIATION;
-    public float currentBubbleSize = DEFAULTSPRITESIZE;
-    public float currentBlowfishSize = DEFAULTSPRITESIZE;
-    public float currentGuppySize = DEFAULTSPRITESIZE;
-    public float currentStarfishSize = DEFAULTSPRITESIZE;
+    // Sliders, Check boxes, Etc
+    public Toggle blurToggle;
+    public Slider volumeSlider;
+    public Slider shakePowerSlider;
+    public Slider bubbleFrequencySlider;
+    public Slider shakenBubbleFrequencySlider;
+    public Slider bubbleCountSlider;
+    public Slider bubbleSizeVariationSlider;
+    public Slider bubbleSizeSlider;
+    public Slider blowfishSizeSlider;
+    public Slider guppySizeSlider;
+    public Slider starfishSizeSlider;
+
+    // TextMesh Text Value Boxes
     public TextMeshProUGUI volumeValue;
     public TextMeshProUGUI shakePowerValue;
     public TextMeshProUGUI bubbleFrequencyValue;
@@ -38,101 +43,90 @@ public class OptionsMenuScript : MonoBehaviour
     public TextMeshProUGUI starfishSizeValue;
 
     void Start() {
-        SetPercentageText(volumeValue, currentVolume);
-        SetMultiplierText(shakePowerValue, currentShakePower);
-        SetFrequencyText(bubbleFrequencyValue, currentBubbleFrequency);
-        SetFrequencyText(shakenBubbleFrequencyValue, currentShakenBubbleFrequency);
-        SetMultiplierText(bubbleCountValue, currentBubbleCount);
-        SetVariationText(bubbleSizeVariationValue, currentBubbleSizeVariation);
-        SetSizeText(bubbleSizeValue, currentBubbleSize);
-        SetSizeText(blowfishSizeValue, currentBlowfishSize);
-        SetSizeText(guppySizeValue, currentGuppySize);
-        SetSizeText(starfishSizeValue, currentStarfishSize);
+        SetPercentageText(volumeValue, volumeSlider.value);
+        SetMultiplierText(shakePowerValue, shakePowerSlider.value);
+        SetFrequencyText(bubbleFrequencyValue, bubbleFrequencySlider.value);
+        SetFrequencyText(shakenBubbleFrequencyValue, shakenBubbleFrequencySlider.value);
+        SetMultiplierText(bubbleCountValue, bubbleCountSlider.value);
+        SetVariationText(bubbleSizeVariationValue, bubbleSizeVariationSlider.value);
+        SetSizeText(bubbleSizeValue, bubbleSizeSlider.value);
+        SetSizeText(blowfishSizeValue, blowfishSizeSlider.value);
+        SetSizeText(guppySizeValue, guppySizeSlider.value);
+        SetSizeText(starfishSizeValue, starfishSizeSlider.value);
     }
 
     void OnEnable() {
         // Load user options
-        // currentBlur = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;  // if "true" set to true else false
-        // currentVolume = PlayerPrefs.GetFloat("volume", DEFAULTVOLUME);
-        // currentShakePower = PlayerPrefs.GetFloat("shakepower", DEFAULTSHAKEPOWER);
-        // currentBubbleFrequency = PlayerPrefs.GetFloat("bubblefrequency", DEFAULTBUBBLEFREQUENCY);
-        // currentShakenBubbleFrequency = PlayerPrefs.GetFloat("shakenbubblefrequency", DEFAULTSHAKENBUBBLEFREQUENCY);
-        // currentBubbleCount = PlayerPrefs.GetFloat("bubblecount", DEFAULTBUBBLECOUNT);
-        // currentBubbleSizeVariation = PlayerPrefs.GetFloat("bubblesizevariation", DEFAULTBUBBLESIZEVARIATION);
-        // currentBubbleSize = PlayerPrefs.GetFloat("bubblesize", DEFAULTSPRITESIZE);
-        // currentBlowfishSize = PlayerPrefs.GetFloat("blowfishsize", DEFAULTSPRITESIZE);
-        // currentGuppySize = PlayerPrefs.GetFloat("guppysize", DEFAULTSPRITESIZE);
-        // currentStarfishSize = PlayerPrefs.GetFloat("starfishsize", DEFAULTSPRITESIZE);
+        blurToggle.isOn = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;  // if "true" set to true else false
+        volumeSlider.value = PlayerPrefs.GetFloat("volume", DEFAULTVOLUME);
+        shakePowerSlider.value = PlayerPrefs.GetFloat("shakepower", DEFAULTSHAKEPOWER);
+        bubbleFrequencySlider.value = PlayerPrefs.GetFloat("bubblefrequency", DEFAULTBUBBLEFREQUENCY);
+        shakenBubbleFrequencySlider.value = PlayerPrefs.GetFloat("shakenbubblefrequency", DEFAULTSHAKENBUBBLEFREQUENCY);
+        bubbleCountSlider.value = PlayerPrefs.GetFloat("bubblecount", DEFAULTBUBBLECOUNT);
+        bubbleSizeVariationSlider.value = PlayerPrefs.GetFloat("bubblesizevariation", DEFAULTBUBBLESIZEVARIATION);
+        bubbleSizeSlider.value = PlayerPrefs.GetFloat("bubblesize", DEFAULTSPRITESIZE);
+        blowfishSizeSlider.value = PlayerPrefs.GetFloat("blowfishsize", DEFAULTSPRITESIZE);
+        guppySizeSlider.value = PlayerPrefs.GetFloat("guppysize", DEFAULTSPRITESIZE);
+        starfishSizeSlider.value = PlayerPrefs.GetFloat("starfishsize", DEFAULTSPRITESIZE);
     }
 
     void OnDisable() {
         // Save user options
-        PlayerPrefs.SetString("blur", currentBlur ? "true" : "false");  // if true set string "true" else "false"
-        PlayerPrefs.SetFloat("volume", currentVolume);
-        PlayerPrefs.SetFloat("shakepower", currentShakePower);
-        PlayerPrefs.SetFloat("bubblefrequency", currentBubbleFrequency);
-        PlayerPrefs.SetFloat("shakenbubblefrequency", currentShakenBubbleFrequency);
-        PlayerPrefs.SetFloat("bubblecount", currentBubbleCount);
-        PlayerPrefs.SetFloat("bubblesizevariation", currentBubbleSizeVariation);
-        PlayerPrefs.SetFloat("bubblesize", currentBubbleSize);
-        PlayerPrefs.SetFloat("blowfishsize", currentBlowfishSize);
-        PlayerPrefs.SetFloat("guppysize", currentGuppySize);
-        PlayerPrefs.SetFloat("starfishsize", currentStarfishSize);
+        PlayerPrefs.SetString("blur", blurToggle.isOn ? "true" : "false");  // if true set string "true" else "false"
+        PlayerPrefs.SetFloat("volume", volumeSlider.value);
+        PlayerPrefs.SetFloat("shakepower", shakePowerSlider.value);
+        PlayerPrefs.SetFloat("bubblefrequency", bubbleFrequencySlider.value);
+        PlayerPrefs.SetFloat("shakenbubblefrequency", shakenBubbleFrequencySlider.value);
+        PlayerPrefs.SetFloat("bubblecount", bubbleCountSlider.value);
+        PlayerPrefs.SetFloat("bubblesizevariation", bubbleSizeVariationSlider.value);
+        PlayerPrefs.SetFloat("bubblesize", bubbleSizeSlider.value);
+        PlayerPrefs.SetFloat("blowfishsize", blowfishSizeSlider.value);
+        PlayerPrefs.SetFloat("guppysize", guppySizeSlider.value);
+        PlayerPrefs.SetFloat("starfishsize", starfishSizeSlider.value);
     }
 
     // On Changed Functions
     public void BlurChanged(bool blur) {
-        currentBlur = blur;
     }
 
     public void VolumeChanged(float volume) {
-        currentVolume = volume;
-        SetPercentageText(volumeValue, currentVolume);
+        SetPercentageText(volumeValue, volume);
     }
 
     public void ShakePowerChanged(float power) {
-        currentShakePower = power;
-        SetMultiplierText(shakePowerValue, currentShakePower);
+        SetMultiplierText(shakePowerValue, power);
     }
 
     public void BubbleFrequencyChanged(float frequency) {
-        currentBubbleFrequency = BUBBLEFREQUENCYDIFFERENCE - frequency;
-        SetFrequencyText(bubbleFrequencyValue, currentBubbleFrequency);
+        SetFrequencyText(bubbleFrequencyValue, BUBBLEFREQUENCYDIFFERENCE - frequency);
     }
 
     public void ShakenBubbleFrequencyChanged(float frequency) {
-        currentShakenBubbleFrequency = SHAKENBUBBLEFREQUENCYDIFFERENCE - frequency;
-        SetFrequencyText(shakenBubbleFrequencyValue, currentShakenBubbleFrequency);
+        SetFrequencyText(shakenBubbleFrequencyValue, SHAKENBUBBLEFREQUENCYDIFFERENCE - frequency);
     }
 
     public void BubbleCountChanged(float count) {
-        currentBubbleCount = count;
-        SetMultiplierText(bubbleCountValue, currentBubbleCount);
+        SetMultiplierText(bubbleCountValue, count);
     }
 
     public void BubbleSizeVariationChanged(float variation) {
-        currentBubbleSizeVariation = variation;
-        SetVariationText(bubbleSizeVariationValue, currentBubbleSizeVariation);
+        SetVariationText(bubbleSizeVariationValue, variation);
     }
 
     public void BubbleSizeChanged(float size) {
-        currentBubbleSize = size;
-        SetSizeText(bubbleSizeValue, currentBubbleSize);
+        SetSizeText(bubbleSizeValue, size);
     }
 
     public void BlowfishSizeChanged(float size) {
-        currentBlowfishSize = size;
-        SetSizeText(blowfishSizeValue, currentBlowfishSize);
+        SetSizeText(blowfishSizeValue, size);
     }
 
     public void GuppySizeChanged(float size) {
-        currentGuppySize = size;
-        SetSizeText(guppySizeValue, currentGuppySize);
+        SetSizeText(guppySizeValue, size);
     }
 
     public void StarfishSizeChanged(float size) {
-        currentStarfishSize = size;
-        SetSizeText(starfishSizeValue, currentStarfishSize);
+        SetSizeText(starfishSizeValue, size);
     }
 
 
@@ -187,16 +181,16 @@ public class OptionsMenuScript : MonoBehaviour
 
     public void DefaultSettings() {
         // Reset defaults and reload scene
-        currentVolume = DEFAULTVOLUME;
-        currentShakePower = DEFAULTSHAKEPOWER;
-        currentBubbleFrequency = DEFAULTBUBBLEFREQUENCY;
-        currentShakenBubbleFrequency = DEFAULTSHAKENBUBBLEFREQUENCY;
-        currentBubbleCount = DEFAULTBUBBLECOUNT;
-        currentBubbleSizeVariation = DEFAULTBUBBLESIZEVARIATION;
-        currentBubbleSize = DEFAULTSPRITESIZE;
-        currentBlowfishSize = DEFAULTSPRITESIZE;
-        currentGuppySize = DEFAULTSPRITESIZE;
-        currentStarfishSize = DEFAULTSPRITESIZE;
-        SceneManager.LoadScene("Menu");
+        volumeSlider.value = DEFAULTVOLUME;
+        shakePowerSlider.value = DEFAULTSHAKEPOWER;
+        bubbleFrequencySlider.value = DEFAULTBUBBLEFREQUENCY;
+        shakenBubbleFrequencySlider.value = DEFAULTSHAKENBUBBLEFREQUENCY;
+        bubbleCountSlider.value = DEFAULTBUBBLECOUNT;
+        bubbleSizeVariationSlider.value = DEFAULTBUBBLESIZEVARIATION;
+        bubbleSizeSlider.value = DEFAULTSPRITESIZE;
+        blowfishSizeSlider.value = DEFAULTSPRITESIZE;
+        guppySizeSlider.value = DEFAULTSPRITESIZE;
+        starfishSizeSlider.value = DEFAULTSPRITESIZE;
+        //SceneManager.LoadScene("Menu");
     }
 }//end of OptionsMenuScript
