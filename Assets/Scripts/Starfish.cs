@@ -19,6 +19,7 @@ public class Starfish : FishController
     }
 
     void Update() {
+        SetCameraProperties();
         MoveFish();
     }
 

@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
     private float spriteAdjustmentRatio;
+    private int screenHeight;
+    private int screenWidth;
     // public bool maintainWidth = false;
     // [Range(-1,1)]
     // public int adaptPosition;
@@ -12,6 +15,40 @@ public class CameraScreenScale : MonoBehaviour {
 
     void Start() {
         // Calculate screen ratio
+        screenHeight = Screen.height;
+        screenWidth = Screen.width;
+        CalculateScreen();
+
+        /*In case we decide to go with landscape rotation **
+        CameraPos = Camera.main.transform.position;
+        defaultHeight = Camera.main.orthographicSize;
+        defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
+        */
+    }
+
+    // In case we decide to go with landscape rotation **
+    void Update() {
+        if (screenHeight != Screen.height || screenWidth != Screen.width) {
+            screenHeight = Screen.height;
+            screenWidth = Screen.width;
+            CalculateScreen();
+        }
+
+        // Go back to main menu on a 4 finger touch TODO: make this work differently
+        if (Input.touchCount == 4) {
+            SceneManager.LoadScene("Menu");
+        }
+
+        // In case we decide to go with landscape rotation **
+        // if (maintainWidth) {
+        //     Camera.main.orthographicSize = defaultWidth / Camera.main.aspect;
+        //     Camera.main.transform.position = new Vector3(CameraPos.x, adaptPosition * (defaultHeight - Camera.main.orthographicSize), CameraPos.z);
+        // } else {
+        //     Camera.main.transform.position = new Vector3(adaptPosition * (defaultWidth - Camera.main.orthographicSize * Camera.main.aspect), CameraPos.y, CameraPos.z);
+        // }
+    }
+
+    void CalculateScreen() {
         float screenRatio = (float)Screen.width / (float)Screen.height;
         float targetRatio;
         if (bg.bounds.size.x <= bg.bounds.size.y) {
@@ -35,24 +72,7 @@ public class CameraScreenScale : MonoBehaviour {
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f  * differenceInSize;
         }
-
-        /*In case we decide to go with landscape rotation **
-        CameraPos = Camera.main.transform.position;
-        defaultHeight = Camera.main.orthographicSize;
-        defaultWidth = Camera.main.orthographicSize * Camera.main.aspect;
-        */
     }
-
-    /*In case we decide to go with landscape rotation **
-    void Update() {
-        if (maintainWidth) {
-            Camera.main.orthographicSize = defaultWidth / Camera.main.aspect;
-            Camera.main.transform.position = new Vector3(CameraPos.x, adaptPosition * (defaultHeight - Camera.main.orthographicSize), CameraPos.z);
-        } else {
-            Camera.main.transform.position = new Vector3(adaptPosition * (defaultWidth - Camera.main.orthographicSize * Camera.main.aspect), CameraPos.y, CameraPos.z);
-        }
-    }
-    */
 
     public float GetSpriteAdjustmentRatio() {
         return spriteAdjustmentRatio;

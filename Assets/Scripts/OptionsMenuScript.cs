@@ -197,6 +197,6 @@ public class OptionsMenuScript : MonoBehaviour
         currentBlowfishSize = DEFAULTSPRITESIZE;
         currentGuppySize = DEFAULTSPRITESIZE;
         currentStarfishSize = DEFAULTSPRITESIZE;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("Menu");
     }
 }

@@ -13,6 +13,7 @@ public class Guppy : FishController
     }
 
     void Update() {
+        SetCameraProperties();
         MoveFish();
     }
 

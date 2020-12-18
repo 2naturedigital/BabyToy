@@ -28,6 +28,7 @@ public class BlowFish : FishController
     }
 
     void Update() {
+        SetCameraProperties();
         PositionCheckVertical();
         PositionCheckHorizontal();
     }

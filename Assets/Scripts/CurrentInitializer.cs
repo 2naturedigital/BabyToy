@@ -25,6 +25,7 @@ public class CurrentInitializer : MonoBehaviour
         tankCurrent.GetComponent<BoxCollider2D>().size = new Vector3(screenWidth*2 * 1.2f, screenHeight*2 * 1.2f);
     }
     void Update() {
+        SetCameraProperties();
     }
 
     public void SetCameraProperties() {

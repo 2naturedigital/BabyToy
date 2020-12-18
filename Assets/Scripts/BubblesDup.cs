@@ -51,6 +51,7 @@ public class BubblesDup : MonoBehaviour
     }
 
     void Update() {
+        SetCameraProperties();
         bubbleTimer -= Time.deltaTime;
         CreateBubbles();
     }
