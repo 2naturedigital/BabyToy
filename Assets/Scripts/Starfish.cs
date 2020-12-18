@@ -54,7 +54,7 @@ public class Starfish : FishController
         } else if (IsShaking()) {                              // spin fast
             Rotate(wobbleShakeSpeed);
         } else if (IsResetTime()) {                           // head back to reset position
-            Rotate(wobbleShakeSpeed - 2);
+            Rotate(wobbleShakeSpeed);
             if (transform.rotation.z <= wobbleMinAngle && transform.rotation.z >= wobbleMaxAngle) {
                 SetResetTime(false);
             }
