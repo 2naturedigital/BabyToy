@@ -877,6 +877,8 @@ MonoBehaviour:
   bubbleContainer: {fileID: 826779766}
   bubbleSpawnMinTime: 1
   bubbleSpawnMaxTime: 5
+  bubbleGravityMin: -2
+  bubbleGravityMax: -15
   bubbleMinScale: 0.5
   bubbleMaxScale: 1
   shakeBubbleTimer: 0.15
@@ -1723,6 +1725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 0
   maxSpeed: 0
+  userSpriteSize: 0
   pumpMinTime: 1
   pumpMaxTime: 6
   pumpPowerMin: 125
@@ -1854,6 +1857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 80
   maxSpeed: 200
+  userSpriteSize: 0
 --- !u!50 &1610959112
 Rigidbody2D:
   serializedVersion: 4
@@ -2096,6 +2100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 5
   maxSpeed: 15
+  userSpriteSize: 0
   wobbleSpeed: 0.07
   wobbleShakeSpeed: 3
   wobbleMinAngle: 0.02

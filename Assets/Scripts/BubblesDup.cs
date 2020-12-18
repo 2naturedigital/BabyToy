@@ -6,6 +6,8 @@ public class BubblesDup : MonoBehaviour
     public GameObject bubbleContainer;
     public float bubbleSpawnMinTime;
     public float bubbleSpawnMaxTime;
+    public float bubbleGravityMin;
+    public float bubbleGravityMax;
     public float bubbleMinScale;
     public float bubbleMaxScale;
     private bool isShaking = false;
@@ -108,6 +110,7 @@ public class BubblesDup : MonoBehaviour
             bubbleClone.transform.position = bubblePosition;
             bubbleClone.transform.SetParent(bubbleContainer.transform);
             bubbleClone.transform.localScale *= Random.Range(bubbleMinScale, bubbleMaxScale) * spriteAdjustmentRatio * userSpriteSize;
+            bubbleClone.GetComponent<Rigidbody2D>().gravityScale = Random.Range(bubbleGravityMin, bubbleGravityMax);
         }
     }
 }//end of BubblesDup
