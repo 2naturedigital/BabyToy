@@ -24,6 +24,7 @@ public class FishController : MonoBehaviour {
     private Vector3 targetPosition;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rBody2D;
+    private Collider2D col2D;
     private CameraScreenScale cameraScreenScale;
     private float spriteAdjustmentRatio;
     public float userSpriteSize;
@@ -35,6 +36,7 @@ public class FishController : MonoBehaviour {
         SetSoundController();
         SetAnimator();
         SetRigidbody2D();
+        SetCollider2D();
         SetSpriteRenderer();
         SetCameraProperties();
         SetFishSize();
@@ -183,6 +185,9 @@ public class FishController : MonoBehaviour {
     public void SetRigidbody2D() {
         rBody2D = GetComponent<Rigidbody2D>();
     }
+    public void SetCollider2D() {
+        col2D = GetComponent<Collider2D>();
+    }
     public void SetSpriteRenderer() {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -221,6 +226,9 @@ public class FishController : MonoBehaviour {
     }
     public Rigidbody2D GetRigidbody2D() {
         return rBody2D;
+    }
+    public Collider2D GetCollider2D() {
+        return col2D;
     }
     public SpriteRenderer GetSpriteRenderer() {
         return spriteRenderer;

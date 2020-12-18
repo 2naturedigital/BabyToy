@@ -34,6 +34,7 @@ public class BlowFish : FishController
     }
 
     private void FixedUpdate() {
+        HandleTouch();
         SetAnimatorShakeTrigger();
 
         // Only do blowfish animations and movement when not shaking and pump timer has been reached
@@ -74,6 +75,20 @@ public class BlowFish : FishController
         if (!IsShaking() && isInflated) {
             PlaySFX(deflateAudio);
             isInflated = false;
+        }
+    }
+
+    public void HandleTouch() {
+        // Get touch position when the screen is touched
+        if (Input.touchCount > 0) {
+            // Handle all touches
+            foreach (Touch touch in Input.touches) {
+                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                // When a touch begins, grab its location and see if it is overlaping a collider2d object
+                if (GetCollider2D() == Physics2D.OverlapPoint(touchPosition)) {
+                    // Animate the fish
+                }
+            }
         }
     }
 

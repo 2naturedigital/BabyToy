@@ -36,26 +36,11 @@ public class Bubble : MonoBehaviour
         this.tag = "Bubble";
     }
 
+    void FixedUpdate() {
+        HandleTouch();
+    }
 
     void Update() {
-        // Get touch position when the screen is touched
-        if (Input.touchCount > 0) {
-            //Handle all touches
-            foreach (Touch touch in Input.touches) {
-                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-                // When a touch begins, grab its location and see if it is overlaping a collider2d object
-
-                if (bubbleCollider == Physics2D.OverlapPoint(touchPosition)) {
-                    // Set the collider2d object to a gameobject & destroy it
-                    if (!isPopped) {
-                        bubble = bubbleCollider.gameObject;
-                        PopBubble(bubble);
-                    }
-                }
-
-            }
-        }
-
         // Autodestruct Bubbles
         // Destroy bubbles above the screen
         if (this.transform.position.y >= defaultHeight + (spriteRenderer.bounds.size.y/2)) {
@@ -70,6 +55,24 @@ public class Bubble : MonoBehaviour
             lifetimer = Random.Range(bubbleLifetimeMin, bubbleLifetimeMax);
         }
 
+    }
+
+    public void HandleTouch() {
+        // Get touch position when the screen is touched
+        if (Input.touchCount > 0) {
+            // Handle all touches
+            foreach (Touch touch in Input.touches) {
+                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                // When a touch begins, grab its location and see if it is overlaping a collider2d object
+                if (bubbleCollider == Physics2D.OverlapPoint(touchPosition)) {
+                    // Set the collider2d object to a gameobject & destroy it
+                    if (!isPopped) {
+                        bubble = bubbleCollider.gameObject;
+                        PopBubble(bubble);
+                    }
+                }
+            }
+        }
     }
 
     public void SetCameraProperties() {

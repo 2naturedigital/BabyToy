@@ -199,4 +199,4 @@ public class OptionsMenuScript : MonoBehaviour
         currentStarfishSize = DEFAULTSPRITESIZE;
         SceneManager.LoadScene("Menu");
     }
-}
+}//end of OptionsMenuScript

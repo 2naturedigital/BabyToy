@@ -7,8 +7,8 @@ public class MainMenuScript : MonoBehaviour
         SceneManager.LoadScene("Rattlers");//SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void ExitGame() {
-        Debug.Log ("MainMenuScript - Exiting App");
-        Application.Quit();
-    }
-}
+    // public void ExitGame() {
+    //     Debug.Log ("MainMenuScript - Exiting App");
+    //     Application.Quit();
+    // }
+}//end of MainMenuScript
