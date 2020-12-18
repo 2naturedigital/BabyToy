@@ -10,9 +10,7 @@ public class OptionsMenuScript : MonoBehaviour
     private const float DEFAULTVOLUME = 1.0f;
     private const float DEFAULTSHAKEPOWER = 2.0f;
     private const float DEFAULTBUBBLEFREQUENCY = 4.0f;
-    private const float BUBBLEFREQUENCYDIFFERENCE = 9.0f; // should be same as min + max
-    private const float DEFAULTSHAKENBUBBLEFREQUENCY = 0.15f;
-    private const float SHAKENBUBBLEFREQUENCYDIFFERENCE = 0.25f; // should be same as min + max
+    private const float DEFAULTSHAKENBUBBLEFREQUENCY = 0.1f;
     private const float DEFAULTBUBBLECOUNT = 1.0f;
     private const float DEFAULTBUBBLESIZEVARIATION = 0.5f;
     private const float DEFAULTSPRITESIZE = 1.0f;
@@ -57,11 +55,11 @@ public class OptionsMenuScript : MonoBehaviour
 
     void OnEnable() {
         // Load user options
-        blurToggle.isOn = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;  // if "true" set to true else false
+        blurToggle.isOn = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;  // If "true" set to true else false
         volumeSlider.value = PlayerPrefs.GetFloat("volume", DEFAULTVOLUME);
         shakePowerSlider.value = PlayerPrefs.GetFloat("shakepower", DEFAULTSHAKEPOWER);
-        bubbleFrequencySlider.value = PlayerPrefs.GetFloat("bubblefrequency", DEFAULTBUBBLEFREQUENCY);
-        shakenBubbleFrequencySlider.value = PlayerPrefs.GetFloat("shakenbubblefrequency", DEFAULTSHAKENBUBBLEFREQUENCY);
+        bubbleFrequencySlider.value = (bubbleFrequencySlider.minValue + bubbleFrequencySlider.maxValue) - PlayerPrefs.GetFloat("bubblefrequency", DEFAULTBUBBLEFREQUENCY);
+        shakenBubbleFrequencySlider.value = (shakenBubbleFrequencySlider.minValue + shakenBubbleFrequencySlider.maxValue) - PlayerPrefs.GetFloat("shakenbubblefrequency", DEFAULTSHAKENBUBBLEFREQUENCY);
         bubbleCountSlider.value = PlayerPrefs.GetFloat("bubblecount", DEFAULTBUBBLECOUNT);
         bubbleSizeVariationSlider.value = PlayerPrefs.GetFloat("bubblesizevariation", DEFAULTBUBBLESIZEVARIATION);
         bubbleSizeSlider.value = PlayerPrefs.GetFloat("bubblesize", DEFAULTSPRITESIZE);
@@ -72,11 +70,11 @@ public class OptionsMenuScript : MonoBehaviour
 
     void OnDisable() {
         // Save user options
-        PlayerPrefs.SetString("blur", blurToggle.isOn ? "true" : "false");  // if true set string "true" else "false"
+        PlayerPrefs.SetString("blur", blurToggle.isOn ? "true" : "false");  // If true set string "true" else "false"
         PlayerPrefs.SetFloat("volume", volumeSlider.value);
         PlayerPrefs.SetFloat("shakepower", shakePowerSlider.value);
-        PlayerPrefs.SetFloat("bubblefrequency", bubbleFrequencySlider.value);
-        PlayerPrefs.SetFloat("shakenbubblefrequency", shakenBubbleFrequencySlider.value);
+        PlayerPrefs.SetFloat("bubblefrequency", (bubbleFrequencySlider.minValue + bubbleFrequencySlider.maxValue) - bubbleFrequencySlider.value); // Send the min+max - current
+        PlayerPrefs.SetFloat("shakenbubblefrequency", (shakenBubbleFrequencySlider.minValue + shakenBubbleFrequencySlider.maxValue) - shakenBubbleFrequencySlider.value); // Send the min+max - current
         PlayerPrefs.SetFloat("bubblecount", bubbleCountSlider.value);
         PlayerPrefs.SetFloat("bubblesizevariation", bubbleSizeVariationSlider.value);
         PlayerPrefs.SetFloat("bubblesize", bubbleSizeSlider.value);
@@ -98,11 +96,11 @@ public class OptionsMenuScript : MonoBehaviour
     }
 
     public void BubbleFrequencyChanged(float frequency) {
-        SetFrequencyText(bubbleFrequencyValue, BUBBLEFREQUENCYDIFFERENCE - frequency);
+        SetFrequencyText(bubbleFrequencyValue, frequency);
     }
 
     public void ShakenBubbleFrequencyChanged(float frequency) {
-        SetFrequencyText(shakenBubbleFrequencyValue, SHAKENBUBBLEFREQUENCYDIFFERENCE - frequency);
+        SetFrequencyText(shakenBubbleFrequencyValue, frequency);
     }
 
     public void BubbleCountChanged(float count) {
@@ -166,15 +164,15 @@ public class OptionsMenuScript : MonoBehaviour
         // Greater than 1 is for regular frequency, less than 1 is for shaken frequency
         if (value >= 1.0f) {
             if (value >= 6.0f) {
-                sliderText.text = "Less";
-            } else if (value <= 3.0f) {
                 sliderText.text = "More";
+            } else if (value <= 3.0f) {
+                sliderText.text = "Less";
             }
         } else {
             if (value >= 0.16f) {
-                sliderText.text = "Less";
-            } else if (value <= 0.08f) {
                 sliderText.text = "More";
+            } else if (value <= 0.08f) {
+                sliderText.text = "Less";
             }
         }
     }
