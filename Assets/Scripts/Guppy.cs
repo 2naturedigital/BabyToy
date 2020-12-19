@@ -31,7 +31,8 @@ public class Guppy : FishController
                 Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 // When a touch begins, grab its location and see if it is overlaping a collider2d object
                 if (GetCollider2D() == Physics2D.OverlapPoint(touchPosition)) {
-                    // Animate the fish
+                    // Guppy oh shit animation
+                    GetAnimator().SetTrigger("isTapped");
                 }
             }
         }
