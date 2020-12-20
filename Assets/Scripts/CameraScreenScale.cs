@@ -34,7 +34,7 @@ public class CameraScreenScale : MonoBehaviour {
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         if (scene.name == "Rattlers") {
-            landscape = PlayerPrefs.GetString("landscape", "true") == "true" ? true : false;
+            landscape = PlayerPrefs.GetString("landscape", "false") == "true" ? true : false;
             if (landscape) {
                 Debug.Log("Orientation Landscape for Rattler");
                 Screen.orientation = ScreenOrientation.Landscape;
