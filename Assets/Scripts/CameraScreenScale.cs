@@ -6,7 +6,7 @@ public class CameraScreenScale : MonoBehaviour {
     private float spriteAdjustmentRatio;
     private int screenHeight;
     private int screenWidth;
-    private bool orientation;
+    private bool landscape;
     // public bool maintainWidth = false;
     // [Range(-1,1)]
     // public int adaptPosition;
@@ -41,8 +41,8 @@ public class CameraScreenScale : MonoBehaviour {
         }
         
         if (scene.name == "Rattlers") {
-            orientation = PlayerPrefs.GetString("landscape", "true") == "true" ? true : false;
-            if (orientation) {
+            landscape = PlayerPrefs.GetString("landscape", "true") == "true" ? true : false;
+            if (landscape) {
                 Screen.orientation = ScreenOrientation.Landscape;
             }
         }
