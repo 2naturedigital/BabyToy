@@ -19,10 +19,7 @@ public class CameraScreenScale : MonoBehaviour {
         screenHeight = Screen.height;
         screenWidth = Screen.width;
         CalculateScreen();
-        if (SceneManager.GetActiveScene().name == "Menu") {
-            Screen.orientation = ScreenOrientation.Portrait;
-        }  
-        
+
 
         /*In case we decide to go with landscape rotation **
         CameraPos = Camera.main.transform.position;
@@ -31,21 +28,22 @@ public class CameraScreenScale : MonoBehaviour {
         */
     }
 
-    private void OnEnable() {
+    void OnEnable() {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "Menu") {
-            Screen.orientation = ScreenOrientation.Portrait;
-        }
-        
         if (scene.name == "Rattlers") {
             landscape = PlayerPrefs.GetString("landscape", "true") == "true" ? true : false;
             if (landscape) {
+                Debug.Log("Orientation Landscape for Rattler");
                 Screen.orientation = ScreenOrientation.Landscape;
             }
         }
+    }
+
+    void OnDisable() {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     // In case we decide to go with landscape rotation **
