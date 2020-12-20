@@ -17,7 +17,7 @@ public class OptionsMenuScript : MonoBehaviour
     private const float DEFAULTSPRITESIZE = 1.0f;
 
     public bool currentBlur = DEFAULTBLUR;
-    public bool orientation = DEFAULTLANDSCAPE;
+    public bool currentOrientation = DEFAULTLANDSCAPE;
     public float currentVolume = DEFAULTVOLUME;
     public float currentShakePower = DEFAULTSHAKEPOWER;
     public float currentBubbleFrequency = DEFAULTBUBBLEFREQUENCY;
@@ -28,8 +28,9 @@ public class OptionsMenuScript : MonoBehaviour
     public float currentBlowfishSize = DEFAULTSPRITESIZE;
     public float currentGuppySize = DEFAULTSPRITESIZE;
     public float currentStarfishSize = DEFAULTSPRITESIZE;
-    // Sliders, Check boxes, Etc
+    // Sliders, Toggles, Etc.
     public Toggle blurToggle;
+    public Toggle orientationToggle;
     public Slider volumeSlider;
     public Slider shakePowerSlider;
     public Slider bubbleFrequencySlider;
@@ -69,6 +70,7 @@ public class OptionsMenuScript : MonoBehaviour
     void OnEnable() {
         // Load user options
         blurToggle.isOn = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;  // If "true" set to true else false
+        orientationToggle.isOn = PlayerPrefs.GetString("landscape", "true") == "true" ? true : false;
         volumeSlider.value = PlayerPrefs.GetFloat("volume", DEFAULTVOLUME);
         shakePowerSlider.value = PlayerPrefs.GetFloat("shakepower", DEFAULTSHAKEPOWER);
         bubbleFrequencySlider.value = (bubbleFrequencySlider.minValue + bubbleFrequencySlider.maxValue) - PlayerPrefs.GetFloat("bubblefrequency", DEFAULTBUBBLEFREQUENCY);
@@ -84,7 +86,7 @@ public class OptionsMenuScript : MonoBehaviour
     void OnDisable() {
         // Save user options
         PlayerPrefs.SetString("blur", blurToggle.isOn ? "true" : "false");  // If true set string "true" else "false"
-        PlayerPrefs.SetString("landscape", orientation ? "true" : "false");
+        PlayerPrefs.SetString("landscape", orientationToggle.isOn ? "true" : "false");
         PlayerPrefs.SetFloat("volume", volumeSlider.value);
         PlayerPrefs.SetFloat("shakepower", shakePowerSlider.value);
         PlayerPrefs.SetFloat("bubblefrequency", (bubbleFrequencySlider.minValue + bubbleFrequencySlider.maxValue) - bubbleFrequencySlider.value); // Send the min+max - current
@@ -102,7 +104,6 @@ public class OptionsMenuScript : MonoBehaviour
     }
 
     public void Orientation(bool landscape) {
-        orientation = landscape;
     }
 
     public void VolumeChanged(float volume) {
@@ -197,6 +198,8 @@ public class OptionsMenuScript : MonoBehaviour
 
     public void DefaultSettings() {
         // Reset defaults and reload scene
+        blurToggle.isOn = DEFAULTBLUR;
+        orientationToggle.isOn = DEFAULTLANDSCAPE;
         volumeSlider.value = DEFAULTVOLUME;
         shakePowerSlider.value = DEFAULTSHAKEPOWER;
         bubbleFrequencySlider.value = DEFAULTBUBBLEFREQUENCY;
