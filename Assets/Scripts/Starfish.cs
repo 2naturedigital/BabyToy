@@ -36,8 +36,9 @@ public class Starfish : FishController
             foreach (Touch touch in Input.touches) {
                 Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 // When a touch begins, grab its location and see if it is overlaping a collider2d object
-                if (GetCollider2D() == Physics2D.OverlapPoint(touchPosition)) {
-                    // Animate the fish
+                if (touch.phase == TouchPhase.Began && GetCollider2D() == Physics2D.OverlapPoint(touchPosition)) {
+                    // Starfish big eyes animation
+                    GetAnimator().SetTrigger("isTapped");
                 }
             }
         }
@@ -54,7 +55,7 @@ public class Starfish : FishController
         } else if (IsShaking()) {                              // spin fast
             Rotate(wobbleShakeSpeed);
         } else if (IsResetTime()) {                           // head back to reset position
-            Rotate(wobbleShakeSpeed - 2);
+            Rotate(wobbleShakeSpeed);
             if (transform.rotation.z <= wobbleMinAngle && transform.rotation.z >= wobbleMaxAngle) {
                 SetResetTime(false);
             }

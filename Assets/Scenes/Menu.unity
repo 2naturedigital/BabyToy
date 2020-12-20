@@ -909,7 +909,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 1
   m_MaxValue: 8
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 4
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2877,7 +2877,7 @@ GameObject:
   - component: {fileID: 611180593}
   - component: {fileID: 611180594}
   m_Layer: 5
-  m_Name: Shaken Bubble Count
+  m_Name: Bubble Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6117,7 +6117,7 @@ MonoBehaviour:
   m_MinValue: 0.05
   m_MaxValue: 0.2
   m_WholeNumbers: 0
-  m_Value: 0.14
+  m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -8878,17 +8878,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eabdb884c69b2d458ca5574a2590e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentBlur: 1
-  currentVolume: 1
-  currentShakePower: 1
-  currentBubbleFrequency: 5
-  currentShakenBubbleFrequency: 0.11
-  currentBubbleCount: 1
-  currentBubbleSizeVariation: 0.5
-  currentBubbleSize: 1
-  currentBlowfishSize: 1
-  currentGuppySize: 1
-  currentStarfishSize: 1
+  blurToggle: {fileID: 480941561}
+  volumeSlider: {fileID: 1382166646}
+  shakePowerSlider: {fileID: 562942800}
+  bubbleFrequencySlider: {fileID: 234552084}
+  shakenBubbleFrequencySlider: {fileID: 1380503166}
+  bubbleCountSlider: {fileID: 611180594}
+  bubbleSizeVariationSlider: {fileID: 663290421}
+  bubbleSizeSlider: {fileID: 936183149}
+  blowfishSizeSlider: {fileID: 1051856055}
+  guppySizeSlider: {fileID: 817858529}
+  starfishSizeSlider: {fileID: 37467997}
   volumeValue: {fileID: 1602526029}
   shakePowerValue: {fileID: 1508292929}
   bubbleFrequencyValue: {fileID: 528715689}
