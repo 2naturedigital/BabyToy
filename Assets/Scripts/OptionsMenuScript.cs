@@ -5,6 +5,7 @@ public class OptionsMenuScript : MonoBehaviour
 {
     // Default Settings  TODO: find a better way to do this
     private const bool DEFAULTBLUR = true;
+    private const bool DEFAULTLANDSCAPE = false;
     private const float DEFAULTVOLUME = 1.0f;
     private const float DEFAULTSHAKEPOWER = 2.0f;
     private const float DEFAULTBUBBLEFREQUENCY = 4.0f;
@@ -16,6 +17,7 @@ public class OptionsMenuScript : MonoBehaviour
     private const float DEFAULTSPRITESIZE = 1.0f;
 
     public bool currentBlur = DEFAULTBLUR;
+    public bool orientation = DEFAULTLANDSCAPE;
     public float currentVolume = DEFAULTVOLUME;
     public float currentShakePower = DEFAULTSHAKEPOWER;
     public float currentBubbleFrequency = DEFAULTBUBBLEFREQUENCY;
@@ -68,6 +70,7 @@ public class OptionsMenuScript : MonoBehaviour
     void OnDisable() {
         // Save user options
         PlayerPrefs.SetString("blur", currentBlur ? "true" : "false");  // if true set string "true" else "false"
+        PlayerPrefs.SetString("landscape", orientation ? "true" : "false");
         PlayerPrefs.SetFloat("volume", currentVolume);
         PlayerPrefs.SetFloat("shakepower", currentShakePower);
         PlayerPrefs.SetFloat("bubblefrequency", currentBubbleFrequency);
@@ -83,6 +86,10 @@ public class OptionsMenuScript : MonoBehaviour
     // On Changed Functions
     public void BlurChanged(bool blur) {
         currentBlur = blur;
+    }
+
+    public void Orientation(bool landscape) {
+        orientation = landscape;
     }
 
     public void VolumeChanged(float volume) {
