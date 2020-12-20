@@ -10,18 +10,8 @@ public class MainMenuScript : MonoBehaviour
     }
 
     void OnEnable() {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "Menu") {
-            Debug.Log("Orientation Portrait for Menu");
-            Screen.orientation = ScreenOrientation.Portrait;
-        }
-    }
-
-    void OnDisable() {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        // Force portrait mode for menu
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     // public void ExitGame() {

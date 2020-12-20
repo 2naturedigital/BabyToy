@@ -6,7 +6,6 @@ public class CameraScreenScale : MonoBehaviour {
     private float spriteAdjustmentRatio;
     private int screenHeight;
     private int screenWidth;
-    private bool landscape;
     // public bool maintainWidth = false;
     // [Range(-1,1)]
     // public int adaptPosition;
@@ -29,21 +28,11 @@ public class CameraScreenScale : MonoBehaviour {
     }
 
     void OnEnable() {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "Rattlers") {
-            landscape = PlayerPrefs.GetString("landscape", "false") == "true" ? true : false;
-            if (landscape) {
-                Debug.Log("Orientation Landscape for Rattler");
-                Screen.orientation = ScreenOrientation.Landscape;
-            }
+        // Change orientation depending on user settings
+        bool landscape = PlayerPrefs.GetString("landscape", "false") == "true" ? true : false;
+        if (landscape) {
+            Screen.orientation = ScreenOrientation.Landscape;
         }
-    }
-
-    void OnDisable() {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     // In case we decide to go with landscape rotation **
@@ -56,7 +45,9 @@ public class CameraScreenScale : MonoBehaviour {
 
         // Go back to main menu on a 4 finger touch TODO: make this work differently
         if (Input.touchCount == 4) {
-            SceneManager.LoadScene("Menu");
+            if (Input.touches[0].phase == TouchPhase.Began) {
+                SceneManager.LoadScene("Menu");
+            }
         }
 
         // In case we decide to go with landscape rotation **
@@ -86,8 +77,8 @@ public class CameraScreenScale : MonoBehaviour {
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
         } else {
-            float differenceInSize = targetRatio / screenRatio;
-            Camera.main.orthographicSize = bg.bounds.size.y/2 * differenceInSize;
+            //float differenceInSize = targetRatio / screenRatio;
+            Camera.main.orthographicSize = bg.bounds.size.y/2;// * differenceInSize;
             Debug.Log("CameraScreenScale - TargetRatio Larger - Ortho Size Set: " + Camera.main.orthographicSize);
             // Set for landscape
             // Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f  * differenceInSize;
