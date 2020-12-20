@@ -8879,7 +8879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentBlur: 1
-  currentOrientation: 0
+  currentLandscape: 0
   currentVolume: 1
   currentShakePower: 2
   currentBubbleFrequency: 4
@@ -8891,7 +8891,7 @@ MonoBehaviour:
   currentGuppySize: 1
   currentStarfishSize: 1
   blurToggle: {fileID: 480941561}
-  orientationToggle: {fileID: 1357659519}
+  landscapeToggle: {fileID: 1357659519}
   volumeSlider: {fileID: 1382166646}
   shakePowerSlider: {fileID: 562942800}
   bubbleFrequencySlider: {fileID: 234552084}
