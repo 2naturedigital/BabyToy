@@ -125,7 +125,12 @@ public class BlowFish : FishController
         if (screenPosition.y > (GetScreenHeight() - GetFishHeight()/2)) {
             // Reset pump timer so fish does not pump
             pumpTimer = pumpMaxTime;
-        } else if (screenPosition.y < (-GetScreenHeight() + GetFishHeight()/2)) {
+            // Clamp y to be inside the screen with a border of the height of the fish so it never actually goes too far off the top of screen
+            if (screenPosition.y >= GetScreenHeight() + (GetFishHeight())) {
+                screenPosition.y = Mathf.Clamp(screenPosition.y, (GetScreenHeight()), GetScreenHeight() + (GetFishHeight()));
+                SetFishOnScreenPosition(screenPosition);
+            }
+        } else if (screenPosition.y <= (-GetScreenHeight() + GetFishHeight()/2)) {
             // If floating around in puffed mode, bounce off the bottom, otherwise just pump right away near bottom
             if (IsShaking()) {
                 // Clamp y to be inside the screen with a border of half the height of the fish so it never actually goes past the bottom of screen
