@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
+    public SpriteRenderer waterLayer;
+    public SpriteRenderer leftHand;
+    public SpriteRenderer rightHand;
+    public Sprite[] backgrounds;
     private float spriteAdjustmentRatio;
     private int screenHeight;
     private int screenWidth;
@@ -33,6 +37,20 @@ public class CameraScreenScale : MonoBehaviour {
         if (landscape) {
             Screen.orientation = ScreenOrientation.Landscape;
         }
+        // Change water visibility
+        bool water = PlayerPrefs.GetString("water", "true") == "true" ? true : false;
+        waterLayer.enabled = water;
+        // Change hands visibility
+        bool hands = PlayerPrefs.GetString("hands", "true") == "true" ? true : false;
+        leftHand.enabled = hands;
+        rightHand.enabled = hands;
+        // Change blur on or off
+        bool blur = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;
+        if (blur) {
+            bg.sprite = backgrounds[0];
+        } else {
+            bg.sprite = backgrounds[1];
+        }
     }
 
     // In case we decide to go with landscape rotation **
@@ -42,6 +60,7 @@ public class CameraScreenScale : MonoBehaviour {
             screenWidth = Screen.width;
             CalculateScreen();
         }
+
 
         // Go back to main menu on a 4 finger touch TODO: make this work differently
         if (Input.touchCount == 4) {

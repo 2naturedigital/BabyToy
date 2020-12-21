@@ -8,6 +8,8 @@ public class OptionsMenuScript : MonoBehaviour
     // Default Settings  TODO: find a better way to do this
     private const bool DEFAULTBLUR = true;
     private const bool DEFAULTLANDSCAPE = false;
+    private const bool DEFAULTWATER = true;
+    private const bool DEFAULTHANDS = true;
     private const float DEFAULTVOLUME = 1.0f;
     private const float DEFAULTSHAKEPOWER = 2.0f;
     private const float DEFAULTBUBBLEFREQUENCY = 4.0f;
@@ -15,22 +17,12 @@ public class OptionsMenuScript : MonoBehaviour
     private const float DEFAULTBUBBLECOUNT = 1.0f;
     private const float DEFAULTBUBBLESIZEVARIATION = 0.5f;
     private const float DEFAULTSPRITESIZE = 1.0f;
-
-    public bool currentBlur = DEFAULTBLUR;
-    public bool currentLandscape = DEFAULTLANDSCAPE;
-    public float currentVolume = DEFAULTVOLUME;
-    public float currentShakePower = DEFAULTSHAKEPOWER;
-    public float currentBubbleFrequency = DEFAULTBUBBLEFREQUENCY;
-    public float currentShakenBubbleFrequency = DEFAULTSHAKENBUBBLEFREQUENCY;
-    public float currentBubbleCount = DEFAULTBUBBLECOUNT;
-    public float currentBubbleSizeVariation = DEFAULTBUBBLESIZEVARIATION;
-    public float currentBubbleSize = DEFAULTSPRITESIZE;
-    public float currentBlowfishSize = DEFAULTSPRITESIZE;
-    public float currentGuppySize = DEFAULTSPRITESIZE;
-    public float currentStarfishSize = DEFAULTSPRITESIZE;
+    private const float DEFAULTSHAKESENSITIVITY = 1.6f;
     // Sliders, Toggles, Etc.
     public Toggle blurToggle;
     public Toggle landscapeToggle;
+    public Toggle waterToggle;
+    public Toggle handsToggle;
     public Slider volumeSlider;
     public Slider shakePowerSlider;
     public Slider bubbleFrequencySlider;
@@ -41,6 +33,7 @@ public class OptionsMenuScript : MonoBehaviour
     public Slider blowfishSizeSlider;
     public Slider guppySizeSlider;
     public Slider starfishSizeSlider;
+    public Slider shakeSensitivitySlider;
 
     // TextMesh Text Value Boxes
     public TextMeshProUGUI volumeValue;
@@ -53,6 +46,7 @@ public class OptionsMenuScript : MonoBehaviour
     public TextMeshProUGUI blowfishSizeValue;
     public TextMeshProUGUI guppySizeValue;
     public TextMeshProUGUI starfishSizeValue;
+    public TextMeshProUGUI shakeSensitivityValue;
 
     void Start() {
         SetPercentageText(volumeValue, volumeSlider.value);
@@ -65,12 +59,15 @@ public class OptionsMenuScript : MonoBehaviour
         SetSizeText(blowfishSizeValue, blowfishSizeSlider.value);
         SetSizeText(guppySizeValue, guppySizeSlider.value);
         SetSizeText(starfishSizeValue, starfishSizeSlider.value);
+        SetSensitivityText(shakeSensitivityValue, shakeSensitivitySlider.value);
     }
 
     void OnEnable() {
         // Load user options
         blurToggle.isOn = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;  // If "true" set to true else false
         landscapeToggle.isOn = PlayerPrefs.GetString("landscape", "false") == "true" ? true : false;
+        waterToggle.isOn = PlayerPrefs.GetString("water", "true") == "true" ? true : false;
+        handsToggle.isOn = PlayerPrefs.GetString("hands", "true") == "true" ? true : false;
         volumeSlider.value = PlayerPrefs.GetFloat("volume", DEFAULTVOLUME);
         shakePowerSlider.value = PlayerPrefs.GetFloat("shakepower", DEFAULTSHAKEPOWER);
         bubbleFrequencySlider.value = (bubbleFrequencySlider.minValue + bubbleFrequencySlider.maxValue) - PlayerPrefs.GetFloat("bubblefrequency", DEFAULTBUBBLEFREQUENCY);
@@ -81,12 +78,15 @@ public class OptionsMenuScript : MonoBehaviour
         blowfishSizeSlider.value = PlayerPrefs.GetFloat("blowfishsize", DEFAULTSPRITESIZE);
         guppySizeSlider.value = PlayerPrefs.GetFloat("guppysize", DEFAULTSPRITESIZE);
         starfishSizeSlider.value = PlayerPrefs.GetFloat("starfishsize", DEFAULTSPRITESIZE);
+        shakeSensitivitySlider.value = PlayerPrefs.GetFloat("shakesensitivity", DEFAULTSHAKESENSITIVITY);
     }
 
     void OnDisable() {
         // Save user options
         PlayerPrefs.SetString("blur", blurToggle.isOn ? "true" : "false");  // If true set string "true" else "false"
         PlayerPrefs.SetString("landscape", landscapeToggle.isOn ? "true" : "false");
+        PlayerPrefs.SetString("water", waterToggle.isOn ? "true" : "false");
+        PlayerPrefs.SetString("hands", handsToggle.isOn ? "true" : "false");
         PlayerPrefs.SetFloat("volume", volumeSlider.value);
         PlayerPrefs.SetFloat("shakepower", shakePowerSlider.value);
         PlayerPrefs.SetFloat("bubblefrequency", (bubbleFrequencySlider.minValue + bubbleFrequencySlider.maxValue) - bubbleFrequencySlider.value); // Send the min+max - current
@@ -97,15 +97,10 @@ public class OptionsMenuScript : MonoBehaviour
         PlayerPrefs.SetFloat("blowfishsize", blowfishSizeSlider.value);
         PlayerPrefs.SetFloat("guppysize", guppySizeSlider.value);
         PlayerPrefs.SetFloat("starfishsize", starfishSizeSlider.value);
+        PlayerPrefs.SetFloat("shakesensitivity", shakeSensitivitySlider.value);
     }
 
     // On Changed Functions
-    public void BlurChanged(bool blur) {
-    }
-
-    public void Orientation(bool landscape) {
-    }
-
     public void VolumeChanged(float volume) {
         SetPercentageText(volumeValue, volume);
     }
@@ -144,6 +139,10 @@ public class OptionsMenuScript : MonoBehaviour
 
     public void StarfishSizeChanged(float size) {
         SetSizeText(starfishSizeValue, size);
+    }
+
+    public void ShakeSensitivityChanged(float sensitivity) {
+        SetSensitivityText(shakeSensitivityValue, sensitivity);
     }
 
 
@@ -196,10 +195,21 @@ public class OptionsMenuScript : MonoBehaviour
         }
     }
 
+    void SetSensitivityText(TextMeshProUGUI sliderText, float value) {
+        sliderText.text = "Normal";
+        if (value >= 1.9f) {
+            sliderText.text = "Harder";
+        } else if (value <= 1.4f) {
+            sliderText.text = "Easier";
+        }
+    }
+
     public void DefaultSettings() {
         // Reset defaults and reload scene
         blurToggle.isOn = DEFAULTBLUR;
         landscapeToggle.isOn = DEFAULTLANDSCAPE;
+        waterToggle.isOn = DEFAULTWATER;
+        handsToggle.isOn = DEFAULTHANDS;
         volumeSlider.value = DEFAULTVOLUME;
         shakePowerSlider.value = DEFAULTSHAKEPOWER;
         bubbleFrequencySlider.value = DEFAULTBUBBLEFREQUENCY;
@@ -210,6 +220,6 @@ public class OptionsMenuScript : MonoBehaviour
         blowfishSizeSlider.value = DEFAULTSPRITESIZE;
         guppySizeSlider.value = DEFAULTSPRITESIZE;
         starfishSizeSlider.value = DEFAULTSPRITESIZE;
-        //SceneManager.LoadScene("Menu");
+        shakeSensitivitySlider.value = DEFAULTSHAKESENSITIVITY;
     }
 }//end of OptionsMenuScript
