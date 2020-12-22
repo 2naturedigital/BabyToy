@@ -63,13 +63,13 @@ public class CameraScreenScale : MonoBehaviour {
         }
 
 
-        // Go back to main menu on a 4 finger touch TODO: make this work differently
+        // DEBUG: Go back to main menu on a 4 finger touch TODO: make this work differently maybe?
         if (Input.touchCount == 4) {
             if (Input.touches[0].phase == TouchPhase.Began) {
                 SceneManager.LoadScene("Menu");
             }
         }
-        // Go back to main menu on right click
+        // DEBUG: Go back to main menu on right click
         if (Input.GetMouseButtonUp(1)) {
             SceneManager.LoadScene("Menu");
         }
@@ -83,53 +83,83 @@ public class CameraScreenScale : MonoBehaviour {
         // }
     }
 
+    // Possibly a much simpler way to calculate screen ortho and sprite ratios
     void CalculateScreen() {
-        // Calculate screen ratio based on orientation
-        float screenRatio;
-        if (landscape) {
-            screenRatio = (float)Screen.height / (float)Screen.width;
-        } else {
-            screenRatio = (float)Screen.width / (float)Screen.height;
-        }
-
-        // Calculate background ratio based on which is larger, width or height
-        // Also adjust sprite ratio accordingly
-        float backgroundRatio;
+        // Adjust sprites to match BG ratio
         if (bg.bounds.size.x > bg.bounds.size.y) {
-            backgroundRatio = bg.bounds.size.y / bg.bounds.size.x;
-            spriteAdjustmentRatio = backgroundRatio;
+            spriteAdjustmentRatio = bg.bounds.size.y / bg.bounds.size.x;
         } else {
-            backgroundRatio = bg.bounds.size.x / bg.bounds.size.y;
             spriteAdjustmentRatio = 1;
         }
 
-        // Set ortho size based on screen orientation, ratio differences, and screen height vs bg height
-        if (landscape) {
-            //Debug.Log("CameraScreenScale - Landscape");
-            if (backgroundRatio > screenRatio) {
-                Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
-                //Debug.Log("CameraScreenScale - BackgroundRatio Larger");
-            } else {
-                Camera.main.orthographicSize = bg.bounds.size.y/2;
-                //Debug.Log("CameraScreenScale - ScreenRatio Larger");
-            }
+        // If the screen's height is greater than the bacground's height, stretch ortho to fit BG top to bottom
+        // Otherwise, stretch the ortho to fit BG side to side and adjust hand size if needed
+        if (Screen.height > bg.bounds.size.y) {
+            Camera.main.orthographicSize = bg.bounds.size.y/2;
+            leftHand.transform.localScale *= 0.8f;
+            rightHand.transform.localScale *= 0.8f;
         } else {
-            //Debug.Log("CameraScreenScale - Portrait");
-            if (backgroundRatio > screenRatio) {
-                Camera.main.orthographicSize = bg.bounds.size.y/2;
-                //Debug.Log("CameraScreenScale - BackgroundRatio Larger");
-            } else {
-                if (Screen.height > bg.bounds.size.y) {
-                    Camera.main.orthographicSize = bg.bounds.size.y/2;
-                    //Debug.Log("CameraScreenScale - ScreenRatio Larger - Screen taller than bg");
-                } else {
-                    Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
-                    //Debug.Log("CameraScreenScale - ScreenRatio Larger - screen shorter than bg");
-                }
-            }
+            Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
         }
-        //Debug.Log("CameraScreenScale - Ortho Size Set: " + Camera.main.orthographicSize);
+
+        // Move the hands to the sides of the screen
+        float newLeftX = -(Camera.main.orthographicSize * Camera.main.aspect) + leftHand.bounds.size.x/2;
+        float newLeftY = -(Camera.main.orthographicSize) + leftHand.bounds.size.y/2;
+        float newRightX = (Camera.main.orthographicSize * Camera.main.aspect) - rightHand.bounds.size.x/2;
+        float newRightY = -(Camera.main.orthographicSize) + rightHand.bounds.size.y/2;
+        leftHand.transform.position = new Vector3(newLeftX,newLeftY,0);
+        rightHand.transform.position = new Vector3(newRightX,newRightY,0);
     }
+
+    // Older way to calculate screen ortho and sprite ratios
+    // KEEP in case of any issues
+    // void CalculateScreen() {
+    //     // Calculate screen ratio based on orientation
+    //     float screenRatio;
+    //     if (landscape) {
+    //         screenRatio = (float)Screen.height / (float)Screen.width;
+    //     } else {
+    //         screenRatio = (float)Screen.width / (float)Screen.height;
+    //     }
+
+    //     // Calculate background ratio based on which is larger, width or height
+    //     // Also adjust sprite ratio accordingly
+    //     float backgroundRatio;
+    //     if (bg.bounds.size.x > bg.bounds.size.y) {
+    //         backgroundRatio = bg.bounds.size.y / bg.bounds.size.x;
+    //         spriteAdjustmentRatio = backgroundRatio;
+    //     } else {
+    //         backgroundRatio = bg.bounds.size.x / bg.bounds.size.y;
+    //         spriteAdjustmentRatio = 1;
+    //     }
+
+    //     // Set ortho size based on screen orientation, ratio differences, and screen height vs bg height
+    //     if (landscape) {
+    //         //Debug.Log("CameraScreenScale - Landscape");
+    //         if (backgroundRatio > screenRatio) {
+    //             Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
+    //             //Debug.Log("CameraScreenScale - BackgroundRatio Larger");
+    //         } else {
+    //             Camera.main.orthographicSize = bg.bounds.size.y/2;
+    //             //Debug.Log("CameraScreenScale - ScreenRatio Larger");
+    //         }
+    //     } else {
+    //         //Debug.Log("CameraScreenScale - Portrait");
+    //         if (backgroundRatio > screenRatio) {
+    //             Camera.main.orthographicSize = bg.bounds.size.y/2;
+    //             //Debug.Log("CameraScreenScale - BackgroundRatio Larger");
+    //         } else {
+    //             if (Screen.height > bg.bounds.size.y) {
+    //                 Camera.main.orthographicSize = bg.bounds.size.y/2;
+    //                 //Debug.Log("CameraScreenScale - ScreenRatio Larger - Screen taller than bg");
+    //             } else {
+    //                 Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
+    //                 //Debug.Log("CameraScreenScale - ScreenRatio Larger - screen shorter than bg");
+    //             }
+    //         }
+    //     }
+    //     //Debug.Log("CameraScreenScale - Ortho Size Set: " + Camera.main.orthographicSize);
+    // }
 
     public float GetSpriteAdjustmentRatio() {
         return spriteAdjustmentRatio;
