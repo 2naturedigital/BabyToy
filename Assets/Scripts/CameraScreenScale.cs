@@ -39,19 +39,19 @@ public class CameraScreenScale : MonoBehaviour {
             Screen.orientation = ScreenOrientation.Landscape;
         }
         // Change water visibility
-        bool water = PlayerPrefs.GetString("water", "true") == "true" ? true : false;
-        waterLayer.enabled = water;
+        // bool water = PlayerPrefs.GetString("water", "true") == "true" ? true : false;
+        // waterLayer.enabled = water;
         // Change hands visibility
         bool hands = PlayerPrefs.GetString("hands", "true") == "true" ? true : false;
         leftHand.enabled = hands;
         rightHand.enabled = hands;
         // Change blur on or off
-        bool blur = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;
-        if (blur) {
-            bg.sprite = backgrounds[0];
-        } else {
-            bg.sprite = backgrounds[1];
-        }
+        // bool blur = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;
+        // if (blur) {
+        //     bg.sprite = backgrounds[0];
+        // } else {
+        //     bg.sprite = backgrounds[1];
+        // }
     }
 
     // In case we decide to go with landscape rotation **
@@ -147,10 +147,14 @@ public class CameraScreenScale : MonoBehaviour {
     //         //Debug.Log("CameraScreenScale - Portrait");
     //         if (backgroundRatio > screenRatio) {
     //             Camera.main.orthographicSize = bg.bounds.size.y/2;
+    //             leftHand.transform.localScale *= 0.8f;
+    //             rightHand.transform.localScale *= 0.8f;
     //             //Debug.Log("CameraScreenScale - BackgroundRatio Larger");
     //         } else {
     //             if (Screen.height > bg.bounds.size.y) {
     //                 Camera.main.orthographicSize = bg.bounds.size.y/2;
+    //                 leftHand.transform.localScale *= 0.8f;
+    //                 rightHand.transform.localScale *= 0.8f;
     //                 //Debug.Log("CameraScreenScale - ScreenRatio Larger - Screen taller than bg");
     //             } else {
     //                 Camera.main.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
