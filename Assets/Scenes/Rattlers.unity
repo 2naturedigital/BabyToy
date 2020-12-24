@@ -1983,7 +1983,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -140, y: -263}
   m_SizeDelta: {x: 285, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1852925467
@@ -2044,7 +2044,7 @@ SpriteRenderer:
   m_SortingLayerID: -562202451
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2ec1de023b0e5614b988fafaef2b2d04, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 53b14ce03b165254ab0865d4c68717a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
