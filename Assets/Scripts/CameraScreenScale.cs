@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [DefaultExecutionOrder(-1)]
 
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
+    public Button button;
+    public float holdTimer = 5.0f;
+    private float elapsedTime = 0;
     public SpriteRenderer waterLayer;
     public SpriteRenderer leftHand;
     public SpriteRenderer rightHand;
@@ -85,6 +89,18 @@ public class CameraScreenScale : MonoBehaviour {
         // }
     }
 
+    public void OnClick() {
+        while (Input.touches[0].phase == TouchPhase.Stationary) {
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= holdTimer) {
+                SceneManager.LoadScene("Menu");
+            }
+        }
+        if (Input.touches[0].phase == TouchPhase.Ended) {
+            elapsedTime = 0;
+        }
+    }
+
     // Possibly a much simpler way to calculate screen ortho and sprite ratios
     void CalculateScreen() {
         // Adjust sprites to match BG ratio
@@ -111,6 +127,11 @@ public class CameraScreenScale : MonoBehaviour {
         float newRightY = -(Camera.main.orthographicSize) + rightHand.bounds.size.y/2;
         leftHand.transform.position = new Vector3(newLeftX,newLeftY,0);
         rightHand.transform.position = new Vector3(newRightX,newRightY,0);
+
+        // Move Parent Button
+        float newX = (Camera.main.orthographicSize * Camera.main.aspect) - button.image.minWidth/2;
+        float newY = (Camera.main.orthographicSize) - button.image.minHeight/2;
+        button.transform.position = new Vector3(newX,newY,0);
     }
 
     // Older way to calculate screen ortho and sprite ratios
