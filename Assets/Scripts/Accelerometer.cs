@@ -27,9 +27,9 @@ public class Accelerometer : MonoBehaviour
         // Shake only if threshold is met and it's been enough time since last shake
         if (Input.acceleration.sqrMagnitude >= sqrShakeDetectionThreshold
             && Time.unscaledTime >= timeSinceLastShake + minShakeInterval) {
-            Debug.Log("Accelerometer - Shake Thresh: " + shakeDetectionThreshhold);
-            Debug.Log("Accelerometer - Shake Squared Thresh: " + sqrShakeDetectionThreshold);
-            Debug.Log("Accelerometer - Shake Mag: " + Input.acceleration.sqrMagnitude);
+            // Debug.Log("Accelerometer - Shake Thresh: " + shakeDetectionThreshhold);
+            // Debug.Log("Accelerometer - Shake Squared Thresh: " + sqrShakeDetectionThreshold);
+            // Debug.Log("Accelerometer - Shake Mag: " + Input.acceleration.sqrMagnitude);
             if (shakeController != null) {
                 shakeController.Shake(Input.acceleration);
             }

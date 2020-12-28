@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[DefaultExecutionOrder(-1)]
+
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
     public SpriteRenderer waterLayer;
