@@ -14,6 +14,10 @@ public class MainMenuScript : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
+    public void OpenLink() {
+        // open a browser to a certain link?
+    }
+
     // public void ExitGame() {
     //     Debug.Log ("MainMenuScript - Exiting App");
     //     Application.Quit();
