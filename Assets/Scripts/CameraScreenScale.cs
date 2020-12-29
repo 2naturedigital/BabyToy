@@ -6,10 +6,8 @@ using UnityEngine.UI;
 
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
-    public Button button;
-    //public CanvasRenderer canvasRenderer;
-    public float holdTimer = 5.0f;
-    private float elapsedTime = 0;
+    private float touchStartTime = 0;
+    private float holdTimer = 5.0f;
     public SpriteRenderer waterLayer;
     public SpriteRenderer leftHand;
     public SpriteRenderer rightHand;
@@ -74,18 +72,6 @@ public class CameraScreenScale : MonoBehaviour {
             CalculateScreen();
         }
 
-
-        // DEBUG: Go back to main menu on a 4 finger touch TODO: make this work differently maybe?
-        if (Input.touchCount == 4) {
-            if (Input.touches[0].phase == TouchPhase.Began) {
-                SceneManager.LoadScene("Menu");
-            }
-        }
-        // DEBUG: Go back to main menu on right click
-        if (Input.GetMouseButtonUp(1)) {
-            SceneManager.LoadScene("Menu");
-        }
-
         // In case we decide to go with landscape rotation **
         // if (maintainWidth) {
         //     cameraMain.orthographicSize = defaultWidth / cameraMain.aspect;
@@ -95,19 +81,8 @@ public class CameraScreenScale : MonoBehaviour {
         // }
     }
 
-    public void OnClick() {
-        if (Input.GetMouseButtonUp(0)) {
-            SceneManager.LoadScene("Menu");
-        }
-        // while (Input.touches[0].phase == TouchPhase.Stationary) {
-        //     elapsedTime += Time.deltaTime;
-        //     if (elapsedTime >= holdTimer) {
-        //         SceneManager.LoadScene("Menu");
-        //     }
-        // }
-        // if (Input.touches[0].phase == TouchPhase.Ended) {
-        //     elapsedTime = 0;
-        // }
+    public void OnLongClick() {
+        SceneManager.LoadScene("Menu");
     }
 
     // Possibly a much simpler way to calculate screen ortho and sprite ratios
@@ -136,15 +111,6 @@ public class CameraScreenScale : MonoBehaviour {
         float newRightY = -(cameraMain.orthographicSize) + rightHand.bounds.size.y/2;
         leftHand.transform.position = new Vector3(newLeftX,newLeftY,0);
         rightHand.transform.position = new Vector3(newRightX,newRightY,0);
-
-        // Move Parent Button
-        //float newX = -(cameraMain.orthographicSize * cameraMain.aspect) - canvasRenderer.transform.position.x/2;
-        //float newY = (cameraMain.orthographicSize) - canvasRenderer.transform.position.y/2;
-        //Debug.Log("btn x: " + newX + " btn y: " + newY);
-        //button.transform.position = new Vector3(newX,newY,0);
-        //canvasRenderer.transform.position = new Vector3(newX,newY,0);
-        //Debug.Log("Button: " + button.transform.position);
-        //Debug.Log("CanvasRenderer: " + canvasRenderer.transform.position);
     }
 
     // Older way to calculate screen ortho and sprite ratios
