@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
-    private float touchStartTime = 0;
-    private float holdTimer = 5.0f;
+    private Vector3 handScale = new Vector3(100, 100, 1);
     public SpriteRenderer waterLayer;
     public SpriteRenderer leftHand;
     public SpriteRenderer rightHand;
@@ -98,10 +97,17 @@ public class CameraScreenScale : MonoBehaviour {
         // Otherwise, stretch the ortho to fit BG side to side and adjust hand size if needed
         if (Screen.height > bg.bounds.size.y) {
             cameraMain.orthographicSize = bg.bounds.size.y/2;
-            leftHand.transform.localScale *= 0.8f;
-            rightHand.transform.localScale *= 0.8f;
+            if (!landscape) {
+                leftHand.transform.localScale = handScale * 0.8f;
+                rightHand.transform.localScale = handScale * 0.8f;
+            } else {
+                leftHand.transform.localScale = handScale * 1.3f;
+                rightHand.transform.localScale = handScale * 1.3f;
+            }
         } else {
             cameraMain.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
+            leftHand.transform.localScale = handScale * 1.3f;
+            rightHand.transform.localScale = handScale * 1.3f;
         }
 
         // Move the hands to the sides of the screen
@@ -149,14 +155,14 @@ public class CameraScreenScale : MonoBehaviour {
     //         //Debug.Log("CameraScreenScale - Portrait");
     //         if (backgroundRatio > screenRatio) {
     //             cameraMain.orthographicSize = bg.bounds.size.y/2;
-    //             leftHand.transform.localScale *= 0.8f;
-    //             rightHand.transform.localScale *= 0.8f;
+    //             leftHand.transform.localScale = handScale * 0.8f;
+    //             rightHand.transform.localScale = handScale * 0.8f;
     //             //Debug.Log("CameraScreenScale - BackgroundRatio Larger");
     //         } else {
     //             if (Screen.height > bg.bounds.size.y) {
     //                 cameraMain.orthographicSize = bg.bounds.size.y/2;
-    //                 leftHand.transform.localScale *= 0.8f;
-    //                 rightHand.transform.localScale *= 0.8f;
+    //                 leftHand.transform.localScale = handScale * 0.8f;
+    //                 rightHand.transform.localScale = handScale * 0.8f;
     //                 //Debug.Log("CameraScreenScale - ScreenRatio Larger - Screen taller than bg");
     //             } else {
     //                 cameraMain.orthographicSize = bg.bounds.size.x * Screen.height / Screen.width * 0.5f;
