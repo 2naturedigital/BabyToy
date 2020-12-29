@@ -20,7 +20,7 @@ TagManager:
   - 
   - Sprites
   - bubbles
-  - 
+  - foreground
   - 
   - 
   - 
@@ -54,4 +54,7 @@ TagManager:
     locked: 0
   - name: bubbles
     uniqueID: 3112565053
+    locked: 0
+  - name: foreground
+    uniqueID: 1861163103
     locked: 0
