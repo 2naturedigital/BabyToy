@@ -1950,12 +1950,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "     As parents ourselves, we feel the need to inspire growing minds without
-    unsolicited interferences that are out of our control.\r\n\n     This app drops
-    children into a safe and fun environment within the digital medium, free from
-    in app purchases and third party advertising.\r\n\n     We highly suggest screen
-    pinning so your little human cannot accidentally change apps and get into unwanted
-    trouble.\n\n2NatureDigital Team\r\n     Richard Moore\r\n     James Cotellesse\r\n\nThanks
-    for playing!\r\n"
+    unsolicited interferences that are out of our control.\r\n\r\n     This app places
+    children in a safe and fun environment within the digital medium, free from egregious
+    in app purchases and third party advertising.  Any purchases in our app will
+    only ever be one time purchases to unlock brand new content we have created for
+    the little tikes.\r\n\r\n     We highly suggest screen pinning so your little
+    human cannot accidentally change apps and get into unwanted trouble.\r\n\r\n2NatureDigital
+    Team\r\n     Richard Moore\r\n     James Cotellesse\r\n\r\nThanks for playing!\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b495ad37d3e61ce40b5e60b1fee0751c, type: 2}
   m_sharedMaterial: {fileID: 738565166088453048, guid: b495ad37d3e61ce40b5e60b1fee0751c,
@@ -10105,7 +10106,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 180.5, y: -126}
+  m_AnchoredPosition: {x: 181.7, y: -281.9}
   m_SizeDelta: {x: -518.35, y: -1163.0499}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1326857054
