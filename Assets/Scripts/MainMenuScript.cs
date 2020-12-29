@@ -15,7 +15,7 @@ public class MainMenuScript : MonoBehaviour
     }
 
     public void OpenLink() {
-        // open a browser to a certain link?
+        Application.OpenURL("https://support.google.com/android/answer/9455138");
     }
 
     // public void ExitGame() {
