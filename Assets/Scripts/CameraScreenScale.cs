@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
     public Button button;
-    public CanvasRenderer canvasRenderer;
+    //public CanvasRenderer canvasRenderer;
     public float holdTimer = 5.0f;
     private float elapsedTime = 0;
     public SpriteRenderer waterLayer;
@@ -138,13 +138,13 @@ public class CameraScreenScale : MonoBehaviour {
         rightHand.transform.position = new Vector3(newRightX,newRightY,0);
 
         // Move Parent Button
-        float newX = -(cameraMain.orthographicSize * cameraMain.aspect) - canvasRenderer.transform.position.x/2;
-        float newY = (cameraMain.orthographicSize) - canvasRenderer.transform.position.y/2;
-        Debug.Log("btn x: " + newX + " btn y: " + newY);
-        button.transform.position = new Vector3(newX,newY,0);
-        canvasRenderer.transform.position = new Vector3(newX,newY,0);
-        Debug.Log("Button: " + button.transform.position);
-        Debug.Log("CanvasRenderer: " + canvasRenderer.transform.position);
+        //float newX = -(cameraMain.orthographicSize * cameraMain.aspect) - canvasRenderer.transform.position.x/2;
+        //float newY = (cameraMain.orthographicSize) - canvasRenderer.transform.position.y/2;
+        //Debug.Log("btn x: " + newX + " btn y: " + newY);
+        //button.transform.position = new Vector3(newX,newY,0);
+        //canvasRenderer.transform.position = new Vector3(newX,newY,0);
+        //Debug.Log("Button: " + button.transform.position);
+        //Debug.Log("CanvasRenderer: " + canvasRenderer.transform.position);
     }
 
     // Older way to calculate screen ortho and sprite ratios
