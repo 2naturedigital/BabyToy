@@ -8,12 +8,12 @@ public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private bool pointerDown;
     private float pointerDownTimer;
     [SerializeField]
-    private float requiredHoldTime;
+    private float requiredHoldTime = 3;
 
     public UnityEvent onLongClick;
 
     [SerializeField]
-    private Image fillImage;
+    private Image fillImage = null;
 
     public void OnPointerDown(PointerEventData eventData) {
         pointerDown = true;
