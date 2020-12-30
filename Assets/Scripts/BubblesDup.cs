@@ -6,8 +6,8 @@ public class BubblesDup : MonoBehaviour
     public GameObject bubbleContainer;
     public float bubbleSpawnMinTime;
     public float bubbleSpawnMaxTime;
-    public float bubbleGravityMin;
-    public float bubbleGravityMax;
+    public float bubbleGravityMin = -0.2f;
+    public float bubbleGravityMax = -15.0f;
     public float bubbleMinScale;
     public float bubbleMaxScale;
     private bool isShaking = false;
@@ -46,7 +46,7 @@ public class BubblesDup : MonoBehaviour
         }
         shakeBubbleTimer = PlayerPrefs.GetFloat("shakenbubblefrequency");
         shakeBubbleCount = (int)PlayerPrefs.GetFloat("bubblecount");
-        float bubblevariation = PlayerPrefs.GetFloat("bubblesizevariation");
+        float bubblevariation = PlayerPrefs.GetFloat("bubblesizevariation", 0.5f);  // Default for some variation
         bubbleMinScale =  1 - bubblevariation;
         bubbleMaxScale = 1 + bubblevariation;
         userSpriteSize = PlayerPrefs.GetFloat("bubblesize");
