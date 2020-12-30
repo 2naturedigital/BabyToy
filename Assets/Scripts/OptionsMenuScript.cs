@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//using UnityEngine.UIElements;
 using TMPro;
+
 public class OptionsMenuScript : MonoBehaviour
 {
     // Default Settings  TODO: find a better way to do this
@@ -48,6 +47,10 @@ public class OptionsMenuScript : MonoBehaviour
     }
 
     void OnEnable() {
+        LoadPlayerPreferences();
+    }
+
+    public void LoadPlayerPreferences() {
         // Force portrait mode for menu
         Screen.orientation = ScreenOrientation.Portrait;
         // Load user options
@@ -66,6 +69,10 @@ public class OptionsMenuScript : MonoBehaviour
     }
 
     void OnDisable() {
+        SavePlayerPreferences();
+    }
+
+    public void SavePlayerPreferences() {
         // Save user options
         PlayerPrefs.SetString("landscape", landscapeToggle.isOn ? "true" : "false");
         PlayerPrefs.SetString("hands", handsToggle.isOn ? "true" : "false");

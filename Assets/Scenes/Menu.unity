@@ -4138,6 +4138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40638370e7a3eb469c849989b439d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: {fileID: 544584432}
+  aboutUs: {fileID: 1027015523}
 --- !u!1 &567085805
 GameObject:
   m_ObjectHideFlags: 0
@@ -7640,6 +7642,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40638370e7a3eb469c849989b439d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: {fileID: 544584432}
+  aboutUs: {fileID: 1027015523}
 --- !u!1 &1032622746
 GameObject:
   m_ObjectHideFlags: 0
@@ -14493,6 +14497,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1027015523}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+      - m_Target: {fileID: 1027015525}
+        m_MethodName: InitializeFirstRun
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

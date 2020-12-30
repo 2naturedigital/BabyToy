@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-[DefaultExecutionOrder(-1)]
+[DefaultExecutionOrder(-20)]
 
 public class CameraScreenScale : MonoBehaviour {
     public SpriteRenderer bg;
@@ -24,6 +24,13 @@ public class CameraScreenScale : MonoBehaviour {
     // private float defaultHeight;
 
     private void Awake() {
+        // First run defaults to true
+        bool firstRun = PlayerPrefs.GetString("firstrun", "true") == "true" ? true : false;
+        // If it is the first time since install (or cache clear) load About Us scene
+        if (firstRun) {
+            SceneManager.LoadScene("Menu");
+        }
+        // Grab main camera one time for all future use
         cameraMain = Camera.main;
     }
 

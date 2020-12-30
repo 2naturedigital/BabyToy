@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//using UnityEngine.UIElements;
 using TMPro;
+
 public class AdvancedOptionsMenuScript : MonoBehaviour
 {
     // Default Settings  TODO: find a better way to do this

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+[DefaultExecutionOrder(-2)]
+
 // This forces the component to require a ShakeController component as well
 [RequireComponent(typeof(ShakeController))]
 
