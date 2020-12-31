@@ -7,6 +7,7 @@
 
 public class Accelerometer : MonoBehaviour
 {
+    private const float DEFAULTSHAKESENSITIVITY = 1.6f;
     public float shakeDetectionThreshhold;
     public float minShakeInterval;
     private float sqrShakeDetectionThreshold;
@@ -21,7 +22,7 @@ public class Accelerometer : MonoBehaviour
 
     void OnEnable() {
         // Grab user options
-        shakeDetectionThreshhold = PlayerPrefs.GetFloat("shakesensitivity");
+        shakeDetectionThreshhold = PlayerPrefs.GetFloat("shakesensitivity", DEFAULTSHAKESENSITIVITY);
     }
 
     void Update() {

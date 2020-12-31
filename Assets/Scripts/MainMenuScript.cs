@@ -41,7 +41,8 @@ public class MainMenuScript : MonoBehaviour
     }
 
     public void PlayGame() {
-        SceneManager.LoadScene("Rattlers");//SceneManager.GetActiveScene().buildIndex + 1);
+        //SceneManager.UnloadSceneAsync("Menu");
+        SceneManager.LoadScene("Rattlers");
     }
 
     public void OpenLink() {

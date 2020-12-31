@@ -2,6 +2,8 @@
 
 public class Starfish : FishController
 {
+    private const float DEFAULTSPRITESIZE = 1.0f;
+
     // User/Unity Adjustable Public Class Variables
     public float wobbleSpeed;
     public float wobbleShakeSpeed;
@@ -15,7 +17,7 @@ public class Starfish : FishController
 
     void OnEnable() {
         // Grab user options
-        SetUserSpriteSize(PlayerPrefs.GetFloat("starfishsize"));
+        SetUserSpriteSize(PlayerPrefs.GetFloat("starfishsize", DEFAULTSPRITESIZE));
     }
 
     void Update() {

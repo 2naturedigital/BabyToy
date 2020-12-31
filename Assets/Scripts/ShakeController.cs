@@ -3,7 +3,7 @@
 public class ShakeController : MonoBehaviour
 {
     // Used to increase the magnintude of the shake all across the game
-    public float shakeForceMultiplier;
+    public float shakeForceMultiplier = 2;
     public float shakeResetTimer;
     public FishController[] fishies;
     public WaterCurrent[] waterCurrent;
@@ -14,7 +14,7 @@ public class ShakeController : MonoBehaviour
 
     void OnEnable() {
         // Grab user options
-        shakeForceMultiplier = PlayerPrefs.GetFloat("shakepower");
+        //shakeForceMultiplier = PlayerPrefs.GetFloat("shakepower");
         //Debug.Log("ShakeController - Shake Power: " + shakeForceMultiplier);
     }
 

@@ -2,12 +2,21 @@
 
 public class BubblesDup : MonoBehaviour
 {
+    private const float DEFAULTBUBBLEAMOUNT = 4.0f;
+    private const float DEFAULTBUBBLEFREQUENCY = 4.0f;
+    private const float DEFAULTSHAKENBUBBLEFREQUENCY = 0.13f;
+    private const float DEFAULTBUBBLEGRAVITY_MIN = -0.2f;
+    private const float DEFAULTBUBBLEGRAVITY_MAX = -15.0f;
+    private const float DEFAULTBUBBLECOUNT = 2.0f;
+    private const float DEFAULTBUBBLESIZEVARIATION = 0.5f;
+    private const float DEFAULTSPRITESIZE = 1.0f;
+
     public GameObject bubbleOriginal;
     public GameObject bubbleContainer;
     public float bubbleSpawnMinTime;
     public float bubbleSpawnMaxTime;
-    public float bubbleGravityMin = -0.2f;
-    public float bubbleGravityMax = -15.0f;
+    public float bubbleGravityMin = DEFAULTBUBBLEGRAVITY_MIN;
+    public float bubbleGravityMax = DEFAULTBUBBLEGRAVITY_MAX;
     public float bubbleMinScale;
     public float bubbleMaxScale;
     private bool isShaking = false;
@@ -35,7 +44,7 @@ public class BubblesDup : MonoBehaviour
 
     void OnEnable() {
         // Grab user options
-        float bubblefrequency = PlayerPrefs.GetFloat("bubblefrequency");
+        float bubblefrequency = PlayerPrefs.GetFloat("bubblefrequency", DEFAULTBUBBLEFREQUENCY);
         bubbleSpawnMinTime = bubblefrequency - 2;
         bubbleSpawnMaxTime = bubblefrequency + 2;
         // Min spawn time adjustmentsust
@@ -44,12 +53,12 @@ public class BubblesDup : MonoBehaviour
         } else if (bubbleSpawnMinTime == -1) {
             bubbleSpawnMinTime = 0.5f;
         }
-        shakeBubbleTimer = PlayerPrefs.GetFloat("shakenbubblefrequency");
-        shakeBubbleCount = (int)PlayerPrefs.GetFloat("bubblecount");
-        float bubblevariation = PlayerPrefs.GetFloat("bubblesizevariation", 0.5f);  // Default for some variation
+        shakeBubbleTimer = PlayerPrefs.GetFloat("shakenbubblefrequency", DEFAULTSHAKENBUBBLEFREQUENCY);
+        shakeBubbleCount = (int)PlayerPrefs.GetFloat("bubblecount", DEFAULTBUBBLECOUNT);
+        float bubblevariation = PlayerPrefs.GetFloat("bubblesizevariation", DEFAULTBUBBLESIZEVARIATION);  // Default for some variation
         bubbleMinScale =  1 - bubblevariation;
         bubbleMaxScale = 1 + bubblevariation;
-        userSpriteSize = PlayerPrefs.GetFloat("bubblesize");
+        userSpriteSize = PlayerPrefs.GetFloat("bubblesize", DEFAULTSPRITESIZE);
     }
 
     void Update() {

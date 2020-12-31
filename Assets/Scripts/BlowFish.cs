@@ -2,6 +2,7 @@
 
 public class BlowFish : FishController
 {
+    private const float DEFAULTSPRITESIZE = 1.0f;
     // User/Unity Adjustable Public Class Variables
     public float pumpMinTime = 0.3f;
     public float pumpMaxTime = 3f;
@@ -24,7 +25,7 @@ public class BlowFish : FishController
 
     void OnEnable() {
         // Grab user options
-        SetUserSpriteSize(PlayerPrefs.GetFloat("blowfishsize"));
+        SetUserSpriteSize(PlayerPrefs.GetFloat("blowfishsize", DEFAULTSPRITESIZE));
     }
 
     void Update() {

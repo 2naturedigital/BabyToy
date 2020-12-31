@@ -2,6 +2,8 @@
 
 public class Guppy : FishController
 {
+    private const float DEFAULTSPRITESIZE = 1.0f;
+
     void Start() {
         InitializeFish();
         SetRandomTarget();
@@ -9,7 +11,7 @@ public class Guppy : FishController
 
     void OnEnable() {
         // Grab user options
-        SetUserSpriteSize(PlayerPrefs.GetFloat("guppysize"));
+        SetUserSpriteSize(PlayerPrefs.GetFloat("guppysize", DEFAULTSPRITESIZE));
     }
 
     void Update() {

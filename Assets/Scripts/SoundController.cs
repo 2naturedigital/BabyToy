@@ -2,12 +2,14 @@
 
 public class SoundController : MonoBehaviour
 {
+    private const float DEFAULTVOLUME = 1.0f;
+
     public AudioSource audioSrc;
     private float volumeModifier;
 
     void OnEnable() {
         // Grab user options
-        volumeModifier = PlayerPrefs.GetFloat("volume");
+        volumeModifier = PlayerPrefs.GetFloat("volume", DEFAULTVOLUME);
         //Debug.Log("Volume: " + volumeModifier);
     }
 
