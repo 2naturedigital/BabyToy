@@ -1046,8 +1046,8 @@ MonoBehaviour:
   bubbleOriginal: {fileID: 6968515196046032890, guid: f9ce2378ff31e0f4daecbd9505a227b1,
     type: 3}
   bubbleContainer: {fileID: 826779766}
-  bubbleSpawnMinTime: 1
-  bubbleSpawnMaxTime: 5
+  bubbleSpawnMinTime: 0.5
+  bubbleSpawnMaxTime: 4
   bubbleGravityMin: -2
   bubbleGravityMax: -15
   bubbleMinScale: 0.5
