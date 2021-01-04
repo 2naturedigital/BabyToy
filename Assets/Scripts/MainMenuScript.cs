@@ -42,7 +42,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void PlayGame() {
         //SceneManager.UnloadSceneAsync("Menu");
-        SceneManager.LoadScene("Rattlers");
+        SceneManager.LoadScene("FishTank");
     }
 
     public void OpenLink() {
