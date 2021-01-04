@@ -47,12 +47,12 @@ public class OptionsMenuScript : MonoBehaviour
     }
 
     void OnEnable() {
+        // Force portrait mode for menu
+        Screen.orientation = ScreenOrientation.Portrait;
         LoadPlayerPreferences();
     }
 
     public void LoadPlayerPreferences() {
-        // Force portrait mode for menu
-        Screen.orientation = ScreenOrientation.Portrait;
         // Load user options
         landscapeToggle.isOn = PlayerPrefs.GetString("landscape", "false") == "true" ? true : false;
         handsToggle.isOn = PlayerPrefs.GetString("hands", "true") == "true" ? true : false;
