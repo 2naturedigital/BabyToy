@@ -1,6 +1,7 @@
 # Rattler
 
-Rattler by 2NatureDigital is licensed under CC BY-NC-SA 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/4.0
+Rattler by 2NatureDigital is licensed under CC BY-NC-SA 4.0.
+To view a copy of this license, visit: https://creativecommons.org/licenses/by-nc-sa/4.0
 
 As parents ourselves, we feel the need to inspire growing minds without unsolicited interferences that are out of our control.
    
