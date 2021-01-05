@@ -4,6 +4,7 @@ public class CurrentInitializer : MonoBehaviour
 {
     public WaterCurrent[] waterCurrents;
     public TankCurrent tankCurrent;
+
     private Vector3 CameraPos;
     private float screenWidth;
     private float screenHeight;

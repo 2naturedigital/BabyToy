@@ -13,21 +13,30 @@ public class BubblesDup : MonoBehaviour
 
     public GameObject bubbleOriginal;
     public GameObject bubbleContainer;
-    public float bubbleSpawnMinTime;
-    public float bubbleSpawnMaxTime;
-    public float bubbleGravityMin = DEFAULTBUBBLEGRAVITY_MIN;
-    public float bubbleGravityMax = DEFAULTBUBBLEGRAVITY_MAX;
-    public float bubbleMinScale;
-    public float bubbleMaxScale;
+    [SerializeField]
+    private float bubbleSpawnMinTime;
+    [SerializeField]
+    private float bubbleSpawnMaxTime;
+    [SerializeField]
+    private float bubbleGravityMin = DEFAULTBUBBLEGRAVITY_MIN;
+    [SerializeField]
+    private float bubbleGravityMax = DEFAULTBUBBLEGRAVITY_MAX;
+    [SerializeField]
+    private float bubbleMinScale;
+    [SerializeField]
+    private float bubbleMaxScale;
+    [SerializeField]
+    private float shakeBubbleTimer;
+    [SerializeField]
+    private int shakeBubbleCount;
+    public AudioClip shake1;
+    public AudioClip shake2;
+
     private bool isShaking = false;
     private float bubbleTimer = 0;
-    public float shakeBubbleTimer;
-    public int shakeBubbleCount;
     private Vector3 CameraPos;
     private float defaultWidth;
     private float defaultHeight;
-    public AudioClip shake1;
-    public AudioClip shake2;
     private SoundController sndCtrl;
     private float magnitudeMult = 1;
     private float shakeForceMultiplier = 1;

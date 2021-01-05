@@ -4,24 +4,20 @@ using UnityEngine.UI;
 
 [DefaultExecutionOrder(-20)]
 
-public class CameraScreenScale : MonoBehaviour {
+public class CameraScreenScale : MonoBehaviour
+{
     public SpriteRenderer bg;
-    private Vector3 handScale = new Vector3(100, 100, 1);
     public SpriteRenderer waterLayer;
     public SpriteRenderer leftHand;
     public SpriteRenderer rightHand;
     public Sprite[] backgrounds;
+
+    private Vector3 handScale = new Vector3(100, 100, 1);
     private float spriteAdjustmentRatio;
     private int screenHeight;
     private int screenWidth;
     private bool landscape;
     private Camera cameraMain;
-    // public bool maintainWidth = false;
-    // [Range(-1,1)]
-    // public int adaptPosition;
-    // private Vector3 CameraPos;
-    // private float defaultWidth;
-    // private float defaultHeight;
 
     private void Awake() {
         // First run defaults to true
@@ -39,13 +35,6 @@ public class CameraScreenScale : MonoBehaviour {
         screenHeight = Screen.height;
         screenWidth = Screen.width;
         CalculateScreen();
-
-
-        /*In case we decide to go with landscape rotation **
-        CameraPos = cameraMain.transform.position;
-        defaultHeight = cameraMain.orthographicSize;
-        defaultWidth = cameraMain.orthographicSize * cameraMain.aspect;
-        */
     }
 
     void OnEnable() {
@@ -54,13 +43,15 @@ public class CameraScreenScale : MonoBehaviour {
         if (landscape) {
             Screen.orientation = ScreenOrientation.Landscape;
         }
+        bool hands = PlayerPrefs.GetString("hands", "true") == "true" ? true : false;
+        leftHand.enabled = hands;
+        rightHand.enabled = hands;
+
+        // Advanced Settings
         // Change water visibility
         // bool water = PlayerPrefs.GetString("water", "true") == "true" ? true : false;
         // waterLayer.enabled = water;
         // Change hands visibility
-        bool hands = PlayerPrefs.GetString("hands", "true") == "true" ? true : false;
-        leftHand.enabled = hands;
-        rightHand.enabled = hands;
         // Change blur on or off
         // bool blur = PlayerPrefs.GetString("blur", "true") == "true" ? true : false;
         // if (blur) {
@@ -77,14 +68,6 @@ public class CameraScreenScale : MonoBehaviour {
             screenWidth = Screen.width;
             CalculateScreen();
         }
-
-        // In case we decide to go with landscape rotation **
-        // if (maintainWidth) {
-        //     cameraMain.orthographicSize = defaultWidth / cameraMain.aspect;
-        //     cameraMain.transform.position = new Vector3(CameraPos.x, adaptPosition * (defaultHeight - cameraMain.orthographicSize), CameraPos.z);
-        // } else {
-        //     cameraMain.transform.position = new Vector3(adaptPosition * (defaultWidth - cameraMain.orthographicSize * cameraMain.aspect), CameraPos.y, CameraPos.z);
-        // }
     }
 
     public void OnLongClick() {

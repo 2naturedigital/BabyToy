@@ -1,22 +1,25 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterCurrent : MonoBehaviour {
+public class WaterCurrent : MonoBehaviour
+{
+    [SerializeField]
+    private float currentStrength;
+    [SerializeField]
+    private Vector3 currentDirection;
+    [SerializeField]
+    private bool alternatingCurrent;
+    [SerializeField]
+    private int minMovementPeriod;
+    [SerializeField]
+    private int maxMovementPeriod;
 
     private List<Rigidbody2D> bubblesInCurrent = new List<Rigidbody2D>();
-    public float currentStrength;
-    public Vector3 currentDirection;
-    public bool alternatingCurrent;
     private int currentMovementPeriod;
-    public int minMovementPeriod;
-    public int maxMovementPeriod;
     private float elapsedTime = 0;
     private float magnitudeMult = 1;
     private float shakeForceMultiplier = 1;
 
-
-    void Start() {
-    }
 
     void Update() {
         // Only do this when currents can alternate

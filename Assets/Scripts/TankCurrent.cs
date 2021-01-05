@@ -1,18 +1,24 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TankCurrent : MonoBehaviour {
+public class TankCurrent : MonoBehaviour
+{
+    [SerializeField]
+    private float minStrength;
+    [SerializeField]
+    private float maxStrength;
+    [SerializeField]
+    private bool alternatingCurrent;
+    [SerializeField]
+    private int minMovementPeriod;
+    [SerializeField]
+    private int maxMovementPeriod;
 
     private List<Rigidbody2D> fishInCurrent = new List<Rigidbody2D>();
     private float currentStrength;
-    public float minStrength;
-    public float maxStrength;
     private Vector3 currentDirection;
     private Vector3 shakeData;
-    public bool alternatingCurrent;
     private int currentMovementPeriod;
-    public int minMovementPeriod;
-    public int maxMovementPeriod;
     private float elapsedTime = 0;
     private bool isShaking = false;
     private float magnitudeMult = 1;

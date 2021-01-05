@@ -5,7 +5,7 @@ public class StarfishAutoblink : StateMachineBehaviour
     readonly float blinkMinTime = 1;
     readonly float blinkMaxTime = 3;
 
-    float blinkTimer = 0;
+    private float blinkTimer = 0;
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

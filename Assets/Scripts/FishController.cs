@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
-//using UnityEngine.SceneManagement;
 
-public class FishController : MonoBehaviour {
+public class FishController : MonoBehaviour
+{
     // User/Unity Adjustable Public Class Variables
-    public float minSpeed;
-    public float maxSpeed;
+    [SerializeField]
+    private float minSpeed;
+    [SerializeField]
+    private float maxSpeed;
+    [SerializeField]
+    private float userSpriteSize;
 
     // Private Class Variables
     private float fishWidth;
@@ -27,7 +31,6 @@ public class FishController : MonoBehaviour {
     private Collider2D col2D;
     private CameraScreenScale cameraScreenScale;
     private float spriteAdjustmentRatio;
-    public float userSpriteSize;
     private int rotationDirection = -1;
 
 

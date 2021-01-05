@@ -5,10 +5,14 @@ public class Starfish : FishController
     private const float DEFAULTSPRITESIZE = 1.0f;
 
     // User/Unity Adjustable Public Class Variables
-    public float wobbleSpeed;
-    public float wobbleShakeSpeed;
-    public float wobbleMinAngle;
-    public float wobbleMaxAngle;
+    [SerializeField]
+    private float wobbleSpeed;
+    [SerializeField]
+    private float wobbleShakeSpeed;
+    [SerializeField]
+    private float wobbleMinAngle;
+    [SerializeField]
+    private float wobbleMaxAngle;
 
     void Start() {
         InitializeFish();

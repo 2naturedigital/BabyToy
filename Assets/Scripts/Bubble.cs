@@ -4,15 +4,24 @@ public class Bubble : MonoBehaviour
 {
     public Animator animator;
     public AudioClip bubbleSound;
-    public float bubblePitchMin;
-    public float bubblePitchMax;
-    public float bubbleVolMin;
-    public float bubbleVolMax;
-    public float bubbleLifetimeMin;
-    public float bubbleLifetimeMax;
-    private float lifetimer;
     public AudioClip[] popSounds;
-    public float destroyAnimationTimer;
+    [SerializeField]
+    private float bubblePitchMin;
+    [SerializeField]
+    private float bubblePitchMax;
+    [SerializeField]
+    private float bubbleVolMin;
+    [SerializeField]
+    private float bubbleVolMax;
+    [SerializeField]
+    private float bubbleLifetimeMin;
+    [SerializeField]
+    private float bubbleLifetimeMax;
+    [SerializeField]
+    private float lifetimer;
+    [SerializeField]
+    private float destroyAnimationTimer;
+
     private GameObject bubble;
     private SoundController sndCtrl;
     private Vector3 CameraPos;

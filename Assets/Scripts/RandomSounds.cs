@@ -2,7 +2,6 @@
 
 public class RandomSounds : MonoBehaviour
 {
-
     public AudioSource audioSrc;
     public AudioClip[] audioClipArray;
 
@@ -10,4 +9,4 @@ public class RandomSounds : MonoBehaviour
         audioSrc.clip = audioClipArray[Random.Range(0, audioClipArray.Length)];
         audioSrc.PlayOneShot(audioSrc.clip);
     }
-}
+}//end of RandomSounds

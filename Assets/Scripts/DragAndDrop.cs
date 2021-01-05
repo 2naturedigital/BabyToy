@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
-public class DragAndDrop : MonoBehaviour {
-    public bool moveAllowed;
-    private Collider2D col;
+public class DragAndDrop : MonoBehaviour
+{
+    [SerializeField]
+    private bool moveAllowed;
 
+    private Collider2D col;
     private FishController thisFish;
 
     void Start() {

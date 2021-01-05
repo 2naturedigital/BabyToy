@@ -3,12 +3,15 @@
 public class ShakeController : MonoBehaviour
 {
     // Used to increase the magnintude of the shake all across the game
-    public float shakeForceMultiplier = 2;
-    public float shakeResetTimer;
+    [SerializeField]
+    private float shakeForceMultiplier = 2;
+    [SerializeField]
+    private float shakeResetTimer;
     public FishController[] fishies;
     public WaterCurrent[] waterCurrent;
     public BubblesDup bubblesDup;
     public TankCurrent tankCurrent;
+
     private float elapsedTime = 0;
     private bool isShaking = false;
 

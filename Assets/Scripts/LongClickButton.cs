@@ -9,7 +9,6 @@ public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private float pointerDownTimer;
     [SerializeField]
     private float requiredHoldTime = 3;
-
     public UnityEvent onLongClick;
 
     [SerializeField]
@@ -50,4 +49,4 @@ public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             fillImage.fillAmount = 0;
         }
     }
-}
+}//end of LongClickButton

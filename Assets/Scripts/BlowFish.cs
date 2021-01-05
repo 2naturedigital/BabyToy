@@ -4,14 +4,19 @@ public class BlowFish : FishController
 {
     private const float DEFAULTSPRITESIZE = 1.0f;
     // User/Unity Adjustable Public Class Variables
-    public float pumpMinTime = 0.3f;
-    public float pumpMaxTime = 3f;
-    public float pumpPowerMin;
-    public float pumpPowerMax;
+    [SerializeField]
+    private float pumpMinTime = 0.3f;
+    [SerializeField]
+    private float pumpMaxTime = 3f;
+    [SerializeField]
+    private float pumpPowerMin;
+    [SerializeField]
+    private float pumpPowerMax;
     public AudioClip inflateAudio;
     public AudioClip deflateAudio;
     public AudioClip swimAudio;
-    public float rotationSpeed;
+    [SerializeField]
+    private float rotationSpeed;
 
     // Private Class Variables
     private float pumpTimer = 0;

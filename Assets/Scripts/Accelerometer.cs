@@ -8,8 +8,11 @@
 public class Accelerometer : MonoBehaviour
 {
     private const float DEFAULTSHAKESENSITIVITY = 1.6f;
-    public float shakeDetectionThreshhold;
-    public float minShakeInterval;
+    [SerializeField]
+    private float shakeDetectionThreshhold;
+    [SerializeField]
+    private float minShakeInterval;
+
     private float sqrShakeDetectionThreshold;
     private float timeSinceLastShake;
     private ShakeController shakeController;

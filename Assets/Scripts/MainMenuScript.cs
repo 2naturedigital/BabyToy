@@ -3,18 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-
     private bool firstRun;
-    [SerializeField]
-    private GameObject mainMenu = null;
-    private OptionsMenuScript optionsMenuScript;
-    [SerializeField]
-    private GameObject aboutUs = null;
+    public GameObject mainMenu = null;
+    //private OptionsMenuScript optionsMenuScript;
+    public GameObject aboutUs = null;
 
     void Awake() {
         // First run defaults to true
         firstRun = PlayerPrefs.GetString("firstrun", "true") == "true" ? true : false;
-        optionsMenuScript = FindObjectOfType<OptionsMenuScript>();
+        //optionsMenuScript = FindObjectOfType<OptionsMenuScript>();
         if (firstRun) {
             mainMenu.SetActive(false);
             aboutUs.SetActive(true);
@@ -22,7 +19,7 @@ public class MainMenuScript : MonoBehaviour
             PlayerPrefs.SetString("firstrun", "false");
 
             // Initialize the first run of the game
-            optionsMenuScript.DefaultSettings();
+            //optionsMenuScript.DefaultSettings();
         }
     }
 
@@ -30,13 +27,13 @@ public class MainMenuScript : MonoBehaviour
         // Force portrait mode for menu
         Screen.orientation = ScreenOrientation.Portrait;
         if (firstRun) {
-            optionsMenuScript.LoadPlayerPreferences();
+            //optionsMenuScript.LoadPlayerPreferences();
         }
     }
 
     void OnDisable() {
         if (firstRun) {
-            optionsMenuScript.SavePlayerPreferences();
+            //optionsMenuScript.SavePlayerPreferences();
         }
     }
 
@@ -48,16 +45,4 @@ public class MainMenuScript : MonoBehaviour
     public void OpenLink() {
         Application.OpenURL("https://support.google.com/android/answer/9455138");
     }
-
-    public void InitializeFirstRun() {
-        if (firstRun) {
-
-        }
-        firstRun = false;
-    }
-
-    // public void ExitGame() {
-    //     Debug.Log ("MainMenuScript - Exiting App");
-    //     Application.Quit();
-    // }
 }//end of MainMenuScript
