@@ -11,8 +11,6 @@ This app places children in a safe and fun environment within the digital medium
    
 We highly suggest screen pinning so your little human cannot accidentally change apps and get into unwanted trouble.
 
-A preview (or teaser) can be found here: https://youtu.be/nN2s-YOMi1Q
-
 # 2NatureDigital Team
     Richard Moore & 
     James Cotellesse
