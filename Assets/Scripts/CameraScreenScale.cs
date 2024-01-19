@@ -41,7 +41,7 @@ public class CameraScreenScale : MonoBehaviour
         // Change orientation depending on user settings
         landscape = PlayerPrefs.GetString("landscape", "false") == "true" ? true : false;
         if (landscape) {
-            Screen.orientation = ScreenOrientation.Landscape;
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
         bool hands = PlayerPrefs.GetString("hands", "true") == "true" ? true : false;
         leftHand.enabled = hands;
