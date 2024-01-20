@@ -45,4 +45,15 @@ public class MainMenuScript : MonoBehaviour
     public void OpenLink() {
         Application.OpenURL("https://support.google.com/android/answer/9455138");
     }
+
+    public void OpenPrivacyPolicy() {
+        Application.OpenURL("https://github.com/2naturedigital/BabyToy/blob/main/PRIVACYPOLICY.md");
+    }
+
+    public void ContactUs() {
+        string email = "2NatureDigital@gmail.com";
+        string subject = "Regarding the Rattler App";
+        string body = "Feel free to express your feedback or concerns here!";
+        Application.OpenURL($"mailto:{email}?subject={subject}&body={body}");
+    }
 }//end of MainMenuScript
