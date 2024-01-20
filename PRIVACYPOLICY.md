@@ -17,4 +17,4 @@ Children's Privacy:
 We are committed to protecting the privacy of children. We do not knowingly collect personal information from children under the age of 13. If we become aware of any such collection, we will take steps to remove the information promptly.
 
 Contact Information:
-For any questions or concerns about our privacy practices, please contact us.
+For any questions or concerns about our privacy practices, please contact us at [2NatureDigital@gmail.com](mailto:2NatureDigital@gmail.com)
