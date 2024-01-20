@@ -15,4 +15,8 @@ We highly suggest screen pinning so your little human cannot accidentally change
     Richard Moore & 
     James Cotellesse
 
+[Contact Us](mailto:2NatureDigital@gmail.com)
+
+# [Privacy Policy](/PRIVACYPOLICY.md)
+
 Thanks for playing!
