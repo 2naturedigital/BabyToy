@@ -1,6 +1,9 @@
-# [Trailer/Preview Video](https://youtu.be/nN2s-YOMi1Q)
-
 # Rattler
+## [Trailer/Preview Video](https://youtu.be/nN2s-YOMi1Q)
+## [Privacy Policy](/PRIVACYPOLICY.md)
+## [2NatureDigital Team](#2naturedigital-team)
+
+[![Guppy](https://github.com/2naturedigital/BabyToy/blob/main/Assets/sprites/fish/guppy.png)]([URL-of-the-video](https://youtu.be/nN2s-YOMi1Q))
 
 Rattler by 2NatureDigital is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0).
 
@@ -14,5 +17,9 @@ We highly suggest screen pinning so your little human cannot accidentally change
 
     Richard Moore & 
     James Cotellesse
+
+[Contact Us](mailto:2NatureDigital@gmail.com)
+
+
 
 Thanks for playing!
