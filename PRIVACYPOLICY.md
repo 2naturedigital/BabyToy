@@ -1,20 +1,27 @@
-Privacy Policy of 2NatureDigital
+# Privacy Policy of 2NatureDigital
 Your Privacy is Crucial
 
-Introduction:
-At 2NatureDigital, we are committed to protecting the privacy of our users and visitors. This Privacy Policy outlines our practices and principles regarding data collection and usage.
+## Introduction:
 
-Current Data Collection Practice:
+At 2NatureDigital, we are committed to protecting the privacy of our users and visitors.
+This Privacy Policy outlines our practices and principles regarding data collection and usage.
+
+## Current Data Collection Practice:
+
 As of now, 2NatureDigital does not collect any personal information from users of our applications or visitors to our website.
 
-Future Changes to Data Collection:
-Should our policy change in the future, we will update this document accordingly. Any future collection of personal information will be conducted transparently, with clear communication regarding the type of data collected and its intended use.
+## Future Changes to Data Collection:
 
-Non-Personal Data Collection:
-We may collect non-personal data such as user interaction, device type, and application usage for improving our services. This data does not identify individual users.
+Should our policy change in the future, we will update this document accordingly, but not before alerting all of you. 
+Any future collection of personal information will be conducted transparently, with clear communication regarding the type of data collected and its intended use.
 
-Children's Privacy:
-We are committed to protecting the privacy of children. We do not knowingly collect personal information from children under the age of 13. If we become aware of any such collection, we will take steps to remove the information promptly.
+## Non-Personal Data Collection:
+We may collect non-personal data such as user interaction, device type, and application usage for improving our services.
+This data does not identify individual users.
 
-Contact Information:
-For any questions or concerns about our privacy practices, please contact us at [2NatureDigital@gmail.com](mailto:2NatureDigital@gmail.com)
+## Children's Privacy:
+We are committed to protecting the privacy of children. We do not knowingly collect personal information from children under the age of 13.
+If we become aware of any such collection, we will take steps to remove the information promptly.
+
+# Contact Information:
+For any questions or concerns about our privacy practices, please [contact us](mailto:2NatureDigital@gmail.com) at 2NatureDigital@gmail.com
