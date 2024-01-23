@@ -93,7 +93,7 @@ Another part of our priority is adding protection for children while using our a
 
 
 # Contact Information
-For any questions or concerns about our privacy practices, please [contact us](mailto:2NatureDigital@gmail.com) at 2NatureDigital@gmail.com
+For any questions or concerns about our privacy practices, please contact us at [2NatureDigital@gmail.com](mailto:2NatureDigital@gmail.com?subject=Regarding%20Rattler%20App&body=What%20would%20you%20like%20to%20contact%20us%20about%3F)
 
 Learn more about us [here](/README.md)
 
