@@ -47,7 +47,7 @@ public class MainMenuScript : MonoBehaviour
     }
 
     public void OpenPrivacyPolicy() {
-        Application.OpenURL("https://2naturedigital.com/#edfb3045-e89a-447e-b86f-a3180336471f");
+        Application.OpenURL("https://2naturedigital.com/privacy-policy");
     }
 
     public void ContactUs() {
