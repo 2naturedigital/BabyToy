@@ -3,7 +3,9 @@ Your Privacy is Crucial
 
 [Contact Us](#contact-information)
 
-At 2NatureDigital, accessible from [2NatureDigital](https://2NatureDigital.com), one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by 2NatureDigital and how we use it.
+Our official [Privacy Policy is here](https://2naturedigital.github.io/website/privacypolicy.html). This is a copy of the same policy.
+
+At 2NatureDigital, accessible from [2NatureDigital](https://2naturedigital.github.io/website/), one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by 2NatureDigital and how we use it.
 
 If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.
 
@@ -51,11 +53,11 @@ Note that 2NatureDigital has no access to or control over these cookies that are
 
 
 # Use of Cookies on Our Website
-Please be aware that our website, hosted by GoDaddy, uses cookies for various purposes, including website traffic analysis and user experience optimization.
+Please be aware that our website, hosted by GitHub, uses cookies for various purposes, including website traffic analysis and user experience optimization.
 
-While 2NatureDigital does not directly control these cookies, they may impact your experience on our site. 
+While 2NatureDigital does not directly control these cookies, they may impact your experience on our site.
 
-By using our website, you acknowledge and consent to the use of these cookies. For more detailed information about GoDaddy's cookie usage and practices, please refer to [GoDaddy's Privacy Policy](https://www.godaddy.com/agreements/privacy).
+By using our website, you acknowledge and consent to the use of these cookies. For more detailed information about GitHub's cookie usage and practices, please refer to [GitHub's Privacy Policy](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 
 
 # Third Party Privacy Policies
