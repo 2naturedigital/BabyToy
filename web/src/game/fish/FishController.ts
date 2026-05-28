@@ -5,21 +5,19 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
   protected readonly gameW: number
   protected readonly gameH: number
 
-  // Movement
   protected minSpeed: number
   protected maxSpeed: number
+  protected currentSpeed = 0   // fixed for each journey, not randomised per-frame
   protected targetX = 0
   protected targetY = 0
   protected isFacingLeft = true
 
-  // Half-dimensions for boundary clamping (set in init)
   protected halfW = 0
   protected halfH = 0
 
-  // Shake state — mirrors FishController.cs fields
   protected isShaking = false
   protected isResetTime = false
-  protected magnitudeMult = 1      // acceleration sqrMagnitude, multiplies speed
+  protected magnitudeMult = 1
   protected shakeForceMultiplier = 1
 
   protected snd!: SoundController
@@ -33,7 +31,6 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
     this.gameH = scene.scale.height
   }
 
-  /** Call once after construction with the user-chosen size multiplier. */
   init(snd: SoundController, size: number) {
     this.snd = snd
     this.setScale(size)
@@ -48,11 +45,12 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
   protected setRandomTarget() {
     this.targetX = Phaser.Math.FloatBetween(this.halfW, this.gameW - this.halfW)
     this.targetY = Phaser.Math.FloatBetween(this.halfH, this.gameH - this.halfH)
+    // Pick speed once per journey — eliminates per-frame jitter
+    this.currentSpeed = Phaser.Math.FloatBetween(this.minSpeed, this.maxSpeed)
   }
 
-  // Mirrors Vector3.MoveTowards — direct position, no physics.
   protected moveFish(delta: number) {
-    const speed = Phaser.Math.FloatBetween(this.minSpeed, this.maxSpeed) * this.magnitudeMult
+    const speed = this.currentSpeed * this.magnitudeMult
     const dx = this.targetX - this.x
     const dy = this.targetY - this.y
     const dist = Math.sqrt(dx * dx + dy * dy)
@@ -74,7 +72,6 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
     this.setFlipX(!this.flipX)
   }
 
-  // Shake interface — mirrors FishController.cs public methods
   startShake(ax: number, ay: number, forceMult: number) {
     this.magnitudeMult = ax * ax + ay * ay
     this.shakeForceMultiplier = forceMult

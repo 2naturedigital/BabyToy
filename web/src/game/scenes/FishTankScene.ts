@@ -22,12 +22,14 @@ export class FishTankScene extends Phaser.Scene {
   private starfish!: Starfish
   private blowfish!: BlowFish
 
-  // Parent long-press button state
   private holdGraphics?: Phaser.GameObjects.Graphics
   private holdTween?: Phaser.Tweens.Tween
   private holdTimer?: Phaser.Time.TimerEvent
-
   private spaceKey?: Phaser.Input.Keyboard.Key
+
+  // Arrow function so removeEventListener works correctly
+  private readonly onSettingsApplied = () => this.scene.restart()
+  private readonly onOpenOptions = () => window.dispatchEvent(new Event('rattler:open-options'))
 
   constructor() {
     super({ key: 'FishTankScene' })
@@ -37,7 +39,7 @@ export class FishTankScene extends Phaser.Scene {
     const { width: W, height: H } = this.scale
     const s = useSettingsStore().settings
 
-    // ── Background — cover-fit: fills canvas without stretching ─────────────
+    // ── Background ──────────────────────────────────────────────────────────
     const bgKey = s.blurBackground ? SPRITES.BG_BLUR : SPRITES.BG
     const bg = this.add.image(W / 2, H / 2, bgKey).setDepth(0)
     bg.setScale(Math.max(W / bg.width, H / bg.height))
@@ -48,7 +50,7 @@ export class FishTankScene extends Phaser.Scene {
       water.setAlpha(0.3)
     }
 
-    // ── Core systems ────────────────────────────────────────────────────────
+    // ── Core systems ─────────────────────────────────────────────────────────
     this.snd = new SoundController(this)
     this.shakeCtrl = new ShakeController()
     this.accel = new Accelerometer((ax, ay) => this.shakeCtrl.shake(ax, ay))
@@ -62,7 +64,7 @@ export class FishTankScene extends Phaser.Scene {
     this.starfish.init(this.snd, s.starfishSize)
     this.starfish.setDepth(3)
 
-    this.blowfish = new BlowFish(this, W * 0.5, H * 0.6)
+    this.blowfish = new BlowFish(this, W * 0.5, H * 0.35)
     this.blowfish.init(this.snd, s.blowfishSize)
     this.blowfish.setDepth(3)
 
@@ -74,22 +76,20 @@ export class FishTankScene extends Phaser.Scene {
     this.bubbleSpawner = new BubbleSpawner(this, this.snd)
     this.shakeCtrl.setBubbleSpawner(this.bubbleSpawner)
 
-    // ── Water currents — 4 horizontal zones stacked vertically (depth 0) ────
-    // Mirrors CurrentInitializer.cs — slices the tank into quarters
+    // ── Water currents — 4 horizontal slices ────────────────────────────────
     const sliceH = H / 4
     this.waterCurrents = [0, 1, 2, 3].map(i =>
       new WaterCurrent(0, i * sliceH, W, sliceH, 40, 2, 6)
     )
     for (const c of this.waterCurrents) this.shakeCtrl.registerCurrent(c)
 
-    // ── Tank current (affects BlowFish horizontal drift) ─────────────────────
+    // ── Tank current (BlowFish horizontal drift) ─────────────────────────────
     this.tankCurrent = new TankCurrent(20, 80, 2, 8)
     this.tankCurrent.setFish(this.blowfish)
     this.shakeCtrl.setTankCurrent(this.tankCurrent)
 
-    // ── Hand overlays — anchored to bottom corners like the Unity original ────
+    // ── Hands (depth 5) ──────────────────────────────────────────────────────
     if (s.showHands) {
-      // Each hand fills ~55% of screen width, anchored at bottom-right / bottom-left
       const rh = this.add.image(0, 0, SPRITES.HANDS_RIGHT).setDepth(5).setOrigin(1, 1)
       const lh = this.add.image(0, 0, SPRITES.HANDS_LEFT).setDepth(5).setOrigin(0, 1)
       const handScale = (W * 0.55) / rh.width
@@ -97,18 +97,31 @@ export class FishTankScene extends Phaser.Scene {
       lh.setScale(handScale).setPosition(0, H)
     }
 
-    // ── Parent long-press button (top-right, depth 10) ─────────────────────
+    // ── Parent long-press button (top-right, depth 10) ───────────────────────
     this.setupParentButton(W, H)
 
-    // ── Keyboard shake (desktop testing) ─────────────────────────────────────
-    this.spaceKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+    // ── Keyboard: spacebar = shake, P = open settings ───────────────────────
+    if (this.input.keyboard) {
+      this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P).on('down', () => {
+        window.dispatchEvent(new Event('rattler:open-options'))
+      })
+    }
 
-    // Start motion sensor (async — non-blocking)
+    // ── Global event listeners ───────────────────────────────────────────────
+    window.addEventListener('rattler:settings-applied', this.onSettingsApplied)
+
+    // Clean up listeners when scene shuts down
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      window.removeEventListener('rattler:settings-applied', this.onSettingsApplied)
+    })
+
+    // Fade in + start motion sensor
+    this.cameras.main.fadeIn(350, 0, 0, 0)
     this.accel.start()
   }
 
   update(_time: number, delta: number) {
-    // Spacebar simulates a device shake for desktop testing
     if (this.spaceKey && Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
       this.accel.simulateShake()
     }
@@ -124,15 +137,14 @@ export class FishTankScene extends Phaser.Scene {
     this.shakeCtrl.update(delta)
   }
 
-  // ── Parent long-press button — mirrors LongClickButton.cs (3 s hold) ──────
   private setupParentButton(W: number, H: number) {
-    const x = W - 60
-    const y = 60
+    const x = W - 36
+    const y = 36
     this.holdGraphics = this.add.graphics().setDepth(10)
 
     const btn = this.add.image(x, y, SPRITES.BTN)
-      .setDisplaySize(90, 90)
-      .setAlpha(0.65)
+      .setDisplaySize(60, 60)
+      .setAlpha(0.6)
       .setDepth(10)
       .setInteractive({ useHandCursor: true })
 
@@ -141,7 +153,10 @@ export class FishTankScene extends Phaser.Scene {
         delay: 3000,
         callback: () => {
           this.holdGraphics?.clear()
-          this.scene.start('MenuScene')
+          this.cameras.main.fadeOut(250, 0, 0, 0)
+          this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+            this.scene.start('MenuScene')
+          })
         },
       })
       this.holdTween = this.tweens.addCounter({
@@ -149,8 +164,8 @@ export class FishTankScene extends Phaser.Scene {
         onUpdate: (tw) => {
           const v = tw.getValue()
           this.holdGraphics?.clear()
-          this.holdGraphics?.fillStyle(0x4fc3f7, 0.6)
-          this.holdGraphics?.slice(x, y, 50, -Math.PI / 2, -Math.PI / 2 + v * Math.PI * 2, false)
+          this.holdGraphics?.fillStyle(0x4fc3f7, 0.7)
+          this.holdGraphics?.slice(x, y, 34, -Math.PI / 2, -Math.PI / 2 + v * Math.PI * 2, false)
           this.holdGraphics?.fillPath()
         },
       })
