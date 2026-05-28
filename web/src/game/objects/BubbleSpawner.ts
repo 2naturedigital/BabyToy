@@ -42,7 +42,7 @@ export class BubbleSpawner {
     this.scaleMax = 1 + variation
     this.baseScale = s.bubbleSize
 
-    this.spawnTimer = Phaser.Math.FloatBetween(this.spawnMin, this.spawnMax)
+    this.spawnTimer = 1.0  // first bubble after 1 s so player sees them quickly
   }
 
   update(delta: number) {

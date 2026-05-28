@@ -27,6 +27,7 @@ export class Bubble extends Phaser.Physics.Arcade.Sprite {
     this.physBody.setVelocityY(-floatSpeed)
 
     this.setScale(scale)
+    this.setDepth(2)  // above water layer (1), below fish (3)
     this.setInteractive()
 
     // Randomize creation sound pitch/volume

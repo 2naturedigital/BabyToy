@@ -37,15 +37,15 @@ export class FishTankScene extends Phaser.Scene {
     const { width: W, height: H } = this.scale
     const s = useSettingsStore().settings
 
-    // ── Background ──────────────────────────────────────────────────────────
+    // ── Background — cover-fit: fills canvas without stretching ─────────────
     const bgKey = s.blurBackground ? SPRITES.BG_BLUR : SPRITES.BG
     const bg = this.add.image(W / 2, H / 2, bgKey).setDepth(0)
-    bg.setDisplaySize(W, H)
+    bg.setScale(Math.max(W / bg.width, H / bg.height))
 
     if (s.showWaterLayer) {
       const water = this.add.image(W / 2, H / 2, SPRITES.WATER_LAYER).setDepth(1)
-      water.setDisplaySize(W, H)
-      water.setAlpha(0.35)
+      water.setScale(Math.max(W / water.width, H / water.height))
+      water.setAlpha(0.3)
     }
 
     // ── Core systems ────────────────────────────────────────────────────────
@@ -87,13 +87,14 @@ export class FishTankScene extends Phaser.Scene {
     this.tankCurrent.setFish(this.blowfish)
     this.shakeCtrl.setTankCurrent(this.tankCurrent)
 
-    // ── Hand overlays (depth 5) ───────────────────────────────────────────────
+    // ── Hand overlays — anchored to bottom corners like the Unity original ────
     if (s.showHands) {
-      const rh = this.add.image(W * 0.75, H * 0.88, SPRITES.HANDS_RIGHT).setDepth(5)
-      const lh = this.add.image(W * 0.25, H * 0.88, SPRITES.HANDS_LEFT).setDepth(5)
-      const handScale = Math.min(W / rh.width, H / rh.height) * 0.45
-      rh.setScale(handScale)
-      lh.setScale(handScale)
+      // Each hand fills ~55% of screen width, anchored at bottom-right / bottom-left
+      const rh = this.add.image(0, 0, SPRITES.HANDS_RIGHT).setDepth(5).setOrigin(1, 1)
+      const lh = this.add.image(0, 0, SPRITES.HANDS_LEFT).setDepth(5).setOrigin(0, 1)
+      const handScale = (W * 0.55) / rh.width
+      rh.setScale(handScale).setPosition(W, H)
+      lh.setScale(handScale).setPosition(0, H)
     }
 
     // ── Parent long-press button (top-right, depth 10) ─────────────────────

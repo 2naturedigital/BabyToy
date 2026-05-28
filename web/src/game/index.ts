@@ -11,13 +11,17 @@ export function createGame(parent: HTMLElement): Phaser.Game {
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
-      width: 1080,
-      height: 1920,
+      width: 540,    // half of 1080 — cuts render work to ¼, same visual output
+      height: 960,
+    },
+    render: {
+      antialias: false,   // not needed for cartoon sprites, saves GPU time
+      roundPixels: true,  // prevents sub-pixel shimmer on moving sprites
     },
     physics: {
       default: 'arcade',
       arcade: {
-        gravity: { x: 0, y: 0 },  // each object sets its own gravity
+        gravity: { x: 0, y: 0 },
         debug: false,
       },
     },
