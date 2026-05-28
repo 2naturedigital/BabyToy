@@ -7,6 +7,8 @@ import { useSettingsStore } from '../../store/settings'
 // Mirrors BubblesDup.cs defaults
 const BUBBLE_GRAVITY_MIN = 80   // px/s float speed (slow drift)
 const BUBBLE_GRAVITY_MAX = 700  // px/s float speed (fast rise)
+// Sprite is 394px; this base scale renders bubbles at 16–47px (0.5–1.5× variation)
+const BUBBLE_BASE_SCALE = 0.08
 
 export class BubbleSpawner {
   private scene: Phaser.Scene
@@ -77,7 +79,7 @@ export class BubbleSpawner {
     for (let i = 0; i < count; i++) {
       const x = Phaser.Math.FloatBetween(40, gW - 40)
       const y = gH + 20                               // just below screen bottom
-      const scale = Phaser.Math.FloatBetween(this.scaleMin, this.scaleMax) * this.baseScale
+      const scale = Phaser.Math.FloatBetween(this.scaleMin, this.scaleMax) * this.baseScale * BUBBLE_BASE_SCALE
       const floatSpeed = Phaser.Math.FloatBetween(BUBBLE_GRAVITY_MIN, BUBBLE_GRAVITY_MAX)
       const bubble = new Bubble(this.scene, x, y, this.snd, scale, floatSpeed)
       this.bubbles.push(bubble)

@@ -7,6 +7,9 @@ export class Guppy extends FishController {
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'guppy_swim_1', 80, 220)
+    // Sprite is 318px wide; this renders it at ~114px on the 540px canvas,
+    // matching the relative Unity scale of 80 (vs Blowfish 100).
+    this.baseScale = 0.36
   }
 
   override init(snd: import('../systems/SoundController').SoundController, size: number) {

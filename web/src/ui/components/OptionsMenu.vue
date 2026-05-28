@@ -104,32 +104,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, h, type Slots } from 'vue'
 import { useSettingsStore } from '../../store/settings'
 
-// Sub-components inlined as render helpers
+// Use h() render functions — string template literals require a full-compiler
+// build that isn't guaranteed in all Vite/Vue 3 configurations.
 const Row = {
   props: ['label', 'value'],
-  template: `
-    <div class="row">
-      <div class="row-top">
-        <span class="row-label">{{ label }}</span>
-        <span class="row-value">{{ value }}</span>
-      </div>
-      <slot />
-    </div>
-  `,
+  setup(props: { label: string; value: string }, { slots }: { slots: Slots }) {
+    return () => h('div', { class: 'row' }, [
+      h('div', { class: 'row-top' }, [
+        h('span', { class: 'row-label' }, props.label),
+        h('span', { class: 'row-value' }, props.value),
+      ]),
+      slots.default?.(),
+    ])
+  },
 }
 
 const ToggleRow = {
   props: ['label', 'value'],
   emits: ['toggle'],
-  template: `
-    <div class="row toggle-row" @click="$emit('toggle')">
-      <span class="row-label">{{ label }}</span>
-      <div :class="['toggle', { on: value }]"><div class="thumb" /></div>
-    </div>
-  `,
+  setup(props: { label: string; value: boolean }, { emit }: { emit: (e: string) => void }) {
+    return () => h(
+      'div',
+      { class: 'row toggle-row', onClick: () => emit('toggle') },
+      [
+        h('span', { class: 'row-label' }, props.label),
+        h('div', { class: { toggle: true, on: props.value } }, [
+          h('div', { class: 'thumb' }),
+        ]),
+      ],
+    )
+  },
 }
 
 const emit = defineEmits(['close'])

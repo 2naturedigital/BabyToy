@@ -20,6 +20,9 @@ export class BlowFish extends FishController {
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'blowfish_swim_1', 0, 0) // no MoveTowards — physics-driven
+    // Sprite is 440px wide; this renders it at ~198px on the 540px canvas,
+    // matching the reference Unity scale of 100.
+    this.baseScale = 0.45
   }
 
   override init(snd: import('../systems/SoundController').SoundController, size: number) {

@@ -13,6 +13,9 @@ export class Starfish extends FishController {
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'starfish_4', 50, 160)
+    // Sprite is 580px wide; this renders it at ~131px on the 540px canvas,
+    // matching the relative Unity scale of 50 (vs Blowfish 100).
+    this.baseScale = 0.226
   }
 
   override init(snd: import('../systems/SoundController').SoundController, size: number) {

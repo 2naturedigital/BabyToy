@@ -21,6 +21,9 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
   protected shakeForceMultiplier = 1
 
   protected snd!: SoundController
+  // Intrinsic scale calibrated so that size=1.0 matches the original Unity appearance.
+  // Each subclass sets this in its constructor.
+  protected baseScale = 1.0
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, minSpeed: number, maxSpeed: number) {
     super(scene, x, y, texture)
@@ -33,7 +36,7 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
 
   init(snd: SoundController, size: number) {
     this.snd = snd
-    this.setScale(size)
+    this.setScale(this.baseScale * size)
     this.halfW = this.displayWidth / 2
     this.halfH = this.displayHeight / 2
     this.setInteractive()
