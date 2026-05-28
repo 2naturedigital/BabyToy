@@ -9,6 +9,7 @@ const WOBBLE_MAX_DEG = 22      // max rotation angle
 export class Starfish extends FishController {
   private wobbleAngle = 0
   private rotDir = 1
+  // reacting is also checked in updateWobble — tween controls angle while true
   private reacting = false
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -25,7 +26,8 @@ export class Starfish extends FishController {
       if (this.reacting) return
       this.reacting = true
       const baseScale = this.scaleX
-      // Spin 360° + grow, then shrink back with a little bounce
+      // Spin 360° + grow, then shrink back with a bounce.
+      // updateWobble is paused during reacting so the tween controls angle.
       this.scene.tweens.add({
         targets: this,
         angle: '+=360',
@@ -39,8 +41,12 @@ export class Starfish extends FishController {
             scaleX: baseScale,
             scaleY: baseScale,
             duration: 300,
-            ease: 'Back.Out',
-            onComplete: () => { this.reacting = false },
+            ease: Phaser.Math.Easing.Back.Out,
+            onComplete: () => {
+              // Sync wobble state so there's no angle jump when wobble resumes
+              this.wobbleAngle = this.angle
+              this.reacting = false
+            },
           })
         },
       })
@@ -54,6 +60,9 @@ export class Starfish extends FishController {
 
   // Mirrors Starfish.cs AnimateFish() — three states: normal / shaking / resetting
   private updateWobble(delta: number) {
+    // Pause wobble while the tap-spin tween is running; it owns the angle
+    if (this.reacting) return
+
     const dt = delta / 1000
 
     if (!this.isShaking && !this.isResetTime) {

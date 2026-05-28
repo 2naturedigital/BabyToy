@@ -155,14 +155,15 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useSettingsStore } from '../../store/settings'
 import type { Settings } from '../../store/settings'
 
 const emit = defineEmits(['close'])
 const store = useSettingsStore()
-// Access settings directly — it is already a reactive object via Pinia/Vue ref unwrapping.
-// The computed wrapper caused scoped-CSS failures with inline sub-components.
-const s = store.settings
+// storeToRefs extracts the settings ref so template auto-unwrapping works reliably.
+// Directly accessing store.settings can skip ref-unwrapping in some Pinia v2 builds.
+const { settings: s } = storeToRefs(store)
 const tab = ref<'basic' | 'advanced'>('basic')
 
 function num(e: Event) { return Number((e.target as HTMLInputElement).value) }
@@ -171,7 +172,7 @@ function set<K extends keyof Settings>(key: K, value: Settings[K]) {
 }
 
 const masterSize = computed(() =>
-  (s.guppySize + s.starfishSize + s.blowfishSize) / 3
+  (s.value.guppySize + s.value.starfishSize + s.value.blowfishSize) / 3
 )
 function setMasterSize(v: number) {
   store.set('guppySize', v)
