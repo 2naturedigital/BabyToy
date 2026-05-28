@@ -96,7 +96,7 @@
 
       </div><!-- /content -->
 
-      <div class="footer-note">Changes apply when you restart the game.</div>
+      <div class="footer-note">Tap Done to apply changes and restart.</div>
       <button class="done-btn" @click="close">Done</button>
 
     </div>

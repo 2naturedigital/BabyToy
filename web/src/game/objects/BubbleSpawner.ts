@@ -85,7 +85,7 @@ export class BubbleSpawner {
   }
 
   // Shake interface — mirrors BubblesDup.cs
-  startShake(ax: number, ay: number, _forceMult: number) {
+  startShake(_ax: number, _ay: number, _forceMult: number) {
     this.isShaking = true
     this.shakeTimer = this.shakeTimerInterval
     this.snd.play(AUDIO.SHAKE_LIGHT, 1.0, 1.0, true)
@@ -93,7 +93,10 @@ export class BubbleSpawner {
 
   continueShake(_ax: number, _ay: number, _forceMult: number) {
     this.shakeTimer = this.shakeTimerInterval
-    this.snd.play(AUDIO.SHAKE_MEDIUM, 1.0, 1.0, false)
+    this.snd.playRandom(
+      [AUDIO.SHAKE_MEDIUM, AUDIO.SHAKE_MEDIUM_2, AUDIO.SHAKE_QUICK],
+      1.0
+    )
   }
 
   endShake() {

@@ -142,10 +142,16 @@ export class BootScene extends Phaser.Scene {
       repeat: 0,
     })
 
-    // Bubble pop (underwater set, frames 1–8; frame 1 = idle)
+    // Bubble pop — two variants for visual variety
     mgr.create({
       key: 'bubble_pop',
       frames: [2,3,4,5,6,7,8].map(i => ({ key: `bubble_uw_${i}` })),
+      frameRate: 16,
+      repeat: 0,
+    })
+    mgr.create({
+      key: 'bubble_pop_two',
+      frames: [1,2,3,4,5,6,7].map(i => ({ key: `bubble_two_${i}` })),
       frameRate: 16,
       repeat: 0,
     })

@@ -114,6 +114,7 @@ export class FishTankScene extends Phaser.Scene {
     // Clean up listeners when scene shuts down
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       window.removeEventListener('rattler:settings-applied', this.onSettingsApplied)
+      this.accel.stop()
     })
 
     // Fade in + start motion sensor

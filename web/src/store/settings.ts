@@ -7,7 +7,7 @@ const defaults = {
   volume: 1.0,
   bubbleFrequency: 4.0,
   bubbleSize: 1.0,
-  bubbleCount: 1,
+  bubbleCount: 2,
   bubbleSizeVariation: 0.5,
   guppySize: 1.0,
   starfishSize: 1.0,

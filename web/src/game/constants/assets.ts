@@ -27,4 +27,5 @@ export const ANIM = {
   BLOWFISH_SWIM: 'blowfish_swim',
   BLOWFISH_INFLATE: 'blowfish_inflate',
   BUBBLE_POP: 'bubble_pop',
+  BUBBLE_POP_TWO: 'bubble_pop_two',
 } as const
