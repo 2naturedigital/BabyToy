@@ -68,7 +68,7 @@ export class BubbleSpawner {
     } else {
       this.spawnTimer -= dt
       if (this.spawnTimer <= 0) {
-        this.spawnBatch(1, false)
+        this.spawnBatch(2, false)
         this.spawnTimer = Phaser.Math.FloatBetween(this.spawnMin, this.spawnMax)
       }
     }

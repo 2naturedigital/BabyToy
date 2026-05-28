@@ -55,14 +55,14 @@ export class FishTankScene extends Phaser.Scene {
     this.shakeCtrl = new ShakeController()
     this.accel = new Accelerometer((ax, ay) => this.shakeCtrl.shake(ax, ay))
 
-    // ── Fish (depth 3) ───────────────────────────────────────────────────────
+    // ── Fish — blowfish=3 (back), guppy=4, starfish=5 (front) ───────────────
     this.guppy = new Guppy(this, W * 0.3, H * 0.5)
     this.guppy.init(this.snd, s.guppySize)
-    this.guppy.setDepth(3)
+    this.guppy.setDepth(4)
 
     this.starfish = new Starfish(this, W * 0.7, H * 0.4)
     this.starfish.init(this.snd, s.starfishSize)
-    this.starfish.setDepth(3)
+    this.starfish.setDepth(5)
 
     this.blowfish = new BlowFish(this, W * 0.5, H * 0.35)
     this.blowfish.init(this.snd, s.blowfishSize)
@@ -88,10 +88,10 @@ export class FishTankScene extends Phaser.Scene {
     this.tankCurrent.setFish(this.blowfish)
     this.shakeCtrl.setTankCurrent(this.tankCurrent)
 
-    // ── Hands (depth 5) ──────────────────────────────────────────────────────
+    // ── Hands (depth 2 — behind fish) ────────────────────────────────────────
     if (s.showHands) {
-      const rh = this.add.image(0, 0, SPRITES.HANDS_RIGHT).setDepth(5).setOrigin(1, 1)
-      const lh = this.add.image(0, 0, SPRITES.HANDS_LEFT).setDepth(5).setOrigin(0, 1)
+      const rh = this.add.image(0, 0, SPRITES.HANDS_RIGHT).setDepth(2).setOrigin(1, 1)
+      const lh = this.add.image(0, 0, SPRITES.HANDS_LEFT).setDepth(2).setOrigin(0, 1)
       const handScale = (W * 0.42) / rh.width  // was 0.55 — trimmed down
       rh.setScale(handScale).setPosition(W, H)
       lh.setScale(handScale).setPosition(0, H)

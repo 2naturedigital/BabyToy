@@ -198,7 +198,7 @@ function freqLabel(v: number) {
 
 function resetAll() {
   const d: Partial<Settings> = {
-    volume: 1.0, bubbleFrequency: 2, bubbleSize: 1.0, bubbleCount: 2,
+    volume: 1.0, bubbleFrequency: 2, bubbleSize: 1.0, bubbleCount: 5,
     bubbleSizeVariation: 0.5, guppySize: 1.0, starfishSize: 1.0, blowfishSize: 1.0,
     shakeSensitivity: 1.0, shakePower: 1.0, shakenBubbleFrequency: 0.13,
     showHands: true, showWaterLayer: true, blurBackground: false,

@@ -53,6 +53,16 @@ export class Starfish extends FishController {
     })
   }
 
+  override endShake() {
+    super.endShake()
+    // After a long shake wobbleAngle can be ±thousands of degrees, so the
+    // "spin back toward 0" condition (|angle| ≤ WOBBLE_MAX_DEG) would never
+    // trigger.  Snap to 0 immediately so normal wobble resumes right away.
+    this.wobbleAngle = 0
+    this.setAngle(0)
+    this.isResetTime = false
+  }
+
   fishUpdate(delta: number) {
     this.moveFish(delta)
     this.updateWobble(delta)

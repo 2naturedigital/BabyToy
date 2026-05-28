@@ -33,6 +33,15 @@ export class BlowFish extends FishController {
     this.scene.physics.add.existing(this)
     this.body2d = this.body as Phaser.Physics.Arcade.Body
     this.body2d.setGravityY(BODY_GRAVITY)
+    // Lock hitbox to the normal (unpuffed) swim body so the inflated visual
+    // doesn't create a disproportionately large tap area.  The sprite texture
+    // is 440×380; the swim body fills roughly 60% of each axis.
+    this.body2d.setSize(Math.round(this.displayWidth * 0.6), Math.round(this.displayHeight * 0.6), true)
+    // Also reset the interactive (tap) area to match
+    this.setInteractive(
+      new Phaser.Geom.Rectangle(88, 76, 264, 228),
+      Phaser.Geom.Rectangle.Contains
+    )
     this.body2d.setCollideWorldBounds(false)
     this.body2d.setDragX(90)
     this.body2d.setDragY(40)  // increased water resistance to damp vertical overshoot

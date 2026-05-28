@@ -1,7 +1,7 @@
 <template>
-  <!-- pointer-events:none blocks Phaser input while any overlay is open -->
+  <!-- .game-blocked targets the canvas directly so pointer-events:none cascades -->
   <div id="game-container" ref="gameContainer"
-       :style="{ pointerEvents: (showOptions || showAbout) ? 'none' : 'auto' }"></div>
+       :class="{ 'game-blocked': showOptions || showAbout }"></div>
   <div id="ui-layer">
     <AboutModal
       v-if="showAbout"
@@ -46,3 +46,10 @@ onUnmounted(() => {
   window.removeEventListener('rattler:open-about',   openAbout)
 })
 </script>
+
+<style>
+/* pointer-events:none on the div doesn't cascade to canvas — target it directly */
+#game-container.game-blocked canvas {
+  pointer-events: none;
+}
+</style>
