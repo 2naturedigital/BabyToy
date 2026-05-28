@@ -92,13 +92,16 @@ export class FishTankScene extends Phaser.Scene {
     if (s.showHands) {
       const rh = this.add.image(0, 0, SPRITES.HANDS_RIGHT).setDepth(5).setOrigin(1, 1)
       const lh = this.add.image(0, 0, SPRITES.HANDS_LEFT).setDepth(5).setOrigin(0, 1)
-      const handScale = (W * 0.55) / rh.width
+      const handScale = (W * 0.42) / rh.width  // was 0.55 — trimmed down
       rh.setScale(handScale).setPosition(W, H)
       lh.setScale(handScale).setPosition(0, H)
     }
 
     // ── Parent long-press button (top-right, depth 10) ───────────────────────
     this.setupParentButton(W, H)
+
+    // ── HUD buttons: shake + rotate (top-left, depth 10) ─────────────────────
+    this.setupHudButtons(W)
 
     // ── Keyboard: spacebar = shake, P = open settings ───────────────────────
     if (this.input.keyboard) {
@@ -179,5 +182,41 @@ export class FishTankScene extends Phaser.Scene {
     }
     btn.on('pointerup', cancelHold)
     btn.on('pointerout', cancelHold)
+  }
+
+  private setupHudButtons(W: number) {
+    const makeBtn = (x: number, label: string) => {
+      const img = this.add.image(x, 36, SPRITES.BTN)
+        .setDisplaySize(52, 52).setAlpha(0.5).setDepth(10)
+        .setInteractive({ useHandCursor: true })
+      this.add.text(x, 36, label, {
+        fontSize: '22px',
+        color: '#ffffff',
+        fontFamily: 'Arial, sans-serif',
+      }).setOrigin(0.5).setDepth(11)
+      return img
+    }
+
+    // Shake button — trigger an artificial shake event
+    const shakeBtn = makeBtn(36, '〜')
+    shakeBtn.on('pointerup', () => this.accel.simulateShake())
+    shakeBtn.on('pointerover', () => shakeBtn.setAlpha(0.8))
+    shakeBtn.on('pointerout',  () => shakeBtn.setAlpha(0.5))
+
+    // Rotate button — request landscape/portrait lock via Screen Orientation API
+    const rotBtn = makeBtn(96, '↺')
+    rotBtn.on('pointerup', () => {
+      if (!screen.orientation || typeof (screen.orientation as any).lock !== 'function') return
+      const isPortrait = screen.orientation.type.startsWith('portrait')
+      try {
+        if (isPortrait) {
+          void (screen.orientation as any).lock('landscape-primary')
+        } else {
+          screen.orientation.unlock()
+        }
+      } catch { /* not available on desktop */ }
+    })
+    rotBtn.on('pointerover', () => rotBtn.setAlpha(0.8))
+    rotBtn.on('pointerout',  () => rotBtn.setAlpha(0.5))
   }
 }

@@ -21,18 +21,28 @@ export class Starfish extends FishController {
   override init(snd: import('../systems/SoundController').SoundController, size: number) {
     super.init(snd, size)
 
-    // Tap → quick scale pulse (Unity played a "bigeye" anim we recreate as a tween)
     this.on('pointerdown', () => {
       if (this.reacting) return
       this.reacting = true
-      const base = this.scaleX
+      const baseScale = this.scaleX
+      // Spin 360° + grow, then shrink back with a little bounce
       this.scene.tweens.add({
         targets: this,
-        scaleX: base * 1.35,
-        scaleY: base * 1.35,
-        duration: 180,
-        yoyo: true,
-        onComplete: () => { this.reacting = false }
+        angle: '+=360',
+        scaleX: baseScale * 1.45,
+        scaleY: baseScale * 1.45,
+        duration: 500,
+        ease: 'Power2',
+        onComplete: () => {
+          this.scene.tweens.add({
+            targets: this,
+            scaleX: baseScale,
+            scaleY: baseScale,
+            duration: 300,
+            ease: 'Back.Out',
+            onComplete: () => { this.reacting = false },
+          })
+        },
       })
     })
   }

@@ -4,11 +4,10 @@ import { AUDIO } from '../constants/assets'
 import type { SoundController } from '../systems/SoundController'
 import { useSettingsStore } from '../../store/settings'
 
-// Mirrors BubblesDup.cs defaults
-const BUBBLE_GRAVITY_MIN = 80   // px/s float speed (slow drift)
-const BUBBLE_GRAVITY_MAX = 700  // px/s float speed (fast rise)
-// Sprite is 394px; this base scale renders bubbles at 16–47px (0.5–1.5× variation)
-const BUBBLE_BASE_SCALE = 0.08
+const BUBBLE_GRAVITY_MIN = 80    // px/s float speed (slow drift)
+const BUBBLE_GRAVITY_MAX = 350   // px/s (was 700 — too fast to see)
+// Sprite 394px: at scale 0.13 and variation ×1.5 → largest bubble ≈74px ("comically big")
+const BUBBLE_BASE_SCALE = 0.13
 
 export class BubbleSpawner {
   private scene: Phaser.Scene
@@ -44,7 +43,9 @@ export class BubbleSpawner {
     this.scaleMax = 1 + variation
     this.baseScale = s.bubbleSize
 
-    this.spawnTimer = 1.0  // first bubble after 1 s so player sees them quickly
+    // Scatter bubbles across the screen so they're visible from frame one
+    this.spawnBatch(5, true)
+    this.spawnTimer = Phaser.Math.FloatBetween(this.spawnMin, this.spawnMax)
   }
 
   update(delta: number) {
@@ -61,24 +62,27 @@ export class BubbleSpawner {
     if (this.isShaking) {
       this.shakeTimer -= dt
       if (this.shakeTimer <= 0) {
-        this.spawnBatch(this.shakeCount)
+        this.spawnBatch(this.shakeCount, false)
         this.shakeTimer = this.shakeTimerInterval
       }
     } else {
       this.spawnTimer -= dt
       if (this.spawnTimer <= 0) {
-        this.spawnBatch(1)
+        this.spawnBatch(1, false)
         this.spawnTimer = Phaser.Math.FloatBetween(this.spawnMin, this.spawnMax)
       }
     }
   }
 
-  private spawnBatch(count: number) {
+  private spawnBatch(count: number, scattered = false) {
     const gW = this.scene.scale.width
     const gH = this.scene.scale.height
     for (let i = 0; i < count; i++) {
       const x = Phaser.Math.FloatBetween(40, gW - 40)
-      const y = gH + 20                               // just below screen bottom
+      // scattered=true: spread across screen for the initial fill; otherwise enter from bottom
+      const y = scattered
+        ? Phaser.Math.FloatBetween(gH * 0.3, gH * 0.95)
+        : gH + 20
       const scale = Phaser.Math.FloatBetween(this.scaleMin, this.scaleMax) * this.baseScale * BUBBLE_BASE_SCALE
       const floatSpeed = Phaser.Math.FloatBetween(BUBBLE_GRAVITY_MIN, BUBBLE_GRAVITY_MAX)
       const bubble = new Bubble(this.scene, x, y, this.snd, scale, floatSpeed)

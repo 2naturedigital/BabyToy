@@ -1,5 +1,7 @@
 <template>
-  <div id="game-container" ref="gameContainer"></div>
+  <!-- pointer-events:none blocks Phaser input while any overlay is open -->
+  <div id="game-container" ref="gameContainer"
+       :style="{ pointerEvents: (showOptions || showAbout) ? 'none' : 'auto' }"></div>
   <div id="ui-layer">
     <AboutModal
       v-if="showAbout"

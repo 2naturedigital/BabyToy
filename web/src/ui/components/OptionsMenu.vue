@@ -18,40 +18,66 @@
         <template v-if="tab === 'basic'">
 
           <div class="section-label">Sound</div>
-          <Row label="Volume" :value="pct(s.volume)">
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Volume</span>
+              <span class="row-value">{{ pct(s.volume) }}</span>
+            </div>
             <input type="range" min="0" max="1" step="0.05"
               :value="s.volume" @input="set('volume', num($event))" />
-          </Row>
+          </div>
 
           <div class="section-label">Bubbles</div>
-          <Row label="Frequency" :value="freqLabel(s.bubbleFrequency)">
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Frequency</span>
+              <span class="row-value">{{ freqLabel(s.bubbleFrequency) }}</span>
+            </div>
             <input type="range" min="1" max="8" step="0.5"
               :value="s.bubbleFrequency" @input="set('bubbleFrequency', num($event))" />
-          </Row>
-          <Row label="Size" :value="sizeLabel(s.bubbleSize)">
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Size</span>
+              <span class="row-value">{{ sizeLabel(s.bubbleSize) }}</span>
+            </div>
             <input type="range" min="0.5" max="2" step="0.1"
               :value="s.bubbleSize" @input="set('bubbleSize', num($event))" />
-          </Row>
+          </div>
 
           <div class="section-label">Fish</div>
-          <Row label="All Fish Size" :value="sizeLabel(masterSize)">
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">All Fish Size</span>
+              <span class="row-value">{{ sizeLabel(masterSize) }}</span>
+            </div>
             <input type="range" min="0.5" max="2" step="0.1"
               :value="masterSize" @input="setMasterSize(num($event))" />
-          </Row>
+          </div>
 
           <div class="section-label">Controls</div>
-          <Row label="Shake Sensitivity" :value="sizeLabel(s.shakeSensitivity)">
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Shake Sensitivity</span>
+              <span class="row-value">{{ sizeLabel(s.shakeSensitivity) }}</span>
+            </div>
             <input type="range" min="0.5" max="2.5" step="0.1"
               :value="s.shakeSensitivity" @input="set('shakeSensitivity', num($event))" />
-          </Row>
+          </div>
 
           <div class="section-label">Display</div>
-          <ToggleRow label="Show Hands" :value="s.showHands"
-            @toggle="set('showHands', !s.showHands)" />
-          <ToggleRow label="Water Overlay" :value="s.showWaterLayer"
-            @toggle="set('showWaterLayer', !s.showWaterLayer)" />
-          <ToggleRow label="Blur Background" :value="s.blurBackground"
-            @toggle="set('blurBackground', !s.blurBackground)" />
+          <div class="row toggle-row" @click="set('showHands', !s.showHands)">
+            <span class="row-label">Show Hands</span>
+            <div :class="['toggle', { on: s.showHands }]"><div class="thumb" /></div>
+          </div>
+          <div class="row toggle-row" @click="set('showWaterLayer', !s.showWaterLayer)">
+            <span class="row-label">Water Overlay</span>
+            <div :class="['toggle', { on: s.showWaterLayer }]"><div class="thumb" /></div>
+          </div>
+          <div class="row toggle-row" @click="set('blurBackground', !s.blurBackground)">
+            <span class="row-label">Blur Background</span>
+            <div :class="['toggle', { on: s.blurBackground }]"><div class="thumb" /></div>
+          </div>
 
         </template>
 
@@ -59,34 +85,58 @@
         <template v-else>
 
           <div class="section-label">Individual Fish Sizes</div>
-          <Row label="Guppy" :value="sizeLabel(s.guppySize)">
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Guppy</span>
+              <span class="row-value">{{ sizeLabel(s.guppySize) }}</span>
+            </div>
             <input type="range" min="0.5" max="2" step="0.1"
               :value="s.guppySize" @input="set('guppySize', num($event))" />
-          </Row>
-          <Row label="Starfish" :value="sizeLabel(s.starfishSize)">
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Starfish</span>
+              <span class="row-value">{{ sizeLabel(s.starfishSize) }}</span>
+            </div>
             <input type="range" min="0.5" max="2" step="0.1"
               :value="s.starfishSize" @input="set('starfishSize', num($event))" />
-          </Row>
-          <Row label="Blowfish" :value="sizeLabel(s.blowfishSize)">
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Blowfish</span>
+              <span class="row-value">{{ sizeLabel(s.blowfishSize) }}</span>
+            </div>
             <input type="range" min="0.5" max="2" step="0.1"
               :value="s.blowfishSize" @input="set('blowfishSize', num($event))" />
-          </Row>
+          </div>
 
           <div class="section-label">Shake</div>
-          <Row label="Shake Power" :value="sizeLabel(s.shakePower)">
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Shake Power</span>
+              <span class="row-value">{{ sizeLabel(s.shakePower) }}</span>
+            </div>
             <input type="range" min="0.5" max="3" step="0.1"
               :value="s.shakePower" @input="set('shakePower', num($event))" />
-          </Row>
+          </div>
 
           <div class="section-label">Bubble Fine-tuning</div>
-          <Row label="Bubbles per Shake" :value="String(s.bubbleCount)">
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Bubbles per Shake</span>
+              <span class="row-value">{{ String(s.bubbleCount) }}</span>
+            </div>
             <input type="range" min="1" max="5" step="1"
               :value="s.bubbleCount" @input="set('bubbleCount', num($event))" />
-          </Row>
-          <Row label="Size Variation" :value="pct(s.bubbleSizeVariation)">
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Size Variation</span>
+              <span class="row-value">{{ pct(s.bubbleSizeVariation) }}</span>
+            </div>
             <input type="range" min="0" max="1" step="0.05"
               :value="s.bubbleSizeVariation" @input="set('bubbleSizeVariation', num($event))" />
-          </Row>
+          </div>
 
           <div class="reset-wrap">
             <button class="reset-btn" @click="resetAll">Reset All to Defaults</button>
@@ -104,53 +154,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, h, type Slots } from 'vue'
+import { ref, computed } from 'vue'
 import { useSettingsStore } from '../../store/settings'
-
-// Use h() render functions — string template literals require a full-compiler
-// build that isn't guaranteed in all Vite/Vue 3 configurations.
-const Row = {
-  props: ['label', 'value'],
-  setup(props: { label: string; value: string }, { slots }: { slots: Slots }) {
-    return () => h('div', { class: 'row' }, [
-      h('div', { class: 'row-top' }, [
-        h('span', { class: 'row-label' }, props.label),
-        h('span', { class: 'row-value' }, props.value),
-      ]),
-      slots.default?.(),
-    ])
-  },
-}
-
-const ToggleRow = {
-  props: ['label', 'value'],
-  emits: ['toggle'],
-  setup(props: { label: string; value: boolean }, { emit }: { emit: (e: string) => void }) {
-    return () => h(
-      'div',
-      { class: 'row toggle-row', onClick: () => emit('toggle') },
-      [
-        h('span', { class: 'row-label' }, props.label),
-        h('div', { class: { toggle: true, on: props.value } }, [
-          h('div', { class: 'thumb' }),
-        ]),
-      ],
-    )
-  },
-}
+import type { Settings } from '../../store/settings'
 
 const emit = defineEmits(['close'])
 const store = useSettingsStore()
-const s = computed(() => store.settings)
+// Access settings directly — it is already a reactive object via Pinia/Vue ref unwrapping.
+// The computed wrapper caused scoped-CSS failures with inline sub-components.
+const s = store.settings
 const tab = ref<'basic' | 'advanced'>('basic')
 
 function num(e: Event) { return Number((e.target as HTMLInputElement).value) }
-function set<K extends keyof typeof s.value>(key: K, value: typeof s.value[K]) {
+function set<K extends keyof Settings>(key: K, value: Settings[K]) {
   store.set(key, value)
 }
 
 const masterSize = computed(() =>
-  (s.value.guppySize + s.value.starfishSize + s.value.blowfishSize) / 3
+  (s.guppySize + s.starfishSize + s.blowfishSize) / 3
 )
 function setMasterSize(v: number) {
   store.set('guppySize', v)
@@ -175,14 +196,14 @@ function freqLabel(v: number) {
 }
 
 function resetAll() {
-  const d = {
-    volume: 1.0, bubbleFrequency: 4, bubbleSize: 1.0, bubbleCount: 2,
+  const d: Partial<Settings> = {
+    volume: 1.0, bubbleFrequency: 2, bubbleSize: 1.0, bubbleCount: 2,
     bubbleSizeVariation: 0.5, guppySize: 1.0, starfishSize: 1.0, blowfishSize: 1.0,
     shakeSensitivity: 1.0, shakePower: 1.0, shakenBubbleFrequency: 0.13,
     showHands: true, showWaterLayer: true, blurBackground: false,
   }
   for (const [k, v] of Object.entries(d)) {
-    store.set(k as keyof typeof s.value, v as never)
+    store.set(k as keyof Settings, v as never)
   }
 }
 

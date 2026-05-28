@@ -5,7 +5,7 @@ const STORAGE_KEY = 'rattler_settings'
 
 const defaults = {
   volume: 1.0,
-  bubbleFrequency: 4.0,
+  bubbleFrequency: 2.0,
   bubbleSize: 1.0,
   bubbleCount: 2,
   bubbleSizeVariation: 0.5,

@@ -2,12 +2,13 @@ import Phaser from 'phaser'
 import { FishController } from './FishController'
 import { ANIM, AUDIO } from '../constants/assets'
 
-// Inspector values translated to px (canvas 1080×1920)
-const PUMP_MIN_TIME = 0.3      // seconds between pumps
-const PUMP_MAX_TIME = 3.0
-const PUMP_POWER_MIN = 200     // px/s upward impulse
-const PUMP_POWER_MAX = 550
-const BODY_GRAVITY = 260       // px/s² downward
+// Physics tuned for 540×960 canvas — gentle floating motion
+const PUMP_MIN_TIME = 2.0      // seconds between pumps (longer = calmer)
+const PUMP_MAX_TIME = 6.0
+const PUMP_POWER_MIN = 60      // px/s upward impulse (was 200 — way too strong)
+const PUMP_POWER_MAX = 180     // max travel ~270px upward (180²/2/60)
+const BODY_GRAVITY = 60        // px/s² downward — gentle sink like floating in water
+const MAX_VERT_SPEED = 220     // cap vertical velocity to prevent flying off screen
 const ROTATION_SPEED = 60      // deg/s normal rotation
 const ROTATION_SHAKE_SPEED = 180
 
@@ -33,9 +34,8 @@ export class BlowFish extends FishController {
     this.body2d = this.body as Phaser.Physics.Arcade.Body
     this.body2d.setGravityY(BODY_GRAVITY)
     this.body2d.setCollideWorldBounds(false)
-    // Water resistance — prevents runaway horizontal velocity from tank current
     this.body2d.setDragX(90)
-    this.body2d.setDragY(20)
+    this.body2d.setDragY(40)  // increased water resistance to damp vertical overshoot
 
     this.on('pointerdown', () => {
       if (this.reacting) return
@@ -53,6 +53,10 @@ export class BlowFish extends FishController {
 
   fishUpdate(delta: number) {
     const dt = delta / 1000
+
+    // Hard cap on vertical speed prevents flying off screen if pump compounds
+    if (this.body2d.velocity.y < -MAX_VERT_SPEED) this.body2d.velocity.y = -MAX_VERT_SPEED
+    if (this.body2d.velocity.y >  MAX_VERT_SPEED) this.body2d.velocity.y =  MAX_VERT_SPEED
 
     this.boundsCheckVertical()
     this.boundsCheckHorizontal()
@@ -107,23 +111,20 @@ export class BlowFish extends FishController {
     this.setAngle(this.angle + this.rotDir * speed * dt)
   }
 
-  // Mirrors BlowFish.cs PositionCheckVertical
   private boundsCheckVertical() {
-    if (this.y < this.halfH) {
-      // Near top — stop pumping for a while
-      this.pumpTimer = PUMP_MAX_TIME
-      if (this.y <= -this.halfH) {
-        this.y = Phaser.Math.Clamp(this.y, -this.halfH, this.halfH)
-      }
-    } else if (this.y >= this.gameH - this.halfH) {
-      if (this.isShaking) {
-        // Bounce off bottom while inflated
-        this.y = Phaser.Math.Clamp(this.y, this.gameH - this.halfH, this.gameH + this.halfH)
-        this.body2d.velocity.y *= -1
-      } else {
-        // Pump immediately at bottom
-        this.pumpTimer = 0
-      }
+    const topBound = this.halfH
+    const bottomBound = this.gameH - this.halfH
+
+    if (this.y <= topBound) {
+      // Hit the ceiling — stop upward motion and wait before pumping again
+      this.y = topBound
+      if (this.body2d.velocity.y < 0) this.body2d.velocity.y = 0
+      if (this.pumpTimer < PUMP_MAX_TIME * 0.6) this.pumpTimer = PUMP_MAX_TIME * 0.6
+    } else if (this.y >= bottomBound) {
+      // Hit the floor — schedule a pump soon (not instant, avoid jerk)
+      this.y = bottomBound
+      if (this.body2d.velocity.y > 0) this.body2d.velocity.y = 0
+      if (this.pumpTimer > 0.8) this.pumpTimer = Phaser.Math.FloatBetween(0.3, 0.8)
     }
   }
 
