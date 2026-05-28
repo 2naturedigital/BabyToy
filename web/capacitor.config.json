@@ -1,0 +1,13 @@
+{
+  "appId": "com.twonaturedigital.rattler",
+  "appName": "Rattler",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}
