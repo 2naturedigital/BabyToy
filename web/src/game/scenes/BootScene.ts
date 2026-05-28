@@ -133,12 +133,12 @@ export class BootScene extends Phaser.Scene {
       repeat: -1,
     })
 
-    // BlowFish inflate — only pose-1 frames so the body colour stays consistent.
-    // Cycling through poses 1-4 at 12fps caused rapid colour flashes.
+    // BlowFish inflate sequence (b=normal, e=mid, f=full)
     mgr.create({
       key: 'blowfish_inflate',
-      frames: ['1b','1e','1f'].map(f => ({ key: `blowfish_${f}` })),
-      frameRate: 4,
+      frames: ['1b','1e','1f','2b','2c','2d','2e','2f','3b','3c','3d','3e','3f','4','4e','4f']
+        .map(f => ({ key: `blowfish_${f}` })),
+      frameRate: 12,
       repeat: 0,
     })
 
