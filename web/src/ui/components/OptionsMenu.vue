@@ -54,6 +54,30 @@
             <input type="range" min="0.5" max="2" step="0.1"
               :value="masterSize" @input="setMasterSize(num($event))" />
           </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Guppy Count</span>
+              <span class="row-value">{{ s.guppyCount }}</span>
+            </div>
+            <input type="range" min="0" max="5" step="1"
+              :value="s.guppyCount" @input="set('guppyCount', num($event))" />
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Starfish Count</span>
+              <span class="row-value">{{ s.starfishCount }}</span>
+            </div>
+            <input type="range" min="0" max="5" step="1"
+              :value="s.starfishCount" @input="set('starfishCount', num($event))" />
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Blowfish Count</span>
+              <span class="row-value">{{ s.blowfishCount }}</span>
+            </div>
+            <input type="range" min="0" max="5" step="1"
+              :value="s.blowfishCount" @input="set('blowfishCount', num($event))" />
+          </div>
 
           <div class="section-label">Controls</div>
           <div class="row">
@@ -200,6 +224,7 @@ function resetAll() {
   const d: Partial<Settings> = {
     volume: 1.0, bubbleFrequency: 2, bubbleSize: 1.0, bubbleCount: 5,
     bubbleSizeVariation: 0.5, guppySize: 1.0, starfishSize: 1.0, blowfishSize: 1.0,
+    guppyCount: 1, starfishCount: 1, blowfishCount: 1,
     shakeSensitivity: 1.0, shakePower: 1.0, shakenBubbleFrequency: 0.13,
     showHands: true, showWaterLayer: true, blurBackground: false,
   }

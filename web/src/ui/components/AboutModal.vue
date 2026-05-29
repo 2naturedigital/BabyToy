@@ -2,7 +2,11 @@
   <div class="overlay">
     <div class="panel">
 
-      <div class="fish-row">🐟 🐠 🐡</div>
+      <div class="fish-row">
+        <img :src="`${base}assets/sprites/fish/guppy_swim1.png`" class="fish-icon" alt="guppy" />
+        <img :src="`${base}assets/sprites/starfish/starfish1_v2.png`" class="fish-icon" alt="starfish" />
+        <img :src="`${base}assets/sprites/blowfish/blowfish_swim1.png`" class="fish-icon" alt="blowfish" />
+      </div>
 
       <h1>Rattler</h1>
       <p class="tagline">A safe, ad-free baby toy</p>
@@ -35,6 +39,7 @@
 
 <script setup lang="ts">
 defineEmits(['close'])
+const base = import.meta.env.BASE_URL
 </script>
 
 <style scoped>
@@ -59,7 +64,19 @@ defineEmits(['close'])
   color: #fff;
 }
 
-.fish-row { font-size: 42px; margin-bottom: 12px; }
+.fish-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.fish-icon {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+}
 
 h1 {
   font-size: 40px;

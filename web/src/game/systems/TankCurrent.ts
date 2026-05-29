@@ -3,7 +3,7 @@ import type { BlowFish } from '../fish/BlowFish'
 
 // Mirrors TankCurrent.cs — applies a slow horizontal drift to BlowFish only.
 export class TankCurrent {
-  private fish!: BlowFish
+  private fish: BlowFish[] = []
   private dirX = 1
   private strength: number
   private magnitudeMult = 1
@@ -27,7 +27,7 @@ export class TankCurrent {
   }
 
   setFish(fish: BlowFish) {
-    this.fish = fish
+    this.fish.push(fish)
   }
 
   update(delta: number) {
@@ -46,8 +46,8 @@ export class TankCurrent {
       this.movementPeriod = Phaser.Math.Between(this.minPeriod, this.maxPeriod)
     }
 
-    if (this.fish?.active) {
-      this.fish.applyForce(this.strength * this.dirX * dt)
+    for (const f of this.fish) {
+      if (f?.active) f.applyForce(this.strength * this.dirX * dt)
     }
   }
 
