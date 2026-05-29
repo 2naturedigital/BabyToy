@@ -23,9 +23,11 @@ export const AUDIO = {
 export const ANIM = {
   GUPPY_SWIM: 'guppy_swim',
   GUPPY_REACT: 'guppy_react',
+  GUPPY_RECOVER: 'guppy_recover',
   STARFISH_WOBBLE: 'starfish_wobble',
   BLOWFISH_SWIM: 'blowfish_swim',
   BLOWFISH_INFLATE: 'blowfish_inflate',
+  BLOWFISH_SHRINK: 'blowfish_shrink',
   BUBBLE_POP: 'bubble_pop',
   BUBBLE_POP_TWO: 'bubble_pop_two',
 } as const

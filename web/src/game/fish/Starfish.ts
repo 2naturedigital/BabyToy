@@ -1,16 +1,15 @@
 import Phaser from 'phaser'
 import { FishController } from './FishController'
+import { ANIM } from '../constants/assets'
 
-const WOBBLE_SPEED       = 45   // deg/s normal swim
-const WOBBLE_SHAKE_SPEED = 300  // deg/s while shaking
-const WOBBLE_MAX_DEG     = 22   // normal wobble range
-const POST_SHAKE_SECS    = 2.5  // how long to decelerate after shake ends
+const WOBBLE_SHAKE_SPEED = 300  // deg/s while shaking / post-shake
+const POST_SHAKE_SECS    = 2.5  // deceleration window after shake ends
 
 export class Starfish extends FishController {
   private wobbleAngle = 0
   private rotDir = 1
-  private reacting = false       // true while tap-spin tween runs
-  private postShakeTimer = 0     // counts down after shake; spins at decelerating speed
+  private reacting = false
+  private postShakeTimer = 0
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'starfish_4', 50, 160)
@@ -20,9 +19,13 @@ export class Starfish extends FishController {
   override init(snd: import('../systems/SoundController').SoundController, size: number) {
     super.init(snd, size)
 
+    // Play the frame animation so eyebrow/mouth expressions cycle naturally
+    this.play(ANIM.STARFISH_WOBBLE)
+
     this.on('pointerdown', () => {
       if (this.reacting) return
       this.reacting = true
+      this.stop()  // pause frame animation during spin
       const baseScale = this.scaleX
       this.scene.tweens.add({
         targets: this,
@@ -39,8 +42,10 @@ export class Starfish extends FishController {
             duration: 300,
             ease: Phaser.Math.Easing.Back.Out,
             onComplete: () => {
-              this.wobbleAngle = this.angle
+              this.setAngle(0)
+              this.wobbleAngle = 0
               this.reacting = false
+              this.play(ANIM.STARFISH_WOBBLE)  // resume expression animation
             },
           })
         },
@@ -48,51 +53,53 @@ export class Starfish extends FishController {
     })
   }
 
+  // Stop the frame animation when shaking starts so we can take over with setAngle
+  override startShake(ax: number, ay: number, forceMult: number) {
+    super.startShake(ax, ay, forceMult)
+    this.stop()
+  }
+
   override endShake() {
     super.endShake()
-    // Normalise accumulated angle to [-180, 180] so the decel loop terminates
     let a = ((this.wobbleAngle % 360) + 360) % 360
     if (a > 180) a -= 360
     this.wobbleAngle = a
-    // Keep spinning in the same direction — deceleration handles the slow-down
     this.postShakeTimer = POST_SHAKE_SECS
-    this.isResetTime = false  // handled by postShakeTimer now
+    this.isResetTime = false
   }
 
   fishUpdate(delta: number) {
     this.moveFish(delta)
-    this.updateWobble(delta)
+    this.updateSpin(delta)
   }
 
-  private updateWobble(delta: number) {
+  private updateSpin(delta: number) {
     if (this.reacting) return
 
     const dt = delta / 1000
 
     if (this.isShaking) {
       this.wobbleAngle += this.rotDir * WOBBLE_SHAKE_SPEED * dt
+      this.setAngle(this.wobbleAngle)
     } else if (this.postShakeTimer > 0) {
       this.postShakeTimer -= dt
-      // Linearly decelerate from WOBBLE_SHAKE_SPEED down to WOBBLE_SPEED
-      const t = Math.max(0, this.postShakeTimer / POST_SHAKE_SECS)  // 1→0
-      const speed = WOBBLE_SPEED + (WOBBLE_SHAKE_SPEED - WOBBLE_SPEED) * t
+      // Decelerate from WOBBLE_SHAKE_SPEED down to 0 over POST_SHAKE_SECS
+      const t = Math.max(0, this.postShakeTimer / POST_SHAKE_SECS)
+      const speed = WOBBLE_SHAKE_SPEED * t
       this.wobbleAngle += this.rotDir * speed * dt
-      // Keep angle from accumulating beyond one full rotation
       if (Math.abs(this.wobbleAngle) > 360) {
         this.wobbleAngle = ((this.wobbleAngle % 360) + 360) % 360
         if (this.wobbleAngle > 180) this.wobbleAngle -= 360
       }
-      // Snap cleanly into normal wobble once the timer expires
+      this.setAngle(this.wobbleAngle)
       if (this.postShakeTimer <= 0) {
-        this.wobbleAngle = Phaser.Math.Clamp(this.wobbleAngle, -WOBBLE_MAX_DEG, WOBBLE_MAX_DEG)
+        // Spin fully wound down — snap upright and let the frame animation take over
+        this.setAngle(0)
+        this.wobbleAngle = 0
         this.rotDir = 1
+        this.play(ANIM.STARFISH_WOBBLE)
       }
-    } else {
-      // Normal gentle wobble
-      this.wobbleAngle += this.rotDir * WOBBLE_SPEED * dt
-      if (Math.abs(this.wobbleAngle) >= WOBBLE_MAX_DEG) this.rotDir *= -1
     }
-
-    this.setAngle(this.wobbleAngle)
+    // Normal state: STARFISH_WOBBLE animation is running, no manual setAngle needed
   }
 }
