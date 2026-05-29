@@ -8,6 +8,8 @@ export class MenuScene extends Phaser.Scene {
   }
 
   create() {
+    const s = useSettingsStore().settings
+    this.scale.setGameSize(s.landscapeMode ? 960 : 540, s.landscapeMode ? 540 : 960)
     const { width: W, height: H } = this.scale
 
     // Background — cover-fit (no stretch)

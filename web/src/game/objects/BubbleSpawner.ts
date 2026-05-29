@@ -6,8 +6,8 @@ import { useSettingsStore } from '../../store/settings'
 
 const BUBBLE_GRAVITY_MIN = 80    // px/s float speed (slow drift)
 const BUBBLE_GRAVITY_MAX = 350   // px/s (was 700 — too fast to see)
-// Sprite 394px: at scale 0.13 and variation ×1.5 → largest bubble ≈74px ("comically big")
-const BUBBLE_BASE_SCALE = 0.13
+// Sprite 394px: at max settings (bubbleSize=2, variation=1) → largest ≈ 0.175*4*394 ≈ 276px (~half screen)
+const BUBBLE_BASE_SCALE = 0.175
 
 export class BubbleSpawner {
   private scene: Phaser.Scene

@@ -11,6 +11,11 @@ import { Starfish } from '../fish/Starfish'
 import { BlowFish } from '../fish/BlowFish'
 import { useSettingsStore } from '../../store/settings'
 
+// Index 0 = original colour; indices 1-4 are tinted variants for extra fish
+const GUPPY_TINTS    = [0xffffff, 0xff8888, 0x88ffff, 0xffff88, 0xff88ff]
+const STARFISH_TINTS = [0xffffff, 0xffaa44, 0x44ddff, 0x88ff44, 0xff44cc]
+const BLOWFISH_TINTS = [0xffffff, 0x88ffcc, 0xffcc88, 0xccaaff, 0xffee44]
+
 export class FishTankScene extends Phaser.Scene {
   private snd!: SoundController
   private shakeCtrl!: ShakeController
@@ -18,26 +23,28 @@ export class FishTankScene extends Phaser.Scene {
   private bubbleSpawner!: BubbleSpawner
   private waterCurrents!: WaterCurrent[]
   private tankCurrent!: TankCurrent
-  private guppy!: Guppy
-  private starfish!: Starfish
-  private blowfish!: BlowFish
+
+  private guppies:    Guppy[]    = []
+  private starfishes: Starfish[] = []
+  private blowfishes: BlowFish[] = []
 
   private holdGraphics?: Phaser.GameObjects.Graphics
   private holdTween?: Phaser.Tweens.Tween
   private holdTimer?: Phaser.Time.TimerEvent
   private spaceKey?: Phaser.Input.Keyboard.Key
 
-  // Arrow function so removeEventListener works correctly
   private readonly onSettingsApplied = () => this.scene.restart()
-  private readonly onOpenOptions = () => window.dispatchEvent(new Event('rattler:open-options'))
 
   constructor() {
     super({ key: 'FishTankScene' })
   }
 
   create() {
-    const { width: W, height: H } = this.scale
     const s = useSettingsStore().settings
+
+    // ── Canvas orientation ────────────────────────────────────────────────────
+    this.scale.setGameSize(s.landscapeMode ? 960 : 540, s.landscapeMode ? 540 : 960)
+    const { width: W, height: H } = this.scale
 
     // ── Background ──────────────────────────────────────────────────────────
     const bgKey = s.blurBackground ? SPRITES.BG_BLUR : SPRITES.BG
@@ -55,24 +62,52 @@ export class FishTankScene extends Phaser.Scene {
     this.shakeCtrl = new ShakeController()
     this.accel = new Accelerometer((ax, ay) => this.shakeCtrl.shake(ax, ay))
 
-    // ── Fish — blowfish=3 (back), guppy=4, starfish=5 (front) ───────────────
-    this.guppy = new Guppy(this, W * 0.3, H * 0.5)
-    this.guppy.init(this.snd, s.guppySize)
-    this.guppy.setDepth(4)
+    // ── Fish ─────────────────────────────────────────────────────────────────
+    // Spread fish across the tank, avoiding overlap by dividing the space evenly
+    this.guppies    = []
+    this.starfishes = []
+    this.blowfishes = []
 
-    this.starfish = new Starfish(this, W * 0.7, H * 0.4)
-    this.starfish.init(this.snd, s.starfishSize)
-    this.starfish.setDepth(5)
+    for (let i = 0; i < s.guppyCount; i++) {
+      const fish = new Guppy(this,
+        Phaser.Math.FloatBetween(W * 0.1, W * 0.9),
+        Phaser.Math.FloatBetween(H * 0.3, H * 0.7),
+      )
+      fish.init(this.snd, s.guppySize)
+      fish.setDepth(4)
+      fish.setTint(GUPPY_TINTS[i % GUPPY_TINTS.length])
+      this.guppies.push(fish)
+      this.shakeCtrl.register(fish)
+    }
 
-    this.blowfish = new BlowFish(this, W * 0.5, H * 0.35)
-    this.blowfish.init(this.snd, s.blowfishSize)
-    this.blowfish.setDepth(3)
+    for (let i = 0; i < s.starfishCount; i++) {
+      const fish = new Starfish(this,
+        Phaser.Math.FloatBetween(W * 0.1, W * 0.9),
+        Phaser.Math.FloatBetween(H * 0.2, H * 0.8),
+      )
+      fish.init(this.snd, s.starfishSize)
+      fish.setDepth(5)
+      fish.setTint(STARFISH_TINTS[i % STARFISH_TINTS.length])
+      this.starfishes.push(fish)
+      this.shakeCtrl.register(fish)
+    }
 
-    this.shakeCtrl.register(this.guppy)
-    this.shakeCtrl.register(this.starfish)
-    this.shakeCtrl.register(this.blowfish)
+    this.tankCurrent = new TankCurrent(20, 80, 2, 8)
 
-    // ── Bubbles (depth 2) ────────────────────────────────────────────────────
+    for (let i = 0; i < s.blowfishCount; i++) {
+      const fish = new BlowFish(this,
+        Phaser.Math.FloatBetween(W * 0.1, W * 0.9),
+        Phaser.Math.FloatBetween(H * 0.2, H * 0.5),
+      )
+      fish.init(this.snd, s.blowfishSize)
+      fish.setDepth(3)
+      fish.setTint(BLOWFISH_TINTS[i % BLOWFISH_TINTS.length])
+      this.blowfishes.push(fish)
+      this.shakeCtrl.register(fish)
+      this.tankCurrent.setFish(fish)
+    }
+
+    // ── Bubbles (depth 6 — above all fish) ───────────────────────────────────
     this.bubbleSpawner = new BubbleSpawner(this, this.snd)
     this.shakeCtrl.setBubbleSpawner(this.bubbleSpawner)
 
@@ -84,15 +119,13 @@ export class FishTankScene extends Phaser.Scene {
     for (const c of this.waterCurrents) this.shakeCtrl.registerCurrent(c)
 
     // ── Tank current (BlowFish horizontal drift) ─────────────────────────────
-    this.tankCurrent = new TankCurrent(20, 80, 2, 8)
-    this.tankCurrent.setFish(this.blowfish)
     this.shakeCtrl.setTankCurrent(this.tankCurrent)
 
     // ── Hands (depth 2 — behind fish) ────────────────────────────────────────
     if (s.showHands) {
       const rh = this.add.image(0, 0, SPRITES.HANDS_RIGHT).setDepth(2).setOrigin(1, 1)
       const lh = this.add.image(0, 0, SPRITES.HANDS_LEFT).setDepth(2).setOrigin(0, 1)
-      const handScale = (W * 0.42) / rh.width  // was 0.55 — trimmed down
+      const handScale = (W * 0.42) / rh.width
       rh.setScale(handScale).setPosition(W, H)
       lh.setScale(handScale).setPosition(0, H)
     }
@@ -114,13 +147,11 @@ export class FishTankScene extends Phaser.Scene {
     // ── Global event listeners ───────────────────────────────────────────────
     window.addEventListener('rattler:settings-applied', this.onSettingsApplied)
 
-    // Clean up listeners when scene shuts down
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       window.removeEventListener('rattler:settings-applied', this.onSettingsApplied)
       this.accel.stop()
     })
 
-    // Fade in + start motion sensor
     this.cameras.main.fadeIn(350, 0, 0, 0)
     this.accel.start()
   }
@@ -130,9 +161,9 @@ export class FishTankScene extends Phaser.Scene {
       this.accel.simulateShake()
     }
 
-    this.guppy.fishUpdate(delta)
-    this.starfish.fishUpdate(delta)
-    this.blowfish.fishUpdate(delta)
+    for (const g of this.guppies)    g.fishUpdate(delta)
+    for (const s of this.starfishes) s.fishUpdate(delta)
+    for (const b of this.blowfishes) b.fishUpdate(delta)
     this.bubbleSpawner.update(delta)
 
     const bubbles = this.bubbleSpawner.bubbles
@@ -197,24 +228,18 @@ export class FishTankScene extends Phaser.Scene {
       return img
     }
 
-    // Shake button — trigger an artificial shake event
+    // Shake button
     const shakeBtn = makeBtn(36, '〜')
     shakeBtn.on('pointerup', () => this.accel.simulateShake())
     shakeBtn.on('pointerover', () => shakeBtn.setAlpha(0.8))
     shakeBtn.on('pointerout',  () => shakeBtn.setAlpha(0.5))
 
-    // Rotate button — request landscape/portrait lock via Screen Orientation API
+    // Rotate button — toggles landscape/portrait and restarts scene
     const rotBtn = makeBtn(96, '↺')
     rotBtn.on('pointerup', () => {
-      if (!screen.orientation || typeof (screen.orientation as any).lock !== 'function') return
-      const isPortrait = screen.orientation.type.startsWith('portrait')
-      try {
-        if (isPortrait) {
-          void (screen.orientation as any).lock('landscape-primary')
-        } else {
-          screen.orientation.unlock()
-        }
-      } catch { /* not available on desktop */ }
+      const store = useSettingsStore()
+      store.set('landscapeMode', !store.settings.landscapeMode)
+      window.dispatchEvent(new Event('rattler:settings-applied'))
     })
     rotBtn.on('pointerover', () => rotBtn.setAlpha(0.8))
     rotBtn.on('pointerout',  () => rotBtn.setAlpha(0.5))
