@@ -23,6 +23,7 @@ export class BlowFish extends FishController {
   private isInflated = false
   private reacting = false
   private deflateTimer = 0   // counts down before deflating after shake ends
+  private deflating = false  // true while the shrink animation plays
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'blowfish_swim_1', 0, 0)
@@ -51,11 +52,14 @@ export class BlowFish extends FishController {
       this.reacting = true
       this.play(ANIM.BLOWFISH_INFLATE)
       this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-        // Hold fully-puffed state before deflating back to swim
+        // Hold fully-puffed then animate back down through the shrink frames
         this.scene.time.delayedCall(TAP_PUFFED_HOLD_MS, () => {
           if (!this.active) return
-          this.reacting = false
-          if (!this.isInflated) this.play(ANIM.BLOWFISH_SWIM)
+          if (!this.isInflated && !this.deflating) {
+            this.shrinkBack(() => { this.reacting = false })
+          } else {
+            this.reacting = false  // shake has taken over inflation state
+          }
         })
       })
     })
@@ -97,20 +101,33 @@ export class BlowFish extends FishController {
     // Inflate on shake start
     if (this.isShaking && !this.isInflated) {
       this.isInflated = true
+      this.deflating = false  // cancel any in-progress shrink
       this.deflateTimer = SHAKE_DEFLATE_DELAY
       this.snd.play(AUDIO.BF_INFLATE)
       this.play(ANIM.BLOWFISH_INFLATE)
     }
 
-    // Deflate with delay after shake ends
-    if (!this.isShaking && this.isInflated) {
+    // After shake ends, count down then animate back through the shrink frames
+    if (!this.isShaking && this.isInflated && !this.deflating) {
       this.deflateTimer -= dt
       if (this.deflateTimer <= 0) {
         this.isInflated = false
         this.snd.play(AUDIO.BF_DEFLATE)
-        this.play(ANIM.BLOWFISH_SWIM)
+        this.shrinkBack(null)
       }
     }
+  }
+
+  // Play the deflate animation then return to swim. Optional callback fires after.
+  private shrinkBack(onDone: (() => void) | null) {
+    this.deflating = true
+    this.play(ANIM.BLOWFISH_SHRINK)
+    this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+      this.deflating = false
+      if (!this.active || this.isInflated) return
+      this.play(ANIM.BLOWFISH_SWIM)
+      onDone?.()
+    })
   }
 
   private pump() {

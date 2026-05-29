@@ -107,14 +107,12 @@ h1 {
   font-size: 16px;
   color: #cce6ff;
   padding: 6px 0;
-  font-family: Arial, sans-serif;
 }
 
 .credit {
   font-size: 15px;
   color: #4a7a9b;
   margin: 4px 0;
-  font-family: Arial, sans-serif;
 }
 
 .credit.small { font-size: 13px; }

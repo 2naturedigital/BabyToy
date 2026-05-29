@@ -111,11 +111,19 @@ export class BootScene extends Phaser.Scene {
       repeat: -1,
     })
 
-    // Guppy react (oshit), then play back-to-normal manually on complete
+    // Guppy react (oshit 1→5 = shocked expression building up)
     mgr.create({
       key: 'guppy_react',
       frames: [1,2,3,4,5].map(i => ({ key: `guppy_oshit_${i}` })),
       frameRate: 10,
+      repeat: 0,
+    })
+
+    // Guppy recover (5→1 = expression relaxing back to normal)
+    mgr.create({
+      key: 'guppy_recover',
+      frames: [5,4,3,2,1].map(i => ({ key: `guppy_oshit_${i}` })),
+      frameRate: 8,
       repeat: 0,
     })
 
@@ -135,12 +143,18 @@ export class BootScene extends Phaser.Scene {
       repeat: -1,
     })
 
-    // BlowFish inflate — 'f' frames are the pink pose that matches the swim colour.
-    // The 'b' frames are green and 'e' frames are white flashes; skipping them
-    // keeps the fish consistently pink while inflating.
+    // BlowFish inflate (1f→4f = growing larger)
     mgr.create({
       key: 'blowfish_inflate',
       frames: ['1f','2f','3f','4f'].map(f => ({ key: `blowfish_${f}` })),
+      frameRate: 6,
+      repeat: 0,
+    })
+
+    // BlowFish shrink (4f→1f = deflating back to normal size)
+    mgr.create({
+      key: 'blowfish_shrink',
+      frames: ['4f','3f','2f','1f'].map(f => ({ key: `blowfish_${f}` })),
       frameRate: 6,
       repeat: 0,
     })

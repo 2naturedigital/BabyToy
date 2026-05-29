@@ -22,11 +22,10 @@ export class Guppy extends FishController {
       this.reacting = true
       this.play(ANIM.GUPPY_REACT)
       this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-        // Hold the shocked expression before returning to swim
+        // Hold the shocked expression then animate back to normal
         this.scene.time.delayedCall(TAP_HOLD_MS, () => {
           if (!this.active) return
-          this.reacting = false
-          if (!this.isShaking) this.play(ANIM.GUPPY_SWIM)
+          this.recover()
         })
       })
     })
@@ -34,20 +33,28 @@ export class Guppy extends FishController {
     this.play(ANIM.GUPPY_SWIM)
   }
 
-  // Guppy gets scared when the device is shaken too
   override startShake(ax: number, ay: number, forceMult: number) {
     super.startShake(ax, ay, forceMult)
     if (!this.reacting) {
       this.reacting = true
       this.play(ANIM.GUPPY_REACT)
-      // Hold on last frame until endShake fires
     }
   }
 
   override endShake() {
     super.endShake()
-    // Keep the shocked face for a beat after the shake stops
     this.scene.time.delayedCall(SHAKE_HOLD_MS, () => {
+      if (!this.active) return
+      if (!this.isShaking) this.recover()
+      else this.reacting = false
+    })
+  }
+
+  // Play the expression-easing animation then return to swim
+  private recover() {
+    if (this.isShaking) { this.reacting = false; return }
+    this.play(ANIM.GUPPY_RECOVER)
+    this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
       if (!this.active) return
       this.reacting = false
       if (!this.isShaking) this.play(ANIM.GUPPY_SWIM)
