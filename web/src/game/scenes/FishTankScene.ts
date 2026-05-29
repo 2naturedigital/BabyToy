@@ -11,10 +11,10 @@ import { Starfish } from '../fish/Starfish'
 import { BlowFish } from '../fish/BlowFish'
 import { useSettingsStore } from '../../store/settings'
 
-// Index 0 = original colour; indices 1-4 are tinted variants for extra fish
-const GUPPY_TINTS    = [0xffffff, 0xff8888, 0x88ffff, 0xffff88, 0xff88ff]
-const STARFISH_TINTS = [0xffffff, 0xffaa44, 0x44ddff, 0x88ff44, 0xff44cc]
-const BLOWFISH_TINTS = [0xffffff, 0x88ffcc, 0xffcc88, 0xccaaff, 0xffee44]
+// Index 0 = original colour; 1-3 are tinted variants (max 3 fish per species)
+const GUPPY_TINTS    = [0xffffff, 0xff8888, 0x88ffff, 0xffff88]
+const STARFISH_TINTS = [0xffffff, 0xffaa44, 0x44ddff, 0x88ff44]
+const BLOWFISH_TINTS = [0xffffff, 0x88ffcc, 0xffcc88, 0xccaaff]
 
 export class FishTankScene extends Phaser.Scene {
   private snd!: SoundController
@@ -68,12 +68,18 @@ export class FishTankScene extends Phaser.Scene {
     this.starfishes = []
     this.blowfishes = []
 
+    // Each fish gets a randomised size within ±fishSizeVariation of the master
+    const randSize = () => {
+      const v = s.fishSizeVariation
+      return s.fishSize * Phaser.Math.FloatBetween(1 - v, 1 + v)
+    }
+
     for (let i = 0; i < s.guppyCount; i++) {
       const fish = new Guppy(this,
         Phaser.Math.FloatBetween(W * 0.1, W * 0.9),
         Phaser.Math.FloatBetween(H * 0.3, H * 0.7),
       )
-      fish.init(this.snd, s.guppySize)
+      fish.init(this.snd, randSize())
       fish.setDepth(4)
       fish.setTint(GUPPY_TINTS[i % GUPPY_TINTS.length])
       this.guppies.push(fish)
@@ -85,7 +91,7 @@ export class FishTankScene extends Phaser.Scene {
         Phaser.Math.FloatBetween(W * 0.1, W * 0.9),
         Phaser.Math.FloatBetween(H * 0.2, H * 0.8),
       )
-      fish.init(this.snd, s.starfishSize)
+      fish.init(this.snd, randSize())
       fish.setDepth(5)
       fish.setTint(STARFISH_TINTS[i % STARFISH_TINTS.length])
       this.starfishes.push(fish)
@@ -99,7 +105,7 @@ export class FishTankScene extends Phaser.Scene {
         Phaser.Math.FloatBetween(W * 0.1, W * 0.9),
         Phaser.Math.FloatBetween(H * 0.2, H * 0.5),
       )
-      fish.init(this.snd, s.blowfishSize)
+      fish.init(this.snd, randSize())
       fish.setDepth(3)
       fish.setTint(BLOWFISH_TINTS[i % BLOWFISH_TINTS.length])
       this.blowfishes.push(fish)
@@ -223,7 +229,7 @@ export class FishTankScene extends Phaser.Scene {
       this.add.text(x, 36, label, {
         fontSize: '22px',
         color: '#ffffff',
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: "'Comic Andy', 'Arial Rounded MT Bold', Arial, sans-serif",
       }).setOrigin(0.5).setDepth(11)
       return img
     }

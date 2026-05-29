@@ -60,7 +60,7 @@ const base = import.meta.env.BASE_URL
   width: min(92%, 400px);
   padding: 32px 28px;
   text-align: center;
-  font-family: Arial Rounded MT Bold, Arial, sans-serif;
+  font-family: 'Comic Andy', 'Arial Rounded MT Bold', Arial, sans-serif;
   color: #fff;
 }
 

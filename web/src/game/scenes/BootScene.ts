@@ -25,7 +25,7 @@ export class BootScene extends Phaser.Scene {
     this.add.text(cx, cy - 80, 'Rattler', {
       fontSize: '80px',
       color: '#4fc3f7',
-      fontFamily: 'Arial Rounded MT Bold, Arial, sans-serif',
+      fontFamily: "'Comic Andy', 'Arial Rounded MT Bold', Arial, sans-serif",
     }).setOrigin(0.5)
 
     const barBorder = this.add.graphics()

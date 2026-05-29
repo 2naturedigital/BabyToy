@@ -49,17 +49,17 @@
           <div class="row">
             <div class="row-top">
               <span class="row-label">All Fish Size</span>
-              <span class="row-value">{{ sizeLabel(masterSize) }}</span>
+              <span class="row-value">{{ sizeLabel(s.fishSize) }}</span>
             </div>
             <input type="range" min="0.5" max="2" step="0.1"
-              :value="masterSize" @input="setMasterSize(num($event))" />
+              :value="s.fishSize" @input="set('fishSize', num($event))" />
           </div>
           <div class="row">
             <div class="row-top">
               <span class="row-label">Guppy Count</span>
               <span class="row-value">{{ s.guppyCount }}</span>
             </div>
-            <input type="range" min="0" max="5" step="1"
+            <input type="range" min="0" max="3" step="1"
               :value="s.guppyCount" @input="set('guppyCount', num($event))" />
           </div>
           <div class="row">
@@ -67,7 +67,7 @@
               <span class="row-label">Starfish Count</span>
               <span class="row-value">{{ s.starfishCount }}</span>
             </div>
-            <input type="range" min="0" max="5" step="1"
+            <input type="range" min="0" max="3" step="1"
               :value="s.starfishCount" @input="set('starfishCount', num($event))" />
           </div>
           <div class="row">
@@ -75,7 +75,7 @@
               <span class="row-label">Blowfish Count</span>
               <span class="row-value">{{ s.blowfishCount }}</span>
             </div>
-            <input type="range" min="0" max="5" step="1"
+            <input type="range" min="0" max="3" step="1"
               :value="s.blowfishCount" @input="set('blowfishCount', num($event))" />
           </div>
 
@@ -108,30 +108,14 @@
         <!-- ── ADVANCED TAB ── -->
         <template v-else>
 
-          <div class="section-label">Individual Fish Sizes</div>
+          <div class="section-label">Fish Fine-tuning</div>
           <div class="row">
             <div class="row-top">
-              <span class="row-label">Guppy</span>
-              <span class="row-value">{{ sizeLabel(s.guppySize) }}</span>
+              <span class="row-label">Size Variation</span>
+              <span class="row-value">{{ pct(s.fishSizeVariation) }}</span>
             </div>
-            <input type="range" min="0.5" max="2" step="0.1"
-              :value="s.guppySize" @input="set('guppySize', num($event))" />
-          </div>
-          <div class="row">
-            <div class="row-top">
-              <span class="row-label">Starfish</span>
-              <span class="row-value">{{ sizeLabel(s.starfishSize) }}</span>
-            </div>
-            <input type="range" min="0.5" max="2" step="0.1"
-              :value="s.starfishSize" @input="set('starfishSize', num($event))" />
-          </div>
-          <div class="row">
-            <div class="row-top">
-              <span class="row-label">Blowfish</span>
-              <span class="row-value">{{ sizeLabel(s.blowfishSize) }}</span>
-            </div>
-            <input type="range" min="0.5" max="2" step="0.1"
-              :value="s.blowfishSize" @input="set('blowfishSize', num($event))" />
+            <input type="range" min="0" max="0.5" step="0.05"
+              :value="s.fishSizeVariation" @input="set('fishSizeVariation', num($event))" />
           </div>
 
           <div class="section-label">Shake</div>
@@ -178,7 +162,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSettingsStore } from '../../store/settings'
 import type { Settings } from '../../store/settings'
@@ -193,15 +177,6 @@ const tab = ref<'basic' | 'advanced'>('basic')
 function num(e: Event) { return Number((e.target as HTMLInputElement).value) }
 function set<K extends keyof Settings>(key: K, value: Settings[K]) {
   store.set(key, value)
-}
-
-const masterSize = computed(() =>
-  (s.value.guppySize + s.value.starfishSize + s.value.blowfishSize) / 3
-)
-function setMasterSize(v: number) {
-  store.set('guppySize', v)
-  store.set('starfishSize', v)
-  store.set('blowfishSize', v)
 }
 
 function pct(v: number) { return `${Math.round(v * 100)}%` }
@@ -223,7 +198,7 @@ function freqLabel(v: number) {
 function resetAll() {
   const d: Partial<Settings> = {
     volume: 1.0, bubbleFrequency: 2, bubbleSize: 1.0, bubbleCount: 5,
-    bubbleSizeVariation: 0.5, guppySize: 1.0, starfishSize: 1.0, blowfishSize: 1.0,
+    bubbleSizeVariation: 0.5, fishSize: 1.0, fishSizeVariation: 0.2,
     guppyCount: 1, starfishCount: 1, blowfishCount: 1,
     shakeSensitivity: 1.0, shakePower: 1.0, shakenBubbleFrequency: 0.13,
     showHands: true, showWaterLayer: true, blurBackground: false,
@@ -259,7 +234,7 @@ function close() {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  font-family: Arial Rounded MT Bold, Arial, sans-serif;
+  font-family: 'Comic Andy', 'Arial Rounded MT Bold', Arial, sans-serif;
   color: #fff;
 }
 

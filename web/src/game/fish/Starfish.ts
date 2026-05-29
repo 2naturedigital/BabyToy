@@ -1,21 +1,19 @@
 import Phaser from 'phaser'
 import { FishController } from './FishController'
 
-// Wobble constants (match original inspector values as closely as possible)
-const WOBBLE_SPEED = 45        // deg/s during normal swim
-const WOBBLE_SHAKE_SPEED = 300 // deg/s while shaking or resetting
-const WOBBLE_MAX_DEG = 22      // max rotation angle
+const WOBBLE_SPEED       = 45   // deg/s normal swim
+const WOBBLE_SHAKE_SPEED = 300  // deg/s while shaking
+const WOBBLE_MAX_DEG     = 22   // normal wobble range
+const POST_SHAKE_SECS    = 2.5  // how long to decelerate after shake ends
 
 export class Starfish extends FishController {
   private wobbleAngle = 0
   private rotDir = 1
-  // reacting is also checked in updateWobble — tween controls angle while true
-  private reacting = false
+  private reacting = false       // true while tap-spin tween runs
+  private postShakeTimer = 0     // counts down after shake; spins at decelerating speed
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'starfish_4', 50, 160)
-    // Sprite is 580px wide; this renders it at ~131px on the 540px canvas,
-    // matching the relative Unity scale of 50 (vs Blowfish 100).
     this.baseScale = 0.226
   }
 
@@ -26,8 +24,6 @@ export class Starfish extends FishController {
       if (this.reacting) return
       this.reacting = true
       const baseScale = this.scaleX
-      // Spin 360° + grow, then shrink back with a bounce.
-      // updateWobble is paused during reacting so the tween controls angle.
       this.scene.tweens.add({
         targets: this,
         angle: '+=360',
@@ -43,7 +39,6 @@ export class Starfish extends FishController {
             duration: 300,
             ease: Phaser.Math.Easing.Back.Out,
             onComplete: () => {
-              // Sync wobble state so there's no angle jump when wobble resumes
               this.wobbleAngle = this.angle
               this.reacting = false
             },
@@ -55,12 +50,13 @@ export class Starfish extends FishController {
 
   override endShake() {
     super.endShake()
-    // After a long shake wobbleAngle can be ±thousands of degrees, so the
-    // "spin back toward 0" condition (|angle| ≤ WOBBLE_MAX_DEG) would never
-    // trigger.  Snap to 0 immediately so normal wobble resumes right away.
-    this.wobbleAngle = 0
-    this.setAngle(0)
-    this.isResetTime = false
+    // Normalise accumulated angle to [-180, 180] so the decel loop terminates
+    let a = ((this.wobbleAngle % 360) + 360) % 360
+    if (a > 180) a -= 360
+    this.wobbleAngle = a
+    // Keep spinning in the same direction — deceleration handles the slow-down
+    this.postShakeTimer = POST_SHAKE_SECS
+    this.isResetTime = false  // handled by postShakeTimer now
   }
 
   fishUpdate(delta: number) {
@@ -68,26 +64,33 @@ export class Starfish extends FishController {
     this.updateWobble(delta)
   }
 
-  // Mirrors Starfish.cs AnimateFish() — three states: normal / shaking / resetting
   private updateWobble(delta: number) {
-    // Pause wobble while the tap-spin tween is running; it owns the angle
     if (this.reacting) return
 
     const dt = delta / 1000
 
-    if (!this.isShaking && !this.isResetTime) {
+    if (this.isShaking) {
+      this.wobbleAngle += this.rotDir * WOBBLE_SHAKE_SPEED * dt
+    } else if (this.postShakeTimer > 0) {
+      this.postShakeTimer -= dt
+      // Linearly decelerate from WOBBLE_SHAKE_SPEED down to WOBBLE_SPEED
+      const t = Math.max(0, this.postShakeTimer / POST_SHAKE_SECS)  // 1→0
+      const speed = WOBBLE_SPEED + (WOBBLE_SHAKE_SPEED - WOBBLE_SPEED) * t
+      this.wobbleAngle += this.rotDir * speed * dt
+      // Keep angle from accumulating beyond one full rotation
+      if (Math.abs(this.wobbleAngle) > 360) {
+        this.wobbleAngle = ((this.wobbleAngle % 360) + 360) % 360
+        if (this.wobbleAngle > 180) this.wobbleAngle -= 360
+      }
+      // Snap cleanly into normal wobble once the timer expires
+      if (this.postShakeTimer <= 0) {
+        this.wobbleAngle = Phaser.Math.Clamp(this.wobbleAngle, -WOBBLE_MAX_DEG, WOBBLE_MAX_DEG)
+        this.rotDir = 1
+      }
+    } else {
+      // Normal gentle wobble
       this.wobbleAngle += this.rotDir * WOBBLE_SPEED * dt
-      if (Math.abs(this.wobbleAngle) >= WOBBLE_MAX_DEG) {
-        this.rotDir *= -1
-      }
-    } else if (this.isShaking) {
-      this.wobbleAngle += this.rotDir * WOBBLE_SHAKE_SPEED * dt
-    } else if (this.isResetTime) {
-      // Spin back toward 0 at shake speed, then stop
-      this.wobbleAngle += this.rotDir * WOBBLE_SHAKE_SPEED * dt
-      if (Math.abs(this.wobbleAngle) <= WOBBLE_MAX_DEG) {
-        this.isResetTime = false
-      }
+      if (Math.abs(this.wobbleAngle) >= WOBBLE_MAX_DEG) this.rotDir *= -1
     }
 
     this.setAngle(this.wobbleAngle)
