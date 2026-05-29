@@ -20,7 +20,7 @@ export class MenuScene extends Phaser.Scene {
     this.add.text(W / 2, H * 0.26, 'Rattler', {
       fontSize: '96px',
       color: '#ffffff',
-      fontFamily: 'Arial Rounded MT Bold, Arial, sans-serif',
+      fontFamily: "'Comic Andy', 'Arial Rounded MT Bold', Arial, sans-serif",
       stroke: '#0066bb',
       strokeThickness: 8,
       shadow: { offsetX: 3, offsetY: 5, color: '#003366', blur: 6, fill: true },
@@ -32,7 +32,7 @@ export class MenuScene extends Phaser.Scene {
       color: '#ffffff',
       backgroundColor: '#0099ee',
       padding: { x: 40, y: 20 },
-      fontFamily: 'Arial Rounded MT Bold, Arial, sans-serif',
+      fontFamily: "'Comic Andy', 'Arial Rounded MT Bold', Arial, sans-serif",
     }).setOrigin(0.5).setInteractive({ useHandCursor: true })
 
     playBtn.on('pointerdown', () => playBtn.setStyle({ backgroundColor: '#007acc' }))
@@ -50,7 +50,7 @@ export class MenuScene extends Phaser.Scene {
       color: '#cce6ff',
       backgroundColor: '#1a5580',
       padding: { x: 36, y: 16 },
-      fontFamily: 'Arial Rounded MT Bold, Arial, sans-serif',
+      fontFamily: "'Comic Andy', 'Arial Rounded MT Bold', Arial, sans-serif",
     }).setOrigin(0.5).setInteractive({ useHandCursor: true })
 
     settingsBtn.on('pointerdown', () => settingsBtn.setStyle({ backgroundColor: '#236b9e' }))

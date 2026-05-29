@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Comic Andy';
+  src: url('./assets/fonts/comic_andy.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
 * {
   margin: 0;
   padding: 0;
