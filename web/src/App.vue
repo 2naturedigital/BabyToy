@@ -1,7 +1,9 @@
 <template>
-  <!-- .game-blocked targets the canvas directly so pointer-events:none cascades -->
+  <!-- canvasBlocked is decoupled from show state so we can keep it true
+       for a brief period after a modal closes, preventing the closing
+       touch/click from propagating through to Phaser. -->
   <div id="game-container" ref="gameContainer"
-       :class="{ 'game-blocked': showOptions || showAbout }"></div>
+       :class="{ 'game-blocked': canvasBlocked }"></div>
   <div id="ui-layer">
     <AboutModal
       v-if="showAbout"
@@ -9,7 +11,7 @@
     />
     <OptionsMenu
       v-else-if="showOptions"
-      @close="showOptions = false"
+      @close="closeOptions"
     />
   </div>
 </template>
@@ -24,15 +26,28 @@ import { useSettingsStore } from './store/settings'
 const gameContainer = ref<HTMLElement | null>(null)
 const showOptions = ref(false)
 const showAbout = ref(false)
+const canvasBlocked = ref(false)  // controls pointer-events independently
 
 const store = useSettingsStore()
 
-const openOptions = () => { showOptions.value = true }
-const openAbout  = () => { showAbout.value = true }
+const openOptions = () => { showOptions.value = true;  canvasBlocked.value = true }
+const openAbout   = () => { showAbout.value  = true;   canvasBlocked.value = true }
+
+// Keep canvas blocked for 200 ms after the modal disappears so the closing
+// touch/pointer-up cannot fall through to Phaser buttons behind the overlay.
+function unblockCanvas() {
+  setTimeout(() => { canvasBlocked.value = false }, 200)
+}
 
 function closeAbout() {
   store.set('firstRun', false)
   showAbout.value = false
+  unblockCanvas()
+}
+
+function closeOptions() {
+  showOptions.value = false
+  unblockCanvas()
 }
 
 onMounted(() => {
@@ -48,7 +63,6 @@ onUnmounted(() => {
 </script>
 
 <style>
-/* pointer-events:none on the div doesn't cascade to canvas — target it directly */
 #game-container.game-blocked canvas {
   pointer-events: none;
 }

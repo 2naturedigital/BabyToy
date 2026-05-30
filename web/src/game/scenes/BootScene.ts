@@ -127,12 +127,26 @@ export class BootScene extends Phaser.Scene {
       repeat: 0,
     })
 
-    // Starfish wobble — cycles through rotation frames
+    // Starfish idle blink (frames 5-7: upright position with eyes opening and closing)
     mgr.create({
-      key: 'starfish_wobble',
-      frames: [1,2,3,4,5,6,7,6,5,4,3,2].map(i => ({ key: `starfish_${i}` })),
-      frameRate: 12,
+      key: 'starfish_blink',
+      frames: [5,6,7,6,5].map(i => ({ key: `starfish_${i}` })),
+      frameRate: 6,
       repeat: -1,
+    })
+    // Starfish bigeye — eyes grow wide as body rises to upright startled pose (Unity starfish_bigeye.anim)
+    mgr.create({
+      key: 'starfish_bigeye',
+      frames: [1,2,3,4,5].map(i => ({ key: `starfish_${i}` })),
+      frameRate: 10,
+      repeat: 0,
+    })
+    // Starfish recover — eyes return to normal as body tilts back to resting (Unity starfish_back_to_normal.anim)
+    mgr.create({
+      key: 'starfish_recover',
+      frames: [5,4,3,2,1].map(i => ({ key: `starfish_${i}` })),
+      frameRate: 8,
+      repeat: 0,
     })
 
     // BlowFish swim loop

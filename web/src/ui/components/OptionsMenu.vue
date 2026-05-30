@@ -131,10 +131,10 @@
           <div class="section-label">Bubble Fine-tuning</div>
           <div class="row">
             <div class="row-top">
-              <span class="row-label">Bubbles per Shake</span>
-              <span class="row-value">{{ String(s.bubbleCount) }}</span>
+              <span class="row-label">Shake Bubble Intensity</span>
+              <span class="row-value">{{ shakeIntensityLabel(s.bubbleCount) }}</span>
             </div>
-            <input type="range" min="1" max="5" step="1"
+            <input type="range" min="1" max="10" step="1"
               :value="s.bubbleCount" @input="set('bubbleCount', num($event))" />
           </div>
           <div class="row">
@@ -193,6 +193,13 @@ function freqLabel(v: number) {
   if (v <= 4) return 'Normal'
   if (v <= 6) return 'Few'
   return 'Rare'
+}
+
+function shakeIntensityLabel(v: number) {
+  if (v <= 2) return 'Light'
+  if (v <= 5) return 'Normal'
+  if (v <= 8) return 'Heavy'
+  return 'Tsunami'
 }
 
 function resetAll() {

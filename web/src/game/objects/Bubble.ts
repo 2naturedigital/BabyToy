@@ -29,7 +29,11 @@ export class Bubble extends Phaser.Physics.Arcade.Sprite {
     this.physBody.setVelocityY(-floatSpeed)
 
     this.setScale(scale)
-    this.setDepth(6)  // above all fish (3-5) and water layer (1)
+    // 50% of bubbles float in front of all fish (depth 7);
+    // the other 50% are split between behind all fish (depth 2) or mid-tank (depth 4).
+    // Fish depths: BlowFish=3, Guppy=4, Starfish=5. Hands=2.
+    const depthPool = [2, 4, 7, 7]
+    this.setDepth(Phaser.Utils.Array.GetRandom(depthPool) as number)
     this.setInteractive()
 
     // Randomize creation sound pitch/volume, alternating between two sounds
