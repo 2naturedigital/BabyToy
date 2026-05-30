@@ -4,6 +4,8 @@ import { ANIM } from '../constants/assets'
 
 const WOBBLE_SHAKE_SPEED = 300  // deg/s while shaking / post-shake
 const POST_SHAKE_SECS    = 2.5  // deceleration window after shake ends
+const IDLE_SWAY_DEG      = 14   // gentle body rock on top of blink animation
+const IDLE_SWAY_SPEED    = 38   // deg/s
 
 export class Starfish extends FishController {
   private wobbleAngle = 0
@@ -12,26 +14,26 @@ export class Starfish extends FishController {
   private postShakeTimer = 0
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, 'starfish_4', 50, 160)
+    super(scene, x, y, 'starfish_5', 50, 160)  // start on the upright big-eye frame
     this.baseScale = 0.226
   }
 
   override init(snd: import('../systems/SoundController').SoundController, size: number) {
     super.init(snd, size)
 
-    // Play the frame animation so eyebrow/mouth expressions cycle naturally
-    this.play(ANIM.STARFISH_WOBBLE)
+    this.play(ANIM.STARFISH_BLINK)
 
     this.on('pointerdown', () => {
       if (this.reacting) return
       this.reacting = true
-      this.stop()  // pause frame animation during spin
+      this.stop()
+      this.setTexture('starfish_5')  // jump straight to wide-eyes upright frame
       const baseScale = this.scaleX
       this.scene.tweens.add({
         targets: this,
         angle: '+=360',
-        scaleX: baseScale * 1.45,
-        scaleY: baseScale * 1.45,
+        scaleX: baseScale * 1.4,
+        scaleY: baseScale * 1.4,
         duration: 500,
         ease: 'Power2',
         onComplete: () => {
@@ -44,8 +46,11 @@ export class Starfish extends FishController {
             onComplete: () => {
               this.setAngle(0)
               this.wobbleAngle = 0
-              this.reacting = false
-              this.play(ANIM.STARFISH_WOBBLE)  // resume expression animation
+              // Hold wide-eyed a beat then animate back to normal
+              this.scene.time.delayedCall(500, () => {
+                if (!this.active || this.isShaking) { this.reacting = false; return }
+                this.recoverThenBlink()
+              })
             },
           })
         },
@@ -53,10 +58,10 @@ export class Starfish extends FishController {
     })
   }
 
-  // Stop the frame animation when shaking starts so we can take over with setAngle
   override startShake(ax: number, ay: number, forceMult: number) {
     super.startShake(ax, ay, forceMult)
     this.stop()
+    this.setTexture('starfish_5')  // wide eyes during shake spin
   }
 
   override endShake() {
@@ -83,23 +88,37 @@ export class Starfish extends FishController {
       this.setAngle(this.wobbleAngle)
     } else if (this.postShakeTimer > 0) {
       this.postShakeTimer -= dt
-      // Decelerate from WOBBLE_SHAKE_SPEED down to 0 over POST_SHAKE_SECS
       const t = Math.max(0, this.postShakeTimer / POST_SHAKE_SECS)
-      const speed = WOBBLE_SHAKE_SPEED * t
-      this.wobbleAngle += this.rotDir * speed * dt
+      this.wobbleAngle += this.rotDir * WOBBLE_SHAKE_SPEED * t * dt
       if (Math.abs(this.wobbleAngle) > 360) {
         this.wobbleAngle = ((this.wobbleAngle % 360) + 360) % 360
         if (this.wobbleAngle > 180) this.wobbleAngle -= 360
       }
       this.setAngle(this.wobbleAngle)
       if (this.postShakeTimer <= 0) {
-        // Spin fully wound down — snap upright and let the frame animation take over
         this.setAngle(0)
         this.wobbleAngle = 0
         this.rotDir = 1
-        this.play(ANIM.STARFISH_WOBBLE)
+        this.recoverThenBlink()
       }
+    } else {
+      // Gentle body sway on top of the blink animation
+      this.wobbleAngle += this.rotDir * IDLE_SWAY_SPEED * dt
+      if (Math.abs(this.wobbleAngle) >= IDLE_SWAY_DEG) this.rotDir *= -1
+      this.setAngle(this.wobbleAngle)
     }
-    // Normal state: STARFISH_WOBBLE animation is running, no manual setAngle needed
+  }
+
+  // Play the recover animation (eyes returning to normal), then resume idle blink
+  private recoverThenBlink() {
+    this.reacting = true
+    this.play(ANIM.STARFISH_RECOVER)
+    this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+      if (!this.active) return
+      this.reacting = false
+      this.wobbleAngle = 0
+      this.rotDir = 1
+      if (!this.isShaking) this.play(ANIM.STARFISH_BLINK)
+    })
   }
 }

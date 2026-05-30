@@ -13,17 +13,15 @@ export class BubbleSpawner {
   private scene: Phaser.Scene
   private snd: SoundController
   private spawnTimer = 0
-  private shakeTimer = 0
   private isShaking = false
-  private shakeTimerInterval = 0.13  // shakeBubbleTimer default
+  private shakeBurstTimer = 0   // cooldown between secondary bursts during a shake
+  private shakeIntensity = 1    // magnitude of latest acceleration reading
 
-  // Active bubble list — filter destroyed ones each frame
   readonly bubbles: Bubble[] = []
 
-  // Spawn parameters from settings (set in constructor)
   private spawnMin: number
   private spawnMax: number
-  private shakeCount: number
+  private shakeIntensityMultiplier: number  // from settings bubbleCount (1–10)
   private scaleMin: number
   private scaleMax: number
   private baseScale: number
@@ -33,17 +31,15 @@ export class BubbleSpawner {
     this.snd = snd
 
     const s = useSettingsStore().settings
-    const freq = s.bubbleFrequency      // 1–8, default 4
+    const freq = s.bubbleFrequency
     this.spawnMin = Math.max(0.5, freq - 2)
     this.spawnMax = freq + 2
-    this.shakeTimerInterval = s.shakenBubbleFrequency
-    this.shakeCount = s.bubbleCount
+    this.shakeIntensityMultiplier = s.bubbleCount  // 1–10 → scales burst size
     const variation = s.bubbleSizeVariation
     this.scaleMin = 1 - variation
     this.scaleMax = 1 + variation
     this.baseScale = s.bubbleSize
 
-    // Scatter bubbles across the screen so they're visible from frame one
     this.spawnBatch(5, true)
     this.spawnTimer = Phaser.Math.FloatBetween(this.spawnMin, this.spawnMax)
   }
@@ -51,19 +47,18 @@ export class BubbleSpawner {
   update(delta: number) {
     const dt = delta / 1000
 
-    // Remove destroyed bubbles from tracking array
     for (let i = this.bubbles.length - 1; i >= 0; i--) {
       if (!this.bubbles[i].active) this.bubbles.splice(i, 1)
     }
-
-    // Update live bubbles
     for (const b of this.bubbles) b.bubbleUpdate(delta)
 
     if (this.isShaking) {
-      this.shakeTimer -= dt
-      if (this.shakeTimer <= 0) {
-        this.spawnBatch(this.shakeCount, false)
-        this.shakeTimer = this.shakeTimerInterval
+      // Secondary bursts while shaking — smaller and slower than the initial blast
+      this.shakeBurstTimer -= dt
+      if (this.shakeBurstTimer <= 0) {
+        const count = Math.round(this.shakeIntensityMultiplier * this.shakeIntensity * 0.6)
+        this.spawnBatch(Phaser.Math.Clamp(count, 1, 8), false)
+        this.shakeBurstTimer = 0.55
       }
     } else {
       this.spawnTimer -= dt
@@ -79,26 +74,27 @@ export class BubbleSpawner {
     const gH = this.scene.scale.height
     for (let i = 0; i < count; i++) {
       const x = Phaser.Math.FloatBetween(40, gW - 40)
-      // scattered=true: spread across screen for the initial fill; otherwise enter from bottom
       const y = scattered
         ? Phaser.Math.FloatBetween(gH * 0.3, gH * 0.95)
         : gH + 20
       const scale = Phaser.Math.FloatBetween(this.scaleMin, this.scaleMax) * this.baseScale * BUBBLE_BASE_SCALE
       const floatSpeed = Phaser.Math.FloatBetween(BUBBLE_GRAVITY_MIN, BUBBLE_GRAVITY_MAX)
-      const bubble = new Bubble(this.scene, x, y, this.snd, scale, floatSpeed)
-      this.bubbles.push(bubble)
+      this.bubbles.push(new Bubble(this.scene, x, y, this.snd, scale, floatSpeed))
     }
   }
 
-  // Shake interface — mirrors BubblesDup.cs
-  startShake(_ax: number, _ay: number, _forceMult: number) {
+  startShake(ax: number, ay: number, _forceMult: number) {
     this.isShaking = true
-    this.shakeTimer = this.shakeTimerInterval
+    this.shakeIntensity = Math.sqrt(ax * ax + ay * ay)
+    // Big immediate burst — proportional to shake strength and user intensity setting
+    const burst = Math.round(this.shakeIntensityMultiplier * this.shakeIntensity * 2)
+    this.spawnBatch(Phaser.Math.Clamp(burst, this.shakeIntensityMultiplier, this.shakeIntensityMultiplier * 5), false)
+    this.shakeBurstTimer = 0.4  // short pause before secondary bursts begin
     this.snd.play(AUDIO.SHAKE_LIGHT, 1.0, 1.0, true)
   }
 
-  continueShake(_ax: number, _ay: number, _forceMult: number) {
-    this.shakeTimer = this.shakeTimerInterval
+  continueShake(ax: number, ay: number, _forceMult: number) {
+    this.shakeIntensity = Math.max(this.shakeIntensity, Math.sqrt(ax * ax + ay * ay))
     this.snd.playRandom(
       [AUDIO.SHAKE_MEDIUM, AUDIO.SHAKE_MEDIUM_2, AUDIO.SHAKE_QUICK],
       1.0

@@ -5,7 +5,7 @@
       <div class="fish-row">
         <img :src="`${base}assets/sprites/fish/guppy_swim1.png`" class="fish-icon" alt="guppy" />
         <img :src="`${base}assets/sprites/starfish/starfish1_v2.png`" class="fish-icon" alt="starfish" />
-        <img :src="`${base}assets/sprites/blowfish/blowfish_swim1.png`" class="fish-icon" alt="blowfish" />
+        <img :src="`${base}assets/sprites/blowfish/blowfish4f.png`" class="fish-icon" alt="blowfish" />
       </div>
 
       <h1>Rattler</h1>
