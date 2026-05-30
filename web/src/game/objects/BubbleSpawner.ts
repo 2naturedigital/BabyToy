@@ -6,8 +6,8 @@ import { useSettingsStore } from '../../store/settings'
 
 const BUBBLE_GRAVITY_MIN = 80    // px/s float speed (slow drift)
 const BUBBLE_GRAVITY_MAX = 350   // px/s (was 700 — too fast to see)
-// Sprite 394px: at max settings (bubbleSize=2, variation=1) → largest ≈ 0.175*4*394 ≈ 276px (~half screen)
-const BUBBLE_BASE_SCALE = 0.175
+// Sprite 394px: at max settings (bubbleSize=3, variation=1) → largest ≈ 0.22*6*394 ≈ 520px (full screen)
+const BUBBLE_BASE_SCALE = 0.22
 
 export class BubbleSpawner {
   private scene: Phaser.Scene
@@ -32,8 +32,10 @@ export class BubbleSpawner {
 
     const s = useSettingsStore().settings
     const freq = s.bubbleFrequency
-    this.spawnMin = Math.max(0.5, freq - 2)
-    this.spawnMax = freq + 2
+    // Higher freq value = more bubbles (shorter interval). interval = 10/freq.
+    const interval = 10 / freq
+    this.spawnMin = Math.max(0.4, interval * 0.6)
+    this.spawnMax = interval * 1.4
     this.shakeIntensityMultiplier = s.bubbleCount  // 1–10 → scales burst size
     const variation = s.bubbleSizeVariation
     this.scaleMin = 1 - variation

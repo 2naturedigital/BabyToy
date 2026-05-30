@@ -28,9 +28,9 @@ export class BlowFish extends FishController {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'blowfish_swim_1', 0, 0)
     // Blowfish sprite is 440×380; guppy is 318×342 at scale 0.36 ≈ 123px tall.
-    // Scale 0.30 → 380*0.30 = 114px, making swim size comparable to the guppy.
-    // The inflated frames fill more of the canvas, so puffed-up visibly exceeds guppy size.
-    this.baseScale = 0.30
+    // Scale 0.45 → 380*0.45 = 171px normal swim size, bigger than the guppy.
+    // Inflated frames are visually larger still.
+    this.baseScale = 0.45
   }
 
   override init(snd: import('../systems/SoundController').SoundController, size: number) {

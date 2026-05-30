@@ -66,7 +66,8 @@ export class Accelerometer {
     const now = performance.now() / 1000
     if (now >= this.lastShakeTime + this.minInterval) {
       this.lastShakeTime = now
-      this.onShake(1.2, 0.8)
+      const power = useSettingsStore().settings.shakePower
+      this.onShake(2.5 * power, 2.0 * power)
     }
   }
 }
