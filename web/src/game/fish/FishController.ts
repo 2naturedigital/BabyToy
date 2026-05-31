@@ -7,7 +7,7 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
 
   protected minSpeed: number
   protected maxSpeed: number
-  protected currentSpeed = 0   // fixed for each journey, not randomised per-frame
+  protected currentSpeed = 0
   protected targetX = 0
   protected targetY = 0
   protected isFacingLeft = true
@@ -20,9 +20,9 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
   protected magnitudeMult = 1
   protected shakeForceMultiplier = 1
 
+  private magnitudeWindRate = 0  // how fast magnitudeMult decays back to 1 after shake
+
   protected snd!: SoundController
-  // Intrinsic scale calibrated so that size=1.0 matches the original Unity appearance.
-  // Each subclass sets this in its constructor.
   protected baseScale = 1.0
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, minSpeed: number, maxSpeed: number) {
@@ -48,11 +48,19 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
   protected setRandomTarget() {
     this.targetX = Phaser.Math.FloatBetween(this.halfW, this.gameW - this.halfW)
     this.targetY = Phaser.Math.FloatBetween(this.halfH, this.gameH - this.halfH)
-    // Pick speed once per journey — eliminates per-frame jitter
     this.currentSpeed = Phaser.Math.FloatBetween(this.minSpeed, this.maxSpeed)
   }
 
   protected moveFish(delta: number) {
+    // Gradually wind down speed boost over 2 seconds after shake ends
+    if (!this.isShaking && this.magnitudeWindRate > 0) {
+      this.magnitudeMult -= this.magnitudeWindRate * (delta / 1000)
+      if (this.magnitudeMult <= 1.0) {
+        this.magnitudeMult = 1.0
+        this.magnitudeWindRate = 0
+      }
+    }
+
     const speed = this.currentSpeed * this.magnitudeMult
     const dx = this.targetX - this.x
     const dy = this.targetY - this.y
@@ -75,23 +83,25 @@ export abstract class FishController extends Phaser.GameObjects.Sprite {
     this.setFlipX(!this.flipX)
   }
 
-  startShake(ax: number, ay: number, forceMult: number) {
-    this.magnitudeMult = ax * ax + ay * ay
-    this.shakeForceMultiplier = forceMult
+  startShake(_ax: number, _ay: number, _forceMult: number) {
+    // Fixed modest speed boost — not proportional to raw acceleration magnitude
+    this.magnitudeWindRate = 0
+    this.magnitudeMult = 1.5
+    this.shakeForceMultiplier = 1
     this.isShaking = true
     this.isResetTime = false
   }
 
-  continueShake(ax: number, ay: number, forceMult: number) {
-    this.magnitudeMult = ax * ax + ay * ay
-    this.shakeForceMultiplier = forceMult
+  continueShake(_ax: number, _ay: number, _forceMult: number) {
+    // magnitudeMult stays at 1.5 for duration of shake
   }
 
   endShake() {
-    this.magnitudeMult = 1
-    this.shakeForceMultiplier = 1
     this.isShaking = false
     this.isResetTime = true
+    this.shakeForceMultiplier = 1
+    // Wind down over 2 seconds instead of snapping back instantly
+    this.magnitudeWindRate = (this.magnitudeMult - 1.0) / 2.0
   }
 
   abstract fishUpdate(delta: number): void

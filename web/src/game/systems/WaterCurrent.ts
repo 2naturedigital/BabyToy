@@ -1,18 +1,19 @@
 import Phaser from 'phaser'
 import type { Bubble } from '../objects/Bubble'
 
+const MAX_BUBBLE_VX = 150  // px/s — prevents bubbles flying off screen
+
 // Mirrors WaterCurrent.cs — a horizontal slice of the tank that nudges bubbles left or right.
 export class WaterCurrent {
-  // Rectangular zone in game-space pixels
   readonly left: number
   readonly right: number
   readonly top: number
   readonly bottom: number
 
-  private direction = 1   // +1 = right, -1 = left
+  private direction = 1
   private strength: number
   private magnitudeMult = 1
-  private shakeForceMultiplier = 1
+  private magnitudeWindRate = 0  // decay rate back to 1.0 after shake
   private elapsedTime = 0
   private movementPeriod: number
   private readonly minPeriod: number
@@ -33,7 +34,15 @@ export class WaterCurrent {
   update(delta: number, bubbles: Bubble[]) {
     const dt = delta / 1000
 
-    // Alternate direction on a random timer
+    // Gradually wind down shake boost
+    if (this.magnitudeWindRate > 0) {
+      this.magnitudeMult -= this.magnitudeWindRate * dt
+      if (this.magnitudeMult <= 1.0) {
+        this.magnitudeMult = 1.0
+        this.magnitudeWindRate = 0
+      }
+    }
+
     this.elapsedTime += dt
     if (this.elapsedTime > this.movementPeriod) {
       this.elapsedTime = 0
@@ -41,11 +50,12 @@ export class WaterCurrent {
       this.movementPeriod = Phaser.Math.Between(this.minPeriod, this.maxPeriod)
     }
 
-    const force = this.strength * this.magnitudeMult * this.shakeForceMultiplier * this.direction
+    const force = this.strength * this.magnitudeMult * this.direction
 
     for (const b of bubbles) {
       if (!b.active || !this.contains(b.x, b.y)) continue
-      b.physBody.velocity.x += force * dt
+      const newVx = b.physBody.velocity.x + force * dt
+      b.physBody.velocity.x = Phaser.Math.Clamp(newVx, -MAX_BUBBLE_VX, MAX_BUBBLE_VX)
     }
   }
 
@@ -53,18 +63,20 @@ export class WaterCurrent {
     return x >= this.left && x <= this.right && y >= this.top && y <= this.bottom
   }
 
-  startShake(ax: number, ay: number, forceMult: number) {
-    this.magnitudeMult = ax * ax + ay * ay
-    this.shakeForceMultiplier = forceMult
+  startShake(ax: number, ay: number, _forceMult: number) {
+    // Cap current boost at 1.8× — don't use shakePower or squared magnitude here
+    const mag = Math.sqrt(ax * ax + ay * ay)
+    this.magnitudeMult = Math.min(1 + mag * 0.2, 1.8)
+    this.magnitudeWindRate = 0
   }
 
-  continueShake(ax: number, ay: number, forceMult: number) {
-    this.magnitudeMult = ax * ax + ay * ay
-    this.shakeForceMultiplier = forceMult
+  continueShake(ax: number, ay: number, _forceMult: number) {
+    const mag = Math.sqrt(ax * ax + ay * ay)
+    this.magnitudeMult = Math.min(1 + mag * 0.2, 1.8)
   }
 
   endShake() {
-    this.magnitudeMult = 1
-    this.shakeForceMultiplier = 1
+    // Let magnitudeMult decay gradually over 2 seconds
+    this.magnitudeWindRate = (this.magnitudeMult - 1.0) / 2.0
   }
 }
