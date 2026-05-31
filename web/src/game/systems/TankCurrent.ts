@@ -7,7 +7,7 @@ export class TankCurrent {
   private dirX = 1
   private strength: number
   private magnitudeMult = 1
-  private shakeForceMultiplier = 1
+  private magnitudeWindRate = 0  // decay rate back to 1.0 after shake
   private isShaking = false
   private elapsedTime = 0
   private movementPeriod: number
@@ -33,43 +33,48 @@ export class TankCurrent {
   update(delta: number) {
     const dt = delta / 1000
 
+    // Gradually wind down shake boost
+    if (this.magnitudeWindRate > 0) {
+      this.magnitudeMult -= this.magnitudeWindRate * dt
+      if (this.magnitudeMult <= 1.0) {
+        this.magnitudeMult = 1.0
+        this.magnitudeWindRate = 0
+      }
+    }
+
     this.elapsedTime += dt
     if (this.elapsedTime > this.movementPeriod) {
       this.elapsedTime = 0
-      if (!this.isShaking) {
-        this.dirX *= -1
-      }
-      this.strength = Phaser.Math.FloatBetween(
-        this.minStr * this.magnitudeMult,
-        this.maxStr * this.magnitudeMult
-      )
+      if (!this.isShaking) this.dirX *= -1
+      this.strength = Phaser.Math.FloatBetween(this.minStr, this.maxStr)
       this.movementPeriod = Phaser.Math.Between(this.minPeriod, this.maxPeriod)
     }
 
+    // magnitudeMult applied at force point so gradual wind-down takes effect immediately
     for (const f of this.fish) {
-      if (f?.active) f.applyForce(this.strength * this.dirX * dt)
+      if (f?.active) f.applyForce(this.strength * this.magnitudeMult * this.dirX * dt)
     }
   }
 
-  startShake(ax: number, ay: number, forceMult: number) {
+  startShake(ax: number, ay: number, _forceMult: number) {
     this.isShaking = true
-    this.magnitudeMult = ax * ax + ay * ay
-    this.shakeForceMultiplier = forceMult
-    // Direction follows shake axis
+    const mag = Math.sqrt(ax * ax + ay * ay)
+    this.magnitudeMult = Math.min(1 + mag * 0.3, 2.0)
+    this.magnitudeWindRate = 0
     this.dirX = ax < 0 ? -1 : 1
     this.elapsedTime = 0
   }
 
-  continueShake(ax: number, ay: number, forceMult: number) {
-    this.magnitudeMult = ax * ax + ay * ay
-    this.shakeForceMultiplier = forceMult
+  continueShake(ax: number, ay: number, _forceMult: number) {
+    const mag = Math.sqrt(ax * ax + ay * ay)
+    this.magnitudeMult = Math.min(1 + mag * 0.3, 2.0)
     this.dirX = ax < 0 ? -1 : 1
     this.elapsedTime = 0
   }
 
   endShake() {
     this.isShaking = false
-    this.magnitudeMult = 1
-    this.shakeForceMultiplier = 1
+    // Wind down over 2 seconds
+    this.magnitudeWindRate = (this.magnitudeMult - 1.0) / 2.0
   }
 }
