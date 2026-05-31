@@ -30,14 +30,25 @@ const canvasBlocked = ref(false)  // controls pointer-events independently
 
 const store = useSettingsStore()
 
-const openOptions = () => { showOptions.value = true;  canvasBlocked.value = true }
-const openAbout   = () => { showAbout.value  = true;   canvasBlocked.value = true }
+const openOptions = () => {
+  window.dispatchEvent(new Event('rattler:overlay-open'))
+  showOptions.value = true
+  canvasBlocked.value = true
+}
+const openAbout = () => {
+  window.dispatchEvent(new Event('rattler:overlay-open'))
+  showAbout.value = true
+  canvasBlocked.value = true
+}
 
-// Keep canvas blocked for 500 ms after the modal disappears so the closing
-// touch/pointer-up cannot fall through to Phaser buttons behind the overlay.
-// 500ms covers the 300ms mobile ghost-click delay with margin.
+// Keep canvas blocked for 500ms after the modal disappears so the closing
+// touch cannot fall through to Phaser. Also re-enable Phaser input after
+// the same delay so both layers unblock at the same moment.
 function unblockCanvas() {
-  setTimeout(() => { canvasBlocked.value = false }, 500)
+  setTimeout(() => {
+    canvasBlocked.value = false
+    window.dispatchEvent(new Event('rattler:overlay-close'))
+  }, 500)
 }
 
 function closeAbout() {

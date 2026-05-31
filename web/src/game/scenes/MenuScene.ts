@@ -78,6 +78,17 @@ export class MenuScene extends Phaser.Scene {
         window.dispatchEvent(new Event('rattler:open-about'))
       })
     }
+
+    // Disable Phaser input while any Vue overlay is open so touches on the
+    // overlay cannot fall through to Phaser buttons in the same frame window.
+    const onOverlayOpen  = () => { this.input.enabled = false }
+    const onOverlayClose = () => { this.input.enabled = true }
+    window.addEventListener('rattler:overlay-open',  onOverlayOpen)
+    window.addEventListener('rattler:overlay-close', onOverlayClose)
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      window.removeEventListener('rattler:overlay-open',  onOverlayOpen)
+      window.removeEventListener('rattler:overlay-close', onOverlayClose)
+    })
   }
 
   // Rounded-rectangle button: Graphics bg + Text label + invisible Zone for input

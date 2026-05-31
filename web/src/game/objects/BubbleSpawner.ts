@@ -8,6 +8,7 @@ const BUBBLE_GRAVITY_MIN = 80    // px/s float speed (slow drift)
 const BUBBLE_GRAVITY_MAX = 350   // px/s (was 700 — too fast to see)
 // Sprite 394px: at max settings (bubbleSize=3, variation=1) → largest ≈ 0.22*6*394 ≈ 520px (full screen)
 const BUBBLE_BASE_SCALE = 0.22
+const MAX_BUBBLES = 30  // cap prevents bubble pile-up from blocking fish taps
 
 export class BubbleSpawner {
   private scene: Phaser.Scene
@@ -75,6 +76,7 @@ export class BubbleSpawner {
     const gW = this.scene.scale.width
     const gH = this.scene.scale.height
     for (let i = 0; i < count; i++) {
+      if (this.bubbles.length >= MAX_BUBBLES) break
       const x = Phaser.Math.FloatBetween(40, gW - 40)
       const y = scattered
         ? Phaser.Math.FloatBetween(gH * 0.3, gH * 0.95)

@@ -34,6 +34,8 @@ export class FishTankScene extends Phaser.Scene {
   private spaceKey?: Phaser.Input.Keyboard.Key
 
   private readonly onSettingsApplied = () => this.scene.restart()
+  private readonly onOverlayOpen  = () => { this.input.enabled = false }
+  private readonly onOverlayClose = () => { this.input.enabled = true }
 
   constructor() {
     super({ key: 'FishTankScene' })
@@ -152,10 +154,37 @@ export class FishTankScene extends Phaser.Scene {
 
     // ── Global event listeners ───────────────────────────────────────────────
     window.addEventListener('rattler:settings-applied', this.onSettingsApplied)
+    window.addEventListener('rattler:overlay-open',  this.onOverlayOpen)
+    window.addEventListener('rattler:overlay-close', this.onOverlayClose)
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       window.removeEventListener('rattler:settings-applied', this.onSettingsApplied)
+      window.removeEventListener('rattler:overlay-open',  this.onOverlayOpen)
+      window.removeEventListener('rattler:overlay-close', this.onOverlayClose)
       this.accel.stop()
+    })
+
+    // ── Bubble tap: handled at scene level so bubbles don't block fish taps ──
+    // Bubbles are not setInteractive; we find the topmost bubble at the pointer
+    // position manually and pop it. Fish receive their own pointerdown events
+    // independently since they are the topmost *interactive* objects Phaser sees.
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      let topBubble: import('../objects/Bubble').Bubble | null = null
+      let topDepth = -Infinity
+      for (const b of this.bubbleSpawner.bubbles) {
+        if (!b.active) continue
+        const hw = b.displayWidth / 2
+        const hh = b.displayHeight / 2
+        if (
+          pointer.x >= b.x - hw && pointer.x <= b.x + hw &&
+          pointer.y >= b.y - hh && pointer.y <= b.y + hh &&
+          b.depth > topDepth
+        ) {
+          topBubble = b
+          topDepth = b.depth
+        }
+      }
+      topBubble?.pop()
     })
 
     this.cameras.main.fadeIn(350, 0, 0, 0)

@@ -15,7 +15,6 @@ export class Bubble extends Phaser.Physics.Arcade.Sprite {
   readonly physBody: Phaser.Physics.Arcade.Body
 
   constructor(scene: Phaser.Scene, x: number, y: number, snd: SoundController, scale: number, floatSpeed: number) {
-    // Idle frame is bubble_uw_1 (un-popped bubble)
     super(scene, x, y, 'bubble_uw_1')
     scene.add.existing(this)
     scene.physics.add.existing(this)
@@ -24,7 +23,6 @@ export class Bubble extends Phaser.Physics.Arcade.Sprite {
     this.lifetime = Phaser.Math.FloatBetween(LIFETIME_MIN, LIFETIME_MAX)
     this.physBody = this.body as Phaser.Physics.Arcade.Body
 
-    // No world gravity — float upward via per-body gravity override
     this.physBody.setAllowGravity(false)
     this.physBody.setVelocityY(-floatSpeed)
 
@@ -34,23 +32,21 @@ export class Bubble extends Phaser.Physics.Arcade.Sprite {
     // Fish depths: BlowFish=3, Guppy=4, Starfish=5. Hands=2.
     const depthPool = [2, 4, 7, 7]
     this.setDepth(Phaser.Utils.Array.GetRandom(depthPool) as number)
-    this.setInteractive()
 
-    // Randomize creation sound pitch/volume, alternating between two sounds
+    // Bubbles are intentionally NOT setInteractive — keeping them out of Phaser's
+    // hit-testing means depth-7 bubbles cannot block taps on fish beneath them.
+    // Popping is handled by FishTankScene's global pointerdown listener instead.
+
     const createKey = Phaser.Utils.Array.GetRandom(CREATE_KEYS) as string
     this.snd.play(createKey,
       Phaser.Math.FloatBetween(0.65, 0.95),
       Phaser.Math.FloatBetween(0.85, 1.2)
     )
-
-    // Tap to pop
-    this.on('pointerdown', () => this.pop())
   }
 
   bubbleUpdate(delta: number) {
     if (this.popped) return
 
-    // Auto-destroy once above top of screen
     if (this.y < -this.displayHeight) {
       this.destroy()
       return
@@ -65,7 +61,6 @@ export class Bubble extends Phaser.Physics.Arcade.Sprite {
   pop() {
     if (this.popped) return
     this.popped = true
-    this.disableInteractive()
     this.physBody.setVelocity(0, 0)
 
     this.snd.playRandom(POP_KEYS, Phaser.Math.FloatBetween(0.7, 1.0))
