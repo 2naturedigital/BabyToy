@@ -127,12 +127,12 @@ export class BootScene extends Phaser.Scene {
       repeat: 0,
     })
 
-    // Starfish idle blink (frames 5-7: upright position with eyes opening and closing)
+    // Starfish blink from resting pose: eyes open briefly then close again
     mgr.create({
       key: 'starfish_blink',
-      frames: [5,6,7,6,5].map(i => ({ key: `starfish_${i}` })),
-      frameRate: 6,
-      repeat: -1,
+      frames: [1,6,7,6,1].map(i => ({ key: `starfish_${i}` })),
+      frameRate: 8,
+      repeat: 0,
     })
     // Starfish bigeye — eyes grow wide as body rises to upright startled pose (Unity starfish_bigeye.anim)
     mgr.create({

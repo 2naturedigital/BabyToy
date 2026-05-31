@@ -41,7 +41,7 @@
               <span class="row-label">Size</span>
               <span class="row-value">{{ sizeLabel(s.bubbleSize) }}</span>
             </div>
-            <input type="range" min="0.5" max="2" step="0.1"
+            <input type="range" min="0.5" max="3" step="0.1"
               :value="s.bubbleSize" @input="set('bubbleSize', num($event))" />
           </div>
 
@@ -53,30 +53,6 @@
             </div>
             <input type="range" min="0.5" max="2" step="0.1"
               :value="s.fishSize" @input="set('fishSize', num($event))" />
-          </div>
-          <div class="row">
-            <div class="row-top">
-              <span class="row-label">Guppy Count</span>
-              <span class="row-value">{{ s.guppyCount }}</span>
-            </div>
-            <input type="range" min="0" max="3" step="1"
-              :value="s.guppyCount" @input="set('guppyCount', num($event))" />
-          </div>
-          <div class="row">
-            <div class="row-top">
-              <span class="row-label">Starfish Count</span>
-              <span class="row-value">{{ s.starfishCount }}</span>
-            </div>
-            <input type="range" min="0" max="3" step="1"
-              :value="s.starfishCount" @input="set('starfishCount', num($event))" />
-          </div>
-          <div class="row">
-            <div class="row-top">
-              <span class="row-label">Blowfish Count</span>
-              <span class="row-value">{{ s.blowfishCount }}</span>
-            </div>
-            <input type="range" min="0" max="3" step="1"
-              :value="s.blowfishCount" @input="set('blowfishCount', num($event))" />
           </div>
 
           <div class="section-label">Controls</div>
@@ -116,6 +92,30 @@
             </div>
             <input type="range" min="0" max="0.5" step="0.05"
               :value="s.fishSizeVariation" @input="set('fishSizeVariation', num($event))" />
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Guppy Count</span>
+              <span class="row-value">{{ s.guppyCount }}</span>
+            </div>
+            <input type="range" min="0" max="3" step="1"
+              :value="s.guppyCount" @input="set('guppyCount', num($event))" />
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Starfish Count</span>
+              <span class="row-value">{{ s.starfishCount }}</span>
+            </div>
+            <input type="range" min="0" max="3" step="1"
+              :value="s.starfishCount" @input="set('starfishCount', num($event))" />
+          </div>
+          <div class="row">
+            <div class="row-top">
+              <span class="row-label">Blowfish Count</span>
+              <span class="row-value">{{ s.blowfishCount }}</span>
+            </div>
+            <input type="range" min="0" max="3" step="1"
+              :value="s.blowfishCount" @input="set('blowfishCount', num($event))" />
           </div>
 
           <div class="section-label">Shake</div>
@@ -189,10 +189,10 @@ function sizeLabel(v: number) {
 }
 
 function freqLabel(v: number) {
-  if (v <= 2) return 'Lots'
-  if (v <= 4) return 'Normal'
-  if (v <= 6) return 'Few'
-  return 'Rare'
+  if (v <= 2) return 'Rare'
+  if (v <= 4) return 'Few'
+  if (v <= 6) return 'Often'
+  return 'Lots'
 }
 
 function shakeIntensityLabel(v: number) {
@@ -204,8 +204,8 @@ function shakeIntensityLabel(v: number) {
 
 function resetAll() {
   const d: Partial<Settings> = {
-    volume: 1.0, bubbleFrequency: 2, bubbleSize: 1.0, bubbleCount: 5,
-    bubbleSizeVariation: 0.5, fishSize: 1.0, fishSizeVariation: 0.2,
+    volume: 1.0, bubbleFrequency: 5.0, bubbleSize: 1.0, bubbleCount: 5,
+    bubbleSizeVariation: 0.5, fishSize: 1.0, fishSizeVariation: 0.0,
     guppyCount: 1, starfishCount: 1, blowfishCount: 1,
     shakeSensitivity: 1.0, shakePower: 1.0, shakenBubbleFrequency: 0.13,
     showHands: true, showWaterLayer: true, blurBackground: false,

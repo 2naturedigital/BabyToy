@@ -33,10 +33,11 @@ const store = useSettingsStore()
 const openOptions = () => { showOptions.value = true;  canvasBlocked.value = true }
 const openAbout   = () => { showAbout.value  = true;   canvasBlocked.value = true }
 
-// Keep canvas blocked for 200 ms after the modal disappears so the closing
+// Keep canvas blocked for 500 ms after the modal disappears so the closing
 // touch/pointer-up cannot fall through to Phaser buttons behind the overlay.
+// 500ms covers the 300ms mobile ghost-click delay with margin.
 function unblockCanvas() {
-  setTimeout(() => { canvasBlocked.value = false }, 200)
+  setTimeout(() => { canvasBlocked.value = false }, 500)
 }
 
 function closeAbout() {
@@ -50,7 +51,9 @@ function closeOptions() {
   unblockCanvas()
 }
 
-onMounted(() => {
+onMounted(async () => {
+  // Ensure Comic Andy is loaded before Phaser canvas text renders it
+  await document.fonts.load("16px 'Comic Andy'").catch(() => {/* fallback font ok */})
   createGame(gameContainer.value!)
   window.addEventListener('rattler:open-options', openOptions)
   window.addEventListener('rattler:open-about',   openAbout)
