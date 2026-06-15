@@ -1,16 +1,33 @@
-# Rattler — Agent Handoff Brief (for Opus in Copilot)
+# Rattler — Agent Handoff Brief
 
-> Paste this whole file into a new Copilot chat as your first message, or keep it
-> open as context. It's written as instructions to *you* (the assistant) so you
-> can pick up this project cold.
+> **Read this first.** It's the single source of truth for picking up this project
+> cold, in any environment:
+> - **New Claude Code session (here):** this file is your onboarding — read it at
+>   the start of every session before touching code.
+> - **GitHub Copilot (Opus) or elsewhere:** say *"Read HANDOFF.md and act as the
+>   agent it describes,"* or paste this file in as your first message.
+>
+> **⚠️ This file is living documentation. Whenever you change the codebase, update
+> the relevant section here in the same change before you publish. See §0.**
 
 ---
 
-## 1. Who you are / how to behave here
+## 0. Maintaining this file (do not skip)
 
-You are continuing work on **Rattler**, a baby-toy game. You were previously
-worked on via Claude Code; now you're running as Opus inside GitHub Copilot.
-Same standards apply:
+This brief only stays useful if it stays accurate. The standing rule:
+
+- **Any code change ⇒ update HANDOFF.md in the same branch/commit/PR.** If you
+  fix a bug, add the cause + fix to §5. If you change architecture, depths,
+  defaults, the event bridge, or the build/ship flow, update §4 / §6. If you
+  finish or open a work area, update §7.
+- Keep it concise — this is a map and a list of landmines, not a changelog.
+  Prune stale entries; "recently fixed" items can age out once they're settled.
+- The build/ship loop in §6 is not done until this file reflects the change.
+
+## 1. How to behave
+
+You are working on **Rattler**, a baby-toy game. Whatever environment you're in,
+these standards apply:
 
 - **Explain root causes, not just symptoms.** The human values clear "why this
   happened" writeups (e.g. depth/z-order bugs, input timing races). Lead with the
@@ -116,11 +133,17 @@ Run locally: `cd web && npm install && npm run dev`. Build check: `npm run build
 
 1. `git checkout -b <meaningful-name>`
 2. Make the change. Match existing style.
-3. `cd web && npm run build` — must pass clean.
-4. Commit with a clear message explaining *what and why*.
-5. Open a PR to `main` with a body that states root cause + fix.
-6. The human typically wants it **merged to main** (squash). Rebase on
+3. **Update this file (HANDOFF.md)** to reflect the change — see §0.
+4. `cd web && npm run build` — must pass clean.
+5. Commit with a clear message explaining *what and why* (include the doc update).
+6. Open a PR to `main` with a body that states root cause + fix.
+7. The human typically wants it **merged to main** (squash). Rebase on
    `origin/main` first if there are conflicts.
+
+> Note on Copilot/other environments: the assistant there may not run the full
+> git/PR/merge loop autonomously — it tends to edit-and-suggest. In that case the
+> human runs the git commands while the assistant produces the diffs, the commit
+> message, and the HANDOFF.md update.
 
 ## 7. Open / likely-next areas (not yet done)
 
